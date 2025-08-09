@@ -1,15 +1,19 @@
-# Ars-Nouveau-Example-Addon
+# Sauce Lib, JarJar for Ars Nouveau Addons
 
-An example repository for making an addon for Ars Nouveau! See the wiki for more info.
+Every push to this repository is built and published to the [BlameJared](https://maven.blamejared.com) maven, to use
+these builds in your project, simply add the following code in your build.gradle
 
-**Getting Started**
+```gradle
+repositories {
+    maven { url 'https://maven.blamejared.com' }
+}
 
-* Fork this repo for a ready to build work space.
-* Join the Ars Nouveau discord to ask questions, get help, or get ideas.
+dependencies {
+    implementation ("com.alexthw.sauce:sauce-[MC_VERSION]:[VERSION]") {transitive=false}
+}
+```
 
-Some useful links for beginners:
-* https://mcforge.readthedocs.io/en/latest/
-* https://forge.gemwire.uk/wiki/
-* https://wiki.mcjty.eu/modding/index.php?title=Main_Page
-* https://github.com/baileyholl/Ars-Nouveau/tree/1.18.x/src/main/java/com/hollingsworth/arsnouveau/api (Full API documentation)
-* https://github.com/bernie-g/geckolib/wiki (Animation library used by Ars Nouveau, optional)
+Current version (1.21.1):
+[![Maven](https://img.shields.io/maven-metadata/v?label=&color=C71A36&metadataUrl=https%3A%2F%2Fmaven.blamejared.com%2Fcom%2Falexthw%2Fsauce%2Fsauce-1.21.1%2Fmaven-metadata.xml&style=flat-square)](https://maven.blamejared.com/com/alexthw/sauce/sauce-1.21.1/)
+
+(remove the v)

@@ -8,11 +8,13 @@ plugins {
 }
 
 base {
-    version = "${minecraft_version}-${mod_version}"
-    group = 'com.hollingsworth.an_addon' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-    archivesBaseName = 'an_addon'
+    version = mod_version
+    group = 'com.alexthw.sauce' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+    archivesName = mod_id + '-' + minecraft_version
 }
-
+if (System.getenv('BUILD_NUMBER') != null) {
+    version += "." + System.getenv('BUILD_NUMBER')
+}
 // Mojang ships Java 21 to end users in 1.21+
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 // Comment the line below if you don't need to share the source jar (e.g. if nothing needs you as a dependency)
@@ -33,7 +35,7 @@ neoForge {
 
     parchment {
         mappingsVersion = project.parchment_version
-        minecraftVersion = "1.21"
+        minecraftVersion = "1.21.1"
     }
 
     runs {
@@ -155,7 +157,6 @@ dependencies {
 
     // only need the compileOnly, the runtime dependency is handled by Ars Nouveau
     compileOnly "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
-    compileOnly "vazkii.patchouli:Patchouli:1.21-${patchouli_version}"
     compileOnly 'com.github.glitchfiend:TerraBlender-neoforge:1.21-4.0.0.0'
     compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}"
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
@@ -171,14 +172,14 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "ArsNouveau Addon",
-                "Specification-Vendor"    : "exampleDev",
+                "Specification-Title"  : "Sauce",
+                "Specification-Vendor" : "alexthw",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : "${version}",
-                "Implementation-Vendor"   : "exampleDev",
+                "Implementation-Vendor": "alexthw",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs"            : "an_addon.mixins.json"
+                "MixinConfigs"         : "sauce.mixins.json"
         ])
     }
 }

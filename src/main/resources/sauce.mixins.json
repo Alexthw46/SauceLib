@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "com.alexthw.sauce.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "refmap": "sauce.refmap.json",
+  "mixins": [
+    "SpellSchoolAccessor"
+  ],
+  "minVersion": "0.8",
+  "client": [
+  ]
+}
