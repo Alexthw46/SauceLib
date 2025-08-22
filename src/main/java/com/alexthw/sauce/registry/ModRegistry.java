@@ -5,7 +5,6 @@ import com.alexthw.sauce.api.item.components.SchoolCasterTomeData;
 import com.alexthw.sauce.common.fluid.SourceFluid;
 import com.alexthw.sauce.common.item.ExampleCosmetic;
 import com.alexthw.sauce.common.recipe.CharmChargingRecipe;
-import com.alexthw.sauce.common.recipe.ConfigCondition;
 import com.alexthw.sauce.common.recipe.ElementalArmorRecipe;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.perk.PerkAttributes;
@@ -167,8 +166,6 @@ public class ModRegistry {
 
     public static final DeferredHolder<RecipeType<?>, RecipeType<CharmChargingRecipe>> CHARM_CHARGING_TYPE = RECIPES.register("charm_charging", () -> RecipeType.simple(prefix("charm_charging")));
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CharmChargingRecipe>> CHARM_CHARGING_SERIALIZER = SERIALIZERS.register("charm_charging", CharmChargingRecipe.Serializer::new);
-
-    public static final DeferredHolder<MapCodec<? extends ICondition>, MapCodec<ConfigCondition>> CONFIG_CONDITION = CONDITION_CODECS.register("config", () -> ConfigCondition.CODEC);
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<SchoolCasterTomeData>> E_TOME_CASTER = DATA_COMPONENT_TYPES.register("school_tome_caster", () -> DataComponentType.<SchoolCasterTomeData>builder().persistent(SchoolCasterTomeData.CODEC.codec()).networkSynchronized(SchoolCasterTomeData.STREAM_CODEC).build());
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<CharmData>> CHARM_DATA = DATA_COMPONENT_TYPES.register("charm_data",
