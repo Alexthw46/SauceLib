@@ -7,6 +7,7 @@ import com.alexthw.sauce.common.item.ExampleCosmetic;
 import com.alexthw.sauce.common.recipe.CharmChargingRecipe;
 import com.alexthw.sauce.common.recipe.ConfigCondition;
 import com.alexthw.sauce.common.recipe.ElementalArmorRecipe;
+import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.perk.PerkAttributes;
 import com.hollingsworth.arsnouveau.api.sound.SpellSound;
 import com.mojang.serialization.MapCodec;
@@ -65,6 +66,18 @@ public class ModRegistry {
         SERIALIZERS.register(bus);
         CONDITION_CODECS.register(bus);
         DATA_COMPONENT_TYPES.register(bus);
+
+        ATTRIBUTES.addAlias(ArsNouveau.prefix("ars_elemental.perk.summon_power"), ArsNouveau.prefix("sauce.perk.summon_power"));
+        ATTRIBUTES.addAlias(ResourceLocation.fromNamespaceAndPath("not_enough_glyphs", "not_enough_glyphs.perk.mana_discount"), ArsNouveau.prefix("sauce.perk.mana_discount"));
+        if (ENABLE_LIQUID_SOURCE) {
+            FLUIDS.addAlias(ResourceLocation.fromNamespaceAndPath("starbunclemania", "source_fluid"), prefix("source_fluid"));
+            FLUIDS.addAlias(ResourceLocation.fromNamespaceAndPath("starbunclemania", "source_fluid_flowing"), prefix("source_fluid_flowing"));
+            BLOCKS.addAlias(ResourceLocation.fromNamespaceAndPath("starbunclemania", "source_fluid_block"), prefix("source_fluid_block"));
+            ITEMS.addAlias(ResourceLocation.fromNamespaceAndPath("starbunclemania", "source_fluid_bucket"), prefix("source_fluid_bucket"));
+        }
+        DATA_COMPONENT_TYPES.addAlias(ResourceLocation.fromNamespaceAndPath("ars_elemental", "elemental_tome_caster"), prefix("school_tome_caster"));
+        DATA_COMPONENT_TYPES.addAlias(ResourceLocation.fromNamespaceAndPath("ars_additions", "charm_data"), prefix("charm_data"));
+
     }
 
     public static final DeferredHolder<Item, ? extends Item> EXAMPLE;
