@@ -99,50 +99,54 @@ public class ModRegistry {
     }
 
     public static final DeferredHolder<Attribute, Attribute> SUMMON_POWER = PerkAttributes.registerAttribute("sauce.perk.summon_power",
-            (id) -> new RangedAttribute(id, 0, 0, 10000.0D),
+            (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
             "ee3a4090-c5f5-4a26-a9c2-6044e9e609de"
     );
 
     public static final DeferredHolder<Attribute, Attribute> ABJURATION_POWER = PerkAttributes.registerAttribute(
             "sauce.perk.abjuration_power",
-            (id) -> new RangedAttribute(id, 0, 0, 10000.0D),
+            (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
             "a1b2c3d4-e5f6-4a1b-9c8d-1234567890ab"
     );
     public static final DeferredHolder<Attribute, Attribute> NECROMANCY_POWER = PerkAttributes.registerAttribute(
             "sauce.perk.necromancy_power",
-            (id) -> new RangedAttribute(id, 0, 0, 10000.0D),
+            (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
             "b2c3d4e5-f6a1-4b9c-8d12-234567890abc"
     );
     public static final DeferredHolder<Attribute, Attribute> MANIPULATION_POWER = PerkAttributes.registerAttribute(
             "sauce.perk.manipulation_power",
-            (id) -> new RangedAttribute(id, 0, 0, 10000.0D),
+            (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
             "c3d4e5f6-a1b2-4c9d-8e12-34567890abcd"
     );
     public static final DeferredHolder<Attribute, Attribute> AIR_POWER = PerkAttributes.registerAttribute(
             "sauce.perk.air_power",
-            (id) -> new RangedAttribute(id, 0, 0, 10000.0D),
+            (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
             "d4e5f6a1-b2c3-4d9e-8f12-4567890abcde"
     );
     public static final DeferredHolder<Attribute, Attribute> EARTH_POWER = PerkAttributes.registerAttribute(
             "sauce.perk.earth_power",
-            (id) -> new RangedAttribute(id, 0, 0, 10000.0D),
+            (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
             "e5f6a1b2-c3d4-4e9f-8012-567890abcdef"
     );
     public static final DeferredHolder<Attribute, Attribute> FIRE_POWER = PerkAttributes.registerAttribute(
             "sauce.perk.fire_power",
-            (id) -> new RangedAttribute(id, 0, 0, 10000.0D),
+            (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
             "f6a1b2c3-d4e5-4f90-8112-67890abcdef0"
     );
     public static final DeferredHolder<Attribute, Attribute> WATER_POWER = PerkAttributes.registerAttribute(
             "sauce.perk.water_power",
-            (id) -> new RangedAttribute(id, 0, 0, 10000.0D),
+            (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
             "a7b8c9d0-e1f2-4a91-8212-7890abcdef01"
     );
     public static final DeferredHolder<Attribute, Attribute> ELEMENTAL_POWER = PerkAttributes.registerAttribute(
             "sauce.perk.elemental_power",
-            (id) -> new RangedAttribute(id, 0, 0, 10000.0D),
+            (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
             "b8c9d0e1-f2a3-4b92-8312-890abcdef012"
     );
+    public static final DeferredHolder<Attribute, Attribute> MANA_DISCOUNT = PerkAttributes.registerAttribute(
+            "sauce.perk.mana_discount",
+            (id) -> new RangedAttribute(id, 0.0, -Double.MAX_VALUE, Double.MAX_VALUE).setSyncable(true),
+            "c9d0e1f2-a3b4-4c93-8412-90abcdef0123");
 
 
     public static final DeferredHolder<RecipeType<?>, RecipeType<ElementalArmorRecipe>> ELEMENTAL_ARMOR_UP = RECIPES.register("armor_upgrade", () -> RecipeType.simple(prefix("armor_upgrade")));
@@ -150,7 +154,6 @@ public class ModRegistry {
 
     public static final DeferredHolder<RecipeType<?>, RecipeType<CharmChargingRecipe>> CHARM_CHARGING_TYPE = RECIPES.register("charm_charging", () -> RecipeType.simple(prefix("charm_charging")));
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CharmChargingRecipe>> CHARM_CHARGING_SERIALIZER = SERIALIZERS.register("charm_charging", CharmChargingRecipe.Serializer::new);
-
 
     public static final DeferredHolder<MapCodec<? extends ICondition>, MapCodec<ConfigCondition>> CONFIG_CONDITION = CONDITION_CODECS.register("config", () -> ConfigCondition.CODEC);
 

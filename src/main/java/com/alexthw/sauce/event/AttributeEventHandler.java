@@ -1,20 +1,22 @@
 package com.alexthw.sauce.event;
 
-import com.alexthw.sauce.Sauce;
 import com.alexthw.sauce.registry.ModRegistry;
+import com.hollingsworth.arsnouveau.api.event.SpellCostCalcEvent;
 import com.hollingsworth.arsnouveau.api.event.SpellModifierEvent;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
+import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.LivingCaster;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.util.FakePlayer;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@EventBusSubscriber(modid = Sauce.MODID)
 public class AttributeEventHandler {
 
     static Map<SpellSchool, Holder<Attribute>> schoolToAttribute = new ConcurrentHashMap<>();
@@ -35,6 +37,17 @@ public class AttributeEventHandler {
         linkSchoolToAttribute(SpellSchools.ELEMENTAL, ModRegistry.ELEMENTAL_POWER);
     }
 
+    @SubscribeEvent
+    public static void discountSpell(final SpellCostCalcEvent event) {
+        if (event.context.getCaster() instanceof LivingCaster caster) {
+            if (caster.livingEntity instanceof Player player && !(player instanceof FakePlayer)) {
+                AttributeInstance perk = player.getAttribute(ModRegistry.MANA_DISCOUNT);
+                if (perk != null) {
+                    event.currentCost -= (int) perk.getValue();
+                }
+            }
+        }
+    }
 
     @SubscribeEvent
     public static void empowerBySchool(SpellModifierEvent event) {
