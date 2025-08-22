@@ -11,15 +11,8 @@ import org.jetbrains.annotations.NotNull;
  * A wrapper for an IFluidHandlerItem that allows it to be used as an IFluidHandler.
  * This is useful for when you want to use an ExtractedStack with a fluid handler.
  */
-public class WrappedExtractedItemHandler implements IFluidHandler {
-
-    IFluidHandlerItem cached;
-    ExtractedStack extractedStack;
-
-    public WrappedExtractedItemHandler(IFluidHandlerItem iFluidHandlerItem, ExtractedStack extractItem) {
-        this.cached = iFluidHandlerItem;
-        this.extractedStack = extractItem;
-    }
+public record WrappedExtractedItemHandler(IFluidHandlerItem cachedFluidHandler,
+                                          ExtractedStack extractedStack) implements IFluidHandler {
 
     /**
      * Returns the number of fluid storage units ("tanks") available
@@ -28,7 +21,7 @@ public class WrappedExtractedItemHandler implements IFluidHandler {
      */
     @Override
     public int getTanks() {
-        return cached.getTanks();
+        return cachedFluidHandler.getTanks();
     }
 
     /**
@@ -49,7 +42,7 @@ public class WrappedExtractedItemHandler implements IFluidHandler {
      */
     @Override
     public @NotNull FluidStack getFluidInTank(int tank) {
-        return cached.getFluidInTank(tank);
+        return cachedFluidHandler.getFluidInTank(tank);
     }
 
     /**
@@ -60,7 +53,7 @@ public class WrappedExtractedItemHandler implements IFluidHandler {
      */
     @Override
     public int getTankCapacity(int tank) {
-        return cached.getTankCapacity(tank);
+        return cachedFluidHandler.getTankCapacity(tank);
     }
 
     /**
@@ -74,7 +67,7 @@ public class WrappedExtractedItemHandler implements IFluidHandler {
      */
     @Override
     public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
-        return cached.isFluidValid(tank, stack);
+        return cachedFluidHandler.isFluidValid(tank, stack);
     }
 
     /**
@@ -86,7 +79,7 @@ public class WrappedExtractedItemHandler implements IFluidHandler {
      */
     @Override
     public int fill(@NotNull FluidStack resource, @NotNull FluidAction action) {
-        return cached.fill(resource, action);
+        return cachedFluidHandler.fill(resource, action);
     }
 
     /**
@@ -99,7 +92,7 @@ public class WrappedExtractedItemHandler implements IFluidHandler {
      */
     @Override
     public @NotNull FluidStack drain(@NotNull FluidStack resource, @NotNull FluidAction action) {
-        return cached.drain(resource, action);
+        return cachedFluidHandler.drain(resource, action);
     }
 
     /**
@@ -114,11 +107,11 @@ public class WrappedExtractedItemHandler implements IFluidHandler {
      */
     @Override
     public @NotNull FluidStack drain(int maxDrain, @NotNull FluidAction action) {
-        return cached.drain(maxDrain, action);
+        return cachedFluidHandler.drain(maxDrain, action);
     }
 
     public void updateContainer() {
-        extractedStack.stack = cached.getContainer();
+        extractedStack.stack = cachedFluidHandler.getContainer();
     }
 
 
