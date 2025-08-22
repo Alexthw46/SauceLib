@@ -21,7 +21,7 @@ import static com.alexthw.sauce.common.entity.EnthrallUtil.*;
 public class GenericEventHandler {
 
     @SubscribeEvent
-    public void onEnthrallTarget(LivingChangeTargetEvent event) {
+    public static void onEnthrallTarget(LivingChangeTargetEvent event) {
         if (!isEnthralled(event.getEntity())) return;
         UUID master = event.getEntity().getPersistentData().getUUID(THRALL_KEY);
         LivingEntity newTarget = null;
@@ -45,7 +45,7 @@ public class GenericEventHandler {
     }
 
     @SubscribeEvent
-    public void registerCustomAI(EntityJoinLevelEvent event) {
+    public static void registerCustomAI(EntityJoinLevelEvent event) {
         if (!Sauce.ENABLE_ENTHRALL) return;
         if (event.getEntity() instanceof LivingEntity && !event.getLevel().isClientSide) {
             if (event.getEntity() instanceof PathfinderMob mob && (mob.getNavigation() instanceof GroundPathNavigation || mob.getNavigation() instanceof FlyingPathNavigation)) {

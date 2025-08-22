@@ -1,0 +1,37 @@
+package com.alexthw.sauce.mixin;
+
+import com.alexthw.sauce.common.recipe.ElementalArmorRecipe;
+import com.alexthw.sauce.documentation.AEArmorEntry;
+import com.hollingsworth.arsnouveau.ArsNouveau;
+import com.hollingsworth.arsnouveau.api.documentation.SinglePageCtor;
+import com.hollingsworth.arsnouveau.setup.registry.Documentation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.level.Level;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.List;
+import java.util.Optional;
+
+@Mixin(Documentation.class)
+public class DocumentationMixin {
+
+    @Inject(method = "getRecipePages(Lnet/minecraft/resources/ResourceLocation;)Ljava/util/List;", at = @At("TAIL"))
+    private static void getRecipePages(ResourceLocation recipeId, CallbackInfoReturnable<List<SinglePageCtor>> cir) {
+        Level level = ArsNouveau.proxy.getClientWorld();
+        RecipeManager manager = level.getRecipeManager();
+        Optional<RecipeHolder<?>> recipe = manager.byKey(recipeId);
+
+        recipe.ifPresent(holder -> {
+            if (holder.value() instanceof ElementalArmorRecipe)
+                //noinspection unchecked
+                cir.getReturnValue().add(AEArmorEntry.create((RecipeHolder<ElementalArmorRecipe>) holder));
+        });
+    }
+
+
+}

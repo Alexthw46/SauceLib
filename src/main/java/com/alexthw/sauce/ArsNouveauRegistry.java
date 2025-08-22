@@ -5,6 +5,7 @@ import com.alexthw.sauce.common.glyphs.TestEffect;
 import com.alexthw.sauce.mixin.SpellSchoolAccessor;
 import com.alexthw.sauce.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.ArsNouveau;
+import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.api.documentation.DocAssets;
 import com.hollingsworth.arsnouveau.api.particle.configurations.IParticleMotionType;
 import com.hollingsworth.arsnouveau.api.particle.configurations.SimpleParticleMotionType;
@@ -41,6 +42,7 @@ public class ArsNouveauRegistry {
     public static void postInit() {
         registerSounds();
         ((SpellSchoolAccessor) SpellSchools.NECROMANCY).setDocIcon(ANIMA_ICON);
+        ArsNouveauAPI.getInstance().getEnchantingRecipeTypes().add(ModRegistry.ELEMENTAL_ARMOR_UP.get());
 
         LingerTimeline.TRAIL_OPTIONS.add(GRAVITY_FIELD_TYPE.get());
 
