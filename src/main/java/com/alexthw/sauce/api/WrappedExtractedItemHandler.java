@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
  * A wrapper for an IFluidHandlerItem that allows it to be used as an IFluidHandler.
  * This is useful for when you want to use an ExtractedStack with a fluid handler.
  */
-class WrappedExtractedItemHandler implements IFluidHandler {
+public class WrappedExtractedItemHandler implements IFluidHandler {
 
     IFluidHandlerItem cached;
     ExtractedStack extractedStack;
