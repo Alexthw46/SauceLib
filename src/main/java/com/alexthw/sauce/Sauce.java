@@ -1,6 +1,7 @@
 package com.alexthw.sauce;
 
-import com.alexthw.sauce.fluid.SourceFluid;
+import com.alexthw.sauce.common.fluid.SourceFluid;
+import com.alexthw.sauce.event.DamageEventHandler;
 import com.alexthw.sauce.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.common.lib.LibBlockNames;
@@ -40,7 +41,7 @@ public class Sauce {
         modEventBus.addListener(this::registerClientExtensions);
         modContainer.registerConfig(ModConfig.Type.SERVER, ExampleConfig.SERVER_SPEC);
         modContainer.registerConfig(ModConfig.Type.COMMON, ExampleConfig.COMMON_SPEC);
-        NeoForge.EVENT_BUS.register(EventHandler.class);
+        NeoForge.EVENT_BUS.register(DamageEventHandler.class);
         if (FMLEnvironment.dist.isClient()) {
             new SourceFluid.FluidTypeSourceClient(modEventBus);
         }

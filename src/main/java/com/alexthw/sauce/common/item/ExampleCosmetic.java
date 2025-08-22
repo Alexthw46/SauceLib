@@ -1,4 +1,4 @@
-package com.alexthw.sauce.item;
+package com.alexthw.sauce.common.item;
 
 import com.hollingsworth.arsnouveau.api.entity.IDecoratable;
 import com.hollingsworth.arsnouveau.api.item.ICosmeticItem;

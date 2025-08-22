@@ -1,4 +1,4 @@
-package com.alexthw.sauce.fluid;
+package com.alexthw.sauce.common.fluid;
 
 import com.alexthw.sauce.Sauce;
 import com.hollingsworth.arsnouveau.ArsNouveau;

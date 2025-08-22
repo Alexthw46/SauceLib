@@ -1,7 +1,7 @@
 package com.alexthw.sauce.datagen;
 
 import com.alexthw.sauce.Sauce;
-import com.alexthw.sauce.glyphs.TestEffect;
+import com.alexthw.sauce.common.glyphs.TestEffect;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.EnchantingApparatusRecipe;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.GlyphRecipe;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.ImbuementRecipe;

@@ -1,4 +1,4 @@
-package com.alexthw.sauce.fluid;
+package com.alexthw.sauce.common.fluid;
 
 import com.hollingsworth.arsnouveau.common.block.tile.ModdedTile;
 import net.minecraft.core.BlockPos;

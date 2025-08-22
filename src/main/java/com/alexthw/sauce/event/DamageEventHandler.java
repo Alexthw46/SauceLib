@@ -1,4 +1,4 @@
-package com.alexthw.sauce;
+package com.alexthw.sauce.event;
 
 import com.alexthw.sauce.api.item.IElementalArmor;
 import com.alexthw.sauce.api.item.ISchoolFocus;
@@ -8,12 +8,15 @@ import com.hollingsworth.arsnouveau.api.event.SpellDamageEvent;
 import com.hollingsworth.arsnouveau.api.spell.IFilter;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
+import com.hollingsworth.arsnouveau.common.entity.EnchantedFallingBlock;
+import com.hollingsworth.arsnouveau.common.entity.EntityEvokerFangs;
 import com.hollingsworth.arsnouveau.setup.registry.CapabilityRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -28,7 +31,7 @@ import java.util.Set;
 import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_AIR;
 import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_EARTH;
 
-public class EventHandler {
+public class DamageEventHandler {
 
     @SubscribeEvent
     public static void betterFilters(SpellDamageEvent.Pre event) {
@@ -87,6 +90,7 @@ public class EventHandler {
                 if (target instanceof Player player && bonusMap.getOrDefault(ELEMENTAL_EARTH, 0) == 4 && target.getEyePosition().y() < 20 && player.getFoodData().getFoodLevel() < 4) {
                     player.getFoodData().setFoodLevel(20);
                 }
+
                 //if you have 4 pieces of the air school, you get extra fall damage reduction
                 if (bonusMap.getOrDefault(ELEMENTAL_AIR, 0) == 4 && event.getSource().is(DamageTypeTags.IS_FALL)) {
                     bonusReduction += 5;
@@ -109,11 +113,19 @@ public class EventHandler {
     }
 
     @SubscribeEvent
-    public static void summonPowerup(LivingDamageEvent.Pre event) {
-        if (event.getSource().getEntity() instanceof ISummon summon && event.getEntity().level() instanceof ServerLevel) {
-            if (summon.getOwner() instanceof Player player) {
-                event.setNewDamage((float) (event.getNewDamage() + player.getAttributeValue(ModRegistry.SUMMON_POWER)));
+    public static void empowerEntitiesBySchool(LivingDamageEvent.Pre event) {
+        Entity sourceEntity = event.getSource().getEntity();
+        if (sourceEntity == null || !(sourceEntity.level() instanceof ServerLevel)) return;
+        switch (sourceEntity) {
+            case ISummon summon when summon.getOwner() instanceof Player player ->
+                    event.setNewDamage((float) (event.getNewDamage() + player.getAttributeValue(ModRegistry.SUMMON_POWER)));
+            case EnchantedFallingBlock fallingBlock when fallingBlock.getOwner() instanceof Player player ->
+                    event.setNewDamage((float) (event.getNewDamage() + player.getAttributeValue(ModRegistry.MANIPULATION_POWER)));
+            case EntityEvokerFangs fangs when fangs.getOwner() instanceof Player player ->
+                    event.setNewDamage((float) (event.getNewDamage() + player.getAttributeValue(ModRegistry.SUMMON_POWER)));
+            default -> {
             }
         }
     }
+
 }

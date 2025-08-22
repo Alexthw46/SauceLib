@@ -1,4 +1,4 @@
-package com.alexthw.sauce.recipe;
+package com.alexthw.sauce.common.recipe;
 
 import com.alexthw.sauce.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.util.PerkUtil;

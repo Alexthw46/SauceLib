@@ -1,7 +1,7 @@
 package com.alexthw.sauce;
 
 import com.alexthw.sauce.api.spell_style.GravityWellMotion;
-import com.alexthw.sauce.glyphs.TestEffect;
+import com.alexthw.sauce.common.glyphs.TestEffect;
 import com.alexthw.sauce.mixin.SpellSchoolAccessor;
 import com.alexthw.sauce.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.ArsNouveau;

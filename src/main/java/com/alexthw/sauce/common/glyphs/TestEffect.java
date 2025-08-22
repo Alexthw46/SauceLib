@@ -1,4 +1,4 @@
-package com.alexthw.sauce.glyphs;
+package com.alexthw.sauce.common.glyphs;
 
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
