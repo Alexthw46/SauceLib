@@ -4,6 +4,8 @@
   "compatibilityLevel": "JAVA_21",
   "refmap": "sauce.refmap.json",
   "mixins": [
+    "EntityMixin",
+    "LivingEntityMixin",
     "SpellSchoolAccessor"
   ],
   "minVersion": "0.8",

@@ -37,8 +37,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
-import static com.alexthw.sauce.Sauce.MODID;
-import static com.alexthw.sauce.Sauce.prefix;
+import static com.alexthw.sauce.Sauce.*;
 import static net.minecraft.core.registries.Registries.ATTRIBUTE;
 import static net.minecraft.core.registries.Registries.SOUND_EVENT;
 
@@ -84,12 +83,12 @@ public class ModRegistry {
         return SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(MODID, name));
     }
 
-    public static final DeferredHolder<FluidType, FluidType> SOURCE_FLUID_TYPE = FLUID_TYPES.register("source_fluid", SourceFluid::new);
+    public static final DeferredHolder<FluidType, FluidType> SOURCE_FLUID_TYPE = ENABLE_LIQUID_SOURCE ? FLUID_TYPES.register("source_fluid", SourceFluid::new) : null;
 
-    public static final DeferredHolder<Fluid, Fluid> SOURCE_FLUID = FLUIDS.register("source_fluid", () -> new BaseFlowingFluid.Source(fluidProperties()));
-    public static final DeferredHolder<Fluid, FlowingFluid> SOURCE_FLUID_FLOWING = FLUIDS.register("source_fluid_flowing", () -> new BaseFlowingFluid.Flowing(fluidProperties()));
-    public static final DeferredHolder<Block, LiquidBlock> SOURCE_FLUID_BLOCK = BLOCKS.register("source_fluid_block", () -> new LiquidBlock(SOURCE_FLUID_FLOWING.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.WATER).noCollission().strength(100.0F).noLootTable()));
-    public static final DeferredHolder<Item, Item> SOURCE_FLUID_BUCKET = ITEMS.register("source_fluid_bucket", () -> new BucketItem(SOURCE_FLUID.get(), basicItemProperties().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final DeferredHolder<Fluid, Fluid> SOURCE_FLUID = ENABLE_LIQUID_SOURCE ? FLUIDS.register("source_fluid", () -> new BaseFlowingFluid.Source(fluidProperties())) : null;
+    public static final DeferredHolder<Fluid, FlowingFluid> SOURCE_FLUID_FLOWING = ENABLE_LIQUID_SOURCE ? FLUIDS.register("source_fluid_flowing", () -> new BaseFlowingFluid.Flowing(fluidProperties())) : null;
+    public static final DeferredHolder<Block, LiquidBlock> SOURCE_FLUID_BLOCK = ENABLE_LIQUID_SOURCE ? BLOCKS.register("source_fluid_block", () -> new LiquidBlock(SOURCE_FLUID_FLOWING.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.WATER).noCollission().strength(100.0F).noLootTable())) : null;
+    public static final DeferredHolder<Item, Item> SOURCE_FLUID_BUCKET = ENABLE_LIQUID_SOURCE ? ITEMS.register("source_fluid_bucket", () -> new BucketItem(SOURCE_FLUID.get(), basicItemProperties().craftRemainder(Items.BUCKET).stacksTo(1))) : null;
 
     static Item.Properties basicItemProperties() {
         return new Item.Properties();

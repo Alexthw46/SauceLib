@@ -1,7 +1,9 @@
 package com.alexthw.sauce;
 
 import com.alexthw.sauce.common.fluid.SourceFluid;
+import com.alexthw.sauce.event.AttributeEventHandler;
 import com.alexthw.sauce.event.DamageEventHandler;
+import com.alexthw.sauce.event.GenericEventHandler;
 import com.alexthw.sauce.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.common.lib.LibBlockNames;
@@ -33,6 +35,9 @@ public class Sauce {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
+    public static boolean ENABLE_LIQUID_SOURCE = true;
+    public static boolean ENABLE_ENTHRALL = true;
+
     public Sauce(IEventBus modEventBus, ModContainer modContainer) {
         ModRegistry.registerRegistries(modEventBus);
         ArsNouveauRegistry.registerGlyphs();
@@ -42,7 +47,9 @@ public class Sauce {
         modContainer.registerConfig(ModConfig.Type.SERVER, ExampleConfig.SERVER_SPEC);
         modContainer.registerConfig(ModConfig.Type.COMMON, ExampleConfig.COMMON_SPEC);
         NeoForge.EVENT_BUS.register(DamageEventHandler.class);
-        if (FMLEnvironment.dist.isClient()) {
+        NeoForge.EVENT_BUS.register(AttributeEventHandler.class);
+        NeoForge.EVENT_BUS.register(GenericEventHandler.class);
+        if (FMLEnvironment.dist.isClient() && ENABLE_LIQUID_SOURCE) {
             new SourceFluid.FluidTypeSourceClient(modEventBus);
         }
     }
@@ -56,11 +63,13 @@ public class Sauce {
     }
 
     public void registerClientExtensions(RegisterClientExtensionsEvent event) {
+        if (!ENABLE_LIQUID_SOURCE) return;
         event.registerFluidType(SourceFluid.extension, ModRegistry.SOURCE_FLUID_TYPE);
     }
 
     private void setup(final FMLCommonSetupEvent ignoredEvent) {
         ArsNouveauRegistry.postInit();
+        if (!ENABLE_LIQUID_SOURCE) return;
         try {
             FluidInteractionRegistry.addInteraction(SOURCE_FLUID_TYPE.get(),
                     new FluidInteractionRegistry.InteractionInformation(
