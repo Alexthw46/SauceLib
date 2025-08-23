@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public interface IElementalArmor extends ISpellModifierItem {
+public interface IElementalArmor extends ISpellModifierItem, ISchoolProvider {
 
     Map<SpellSchool, TagKey<DamageType>> damageResistances = new ConcurrentHashMap<>();
 
@@ -40,8 +40,6 @@ public interface IElementalArmor extends ISpellModifierItem {
         }
         return sum;
     }
-
-    SpellSchool getSchool();
 
     String getTier();
 

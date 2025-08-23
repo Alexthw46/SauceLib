@@ -26,9 +26,9 @@ displayName = "Sauce Library" #mandatory
 # A file name (in the root of the mod JAR) containing a logo for display
 #logoFile="examplemod.png" #optional
 # A text field displayed in the mod UI
-credits="A bunch of Starbuncles" #optional
+credits = "A bunch of Starbuncle devs" #optional
 # A text field displayed in the mod UI
-authors="Alexthw & BaileyHoll for base example, whoever forgot to change this for the rest." #optional
+authors = "Alexthw." #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
 Library mod for Ars Nouveau addons, adding common code and functionality as well as liquified source for Ars Nouveau.
