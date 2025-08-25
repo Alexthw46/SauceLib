@@ -19,6 +19,7 @@ public class SauceLangProvider extends LanguageProvider {
         add("curios.modifiers.bangle", "While in bangle slot:");
         add("curios.identifier.bundle", "Bundle");
         add("curios.identifier.bangle", "Bangle");
+        add("jei.sauce.charm_charging", "Charm Charging");
         add("sauce.perk.summon_power", "Summoning Spell Power");
         add("sauce.perk.manipulation_power", "Manipulation Spell Power");
         add("sauce.perk.abjuration_power", "Abjuration Spell Power");
@@ -31,5 +32,6 @@ public class SauceLangProvider extends LanguageProvider {
         add("sauce.perk.spell_crit", "Spell Critical Strike Chance");
         add("sauce.perk.spell_crit_damage", "Spell Critical Damage Boost");
         add("sauce.perk.mana_discount", "Mana Cost Reduction");
+
     }
 }
