@@ -17,14 +17,13 @@ import net.minecraft.world.item.ItemStack;
 
 public class CharmChargingRecipeCategory implements IRecipeCategory<CharmChargingRecipe> {
     public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(Sauce.MODID, "charm_charging");
-    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Sauce.MODID, "textures/gui/charm_charging_gui.png");
 
     private final IDrawable background;
     private final IDrawable icon;
     private final Component title;
 
     public CharmChargingRecipeCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(TEXTURE, 0, 0, 120, 60);
+        this.background = helper.createBlankDrawable(120, 60);
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(net.minecraft.world.item.Items.ENCHANTED_BOOK));
         this.title = Component.translatable("jei.sauce.charm_charging");
     }

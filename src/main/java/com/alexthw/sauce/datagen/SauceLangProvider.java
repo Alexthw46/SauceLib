@@ -20,6 +20,8 @@ public class SauceLangProvider extends LanguageProvider {
         add("curios.identifier.bundle", "Bundle");
         add("curios.identifier.bangle", "Bangle");
         add("jei.sauce.charm_charging", "Charm Charging");
+        add("tooltip.sauce.charm.desc", "Rechargeable");
+        add("tooltip.sauce.charm.charges", "Charges %s / %s");
         add("sauce.perk.summon_power", "Summoning Spell Power");
         add("sauce.perk.manipulation_power", "Manipulation Spell Power");
         add("sauce.perk.abjuration_power", "Abjuration Spell Power");
