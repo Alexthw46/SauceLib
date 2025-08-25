@@ -64,7 +64,7 @@ public class AttributeEventHandler {
     private static void empowerSchool(SpellModifierEvent event, SpellSchool school) {
         Holder<Attribute> attribute = schoolToAttribute.get(school);
         if (attribute != null && event.caster != null) {
-            double power = event.caster.getAttributeValue(attribute);
+            double power = event.caster.getAttributes().hasAttribute(attribute) ? event.caster.getAttributeValue(attribute) : 0;
             if (power != 0) {
                 event.builder.addDamageModifier(power);
             }
