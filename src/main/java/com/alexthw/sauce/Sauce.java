@@ -37,15 +37,16 @@ public class Sauce {
 
     public static boolean ENABLE_LIQUID_SOURCE = true;
     public static boolean ENABLE_ENTHRALL = true;
+    public static boolean ENABLE_SPELL_CRIT = true;
 
     public Sauce(IEventBus modEventBus, ModContainer modContainer) {
         ModRegistry.registerRegistries(modEventBus);
-        ArsNouveauRegistry.registerGlyphs();
+        ArsNouveauRegistry.init();
         modEventBus.addListener(this::setup);
         modEventBus.addListener(this::doClientStuff);
         modEventBus.addListener(this::registerClientExtensions);
-        modContainer.registerConfig(ModConfig.Type.SERVER, ExampleConfig.SERVER_SPEC);
-        modContainer.registerConfig(ModConfig.Type.COMMON, ExampleConfig.COMMON_SPEC);
+        modContainer.registerConfig(ModConfig.Type.SERVER, SauceConfig.SERVER_SPEC);
+        modContainer.registerConfig(ModConfig.Type.COMMON, SauceConfig.COMMON_SPEC);
         NeoForge.EVENT_BUS.register(DamageEventHandler.class);
         NeoForge.EVENT_BUS.register(AttributeEventHandler.class);
         NeoForge.EVENT_BUS.register(GenericEventHandler.class);

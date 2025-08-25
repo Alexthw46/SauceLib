@@ -158,8 +158,18 @@ public class ModRegistry {
     public static final DeferredHolder<Attribute, Attribute> MANA_DISCOUNT = PerkAttributes.registerAttribute(
             "sauce.perk.mana_discount",
             (id) -> new RangedAttribute(id, 0.0, -Double.MAX_VALUE, Double.MAX_VALUE).setSyncable(true),
-            "c9d0e1f2-a3b4-4c93-8412-90abcdef0123");
-
+            "c9d0e1f2-a3b4-4c93-8412-90abcdef0123"
+    );
+    public static final DeferredHolder<Attribute, Attribute> SPELL_CRIT_DAMAGE = PerkAttributes.registerAttribute(
+            "sauce.perk.spell_crit_damage",
+            (id) -> new RangedAttribute(id, 25.0, -100.0, 1000.0).setSyncable(true),
+            "d0e1f2a3-b4c5-4d94-8512-0abcdef05678"
+    );
+    public static final DeferredHolder<Attribute, Attribute> SPELL_CRIT = PerkAttributes.registerAttribute(
+            "sauce.perk.spell_crit",
+            (id) -> new RangedAttribute(id, 1.0, 0.0, 100.0).setSyncable(true),
+            "d0e1f2a3-b4c5-4d94-8512-0abcdef01234"
+    );
 
     public static final DeferredHolder<RecipeType<?>, RecipeType<ElementalArmorRecipe>> ELEMENTAL_ARMOR_UP = RECIPES.register("armor_upgrade", () -> RecipeType.simple(prefix("armor_upgrade")));
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<ElementalArmorRecipe>> ELEMENTAL_ARMOR_UP_SERIALIZER = SERIALIZERS.register("armor_upgrade", ElementalArmorRecipe.Serializer::new);

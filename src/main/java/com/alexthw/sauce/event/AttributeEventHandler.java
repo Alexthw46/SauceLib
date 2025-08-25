@@ -1,7 +1,9 @@
 package com.alexthw.sauce.event;
 
+import com.alexthw.sauce.Sauce;
 import com.alexthw.sauce.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.event.SpellCostCalcEvent;
+import com.hollingsworth.arsnouveau.api.event.SpellDamageEvent;
 import com.hollingsworth.arsnouveau.api.event.SpellModifierEvent;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
@@ -44,6 +46,21 @@ public class AttributeEventHandler {
                 AttributeInstance perk = player.getAttribute(ModRegistry.MANA_DISCOUNT);
                 if (perk != null) {
                     event.currentCost -= (int) perk.getValue();
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void critChance(SpellDamageEvent.Pre pre) {
+        if (!Sauce.ENABLE_SPELL_CRIT) return;
+        if (pre.caster instanceof Player player && !(player instanceof FakePlayer)) {
+            AttributeInstance critChance = player.getAttribute(ModRegistry.SPELL_CRIT);
+            AttributeInstance critDamage = player.getAttribute(ModRegistry.SPELL_CRIT_DAMAGE);
+            if (critChance != null && critDamage != null) {
+                double chance = critChance.getValue();
+                if (chance > 0 && pre.caster.getRandom().nextDouble() < (chance / 100)) {
+                    pre.damage *= (float) (1 + critDamage.getValue() / 100.0);
                 }
             }
         }

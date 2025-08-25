@@ -1,7 +1,6 @@
 package com.alexthw.sauce.datagen;
 
 import com.alexthw.sauce.Sauce;
-import com.alexthw.sauce.common.glyphs.TestEffect;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.EnchantingApparatusRecipe;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.GlyphRecipe;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.ImbuementRecipe;
@@ -14,7 +13,6 @@ import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
@@ -39,8 +37,6 @@ public class ArsProviders {
         public void collectJsons(CachedOutput cache) {
 
             Path output = this.generator.getPackOutput().getOutputFolder();
-
-            recipes.add(get(TestEffect.INSTANCE).withItem(Items.DIRT));
 
             for (GlyphRecipe recipe : recipes) {
                 Path path = getScribeGlyphPath(output, recipe.output.getItem());

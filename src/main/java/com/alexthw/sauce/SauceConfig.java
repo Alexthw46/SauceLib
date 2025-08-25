@@ -8,7 +8,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
-public class ExampleConfig {
+public class SauceConfig {
     public static final Common COMMON;
     public static final ModConfigSpec COMMON_SPEC;
     public static final Server SERVER;
@@ -47,4 +47,5 @@ public class ExampleConfig {
     @SubscribeEvent
     public static void onReload(final ModConfigEvent.Reloading configEvent) {
     }
+
 }

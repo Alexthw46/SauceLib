@@ -1,5 +1,21 @@
 {
   "block.sauce.source_fluid_block": "Liquified Source",
+  "curios.identifier.bangle": "Bangle",
+  "curios.identifier.bundle": "Bundle",
+  "curios.modifiers.an_focus": "While in spell focus slot:",
+  "curios.modifiers.bangle": "While in bangle slot:",
   "fluid_type.sauce.source_fluid": "Liquefied Source",
-  "item.sauce.source_fluid_bucket": "Liquefied Source Bucket"
+  "item.sauce.source_fluid_bucket": "Liquefied Source Bucket",
+  "sauce.perk.abjuration_power": "Abjuration Spell Power",
+  "sauce.perk.air_power": "Air Spell Power",
+  "sauce.perk.earth_power": "Earth Spell Power",
+  "sauce.perk.elemental_power": "Elemental Spell Power",
+  "sauce.perk.fire_power": "Fire Spell Power",
+  "sauce.perk.mana_discount": "Mana Cost Reduction",
+  "sauce.perk.manipulation_power": "Manipulation Spell Power",
+  "sauce.perk.necromancy_power": "Necromancy Spell Power",
+  "sauce.perk.spell_crit": "Spell Critical Strike Chance",
+  "sauce.perk.spell_crit_damage": "Spell Critical Damage Boost",
+  "sauce.perk.summon_power": "Summoning Spell Power",
+  "sauce.perk.water_power": "Water Spell Power"
 }
