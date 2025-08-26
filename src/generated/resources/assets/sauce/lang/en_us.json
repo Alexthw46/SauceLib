@@ -19,6 +19,7 @@
   "sauce.perk.spell_crit_damage": "Spell Critical Damage Boost",
   "sauce.perk.summon_power": "Summoning Spell Power",
   "sauce.perk.water_power": "Water Spell Power",
+  "tooltip.sauce.caster_tome": "Mimics the abilities of a school focus.",
   "tooltip.sauce.charm.charges": "Charges %s / %s",
   "tooltip.sauce.charm.desc": "Rechargeable"
 }

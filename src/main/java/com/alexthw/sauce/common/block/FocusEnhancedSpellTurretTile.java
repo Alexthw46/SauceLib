@@ -24,6 +24,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
@@ -39,6 +40,11 @@ public class FocusEnhancedSpellTurretTile extends RotatingTurretTile {
 
     public FocusEnhancedSpellTurretTile(BlockPos pos, BlockState state) {
         this(ModRegistry.FOCUS_TURRET.get(), pos, state);
+    }
+
+    @Override
+    public @NotNull BlockEntityType<?> getType() {
+        return ModRegistry.FOCUS_TURRET.get();
     }
 
     public SpellSchool getSchool() {
