@@ -3,7 +3,6 @@ package com.alexthw.sauce.client;
 import com.alexthw.sauce.common.block.FocusEnhancedSpellTurretTile;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.client.renderer.item.GenericItemBlockRenderer;
-import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -28,17 +27,34 @@ public class FocusTurretRenderer extends GeoBlockRenderer<FocusEnhancedSpellTurr
     }
 
     @Override
-    public void actuallyRender(PoseStack poseStack, FocusEnhancedSpellTurretTile animatable, BakedGeoModel model, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int color) {
-        poseStack.pushPose();
-        Direction direction = animatable.getBlockState().getValue(BasicSpellTurret.FACING);
-        if (direction == Direction.UP) {
-            poseStack.translate(0.0, 0.5, -0.5);
-        } else if (direction == Direction.DOWN) {
-            poseStack.translate(0.0, 0.5, 0.5);
+    public void actuallyRender(PoseStack poseStack, FocusEnhancedSpellTurretTile tile, BakedGeoModel model, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int color) {
+        super.actuallyRender(poseStack, tile, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, color);
+        float rotationX = tile.rotationX;
+        float neededRotationX = tile.clientNeededX;
+        float rotationY = tile.rotationY;
+        float neededRotationY = tile.clientNeededY;
+        float step = (0.1f + partialTick);
+        if (rotationX != neededRotationX) {
+            float diff = neededRotationX - rotationX;
+            if (Math.abs(diff) < step) {
+                tile.setRotationX(neededRotationX);
+            } else {
+                tile.setRotationX(rotationX + diff * step);
+            }
         }
+        if (rotationY != neededRotationY) {
+            float diff = neededRotationY - rotationY;
+            if (Math.abs(diff) < step) {
+                tile.setRotationY(neededRotationY);
+            } else {
+                tile.setRotationY(rotationY + diff * step);
+            }
+        }
+    }
 
-        super.actuallyRender(poseStack, animatable, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, color);
-        poseStack.popPose();
+    //Disable geckolib automatic rotation based on blockstate
+    @Override
+    protected void rotateBlock(Direction facing, PoseStack poseStack) {
     }
 
     public static GenericItemBlockRenderer getISTER(String element) {
