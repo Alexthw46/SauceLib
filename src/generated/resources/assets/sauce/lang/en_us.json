@@ -6,6 +6,7 @@
   "curios.modifiers.bangle": "While in bangle slot:",
   "fluid_type.sauce.source_fluid": "Liquefied Source",
   "item.sauce.source_fluid_bucket": "Liquefied Source Bucket",
+  "jei.sauce.charm_charging": "Charm Charging",
   "sauce.perk.abjuration_power": "Abjuration Spell Power",
   "sauce.perk.air_power": "Air Spell Power",
   "sauce.perk.earth_power": "Earth Spell Power",
@@ -17,5 +18,7 @@
   "sauce.perk.spell_crit": "Spell Critical Strike Chance",
   "sauce.perk.spell_crit_damage": "Spell Critical Damage Boost",
   "sauce.perk.summon_power": "Summoning Spell Power",
-  "sauce.perk.water_power": "Water Spell Power"
+  "sauce.perk.water_power": "Water Spell Power",
+  "tooltip.sauce.charm.charges": "Charges %s / %s",
+  "tooltip.sauce.charm.desc": "Rechargeable"
 }
