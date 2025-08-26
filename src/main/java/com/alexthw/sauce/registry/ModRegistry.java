@@ -2,8 +2,8 @@ package com.alexthw.sauce.registry;
 
 import com.alexthw.sauce.api.item.components.CharmData;
 import com.alexthw.sauce.api.item.components.SchoolCasterTomeData;
+import com.alexthw.sauce.common.block.FocusEnhancedSpellTurretTile;
 import com.alexthw.sauce.common.fluid.SourceFluid;
-import com.alexthw.sauce.common.item.ExampleCosmetic;
 import com.alexthw.sauce.common.recipe.CharmChargingRecipe;
 import com.alexthw.sauce.common.recipe.ElementalArmorRecipe;
 import com.hollingsworth.arsnouveau.ArsNouveau;
@@ -25,11 +25,13 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.conditions.ICondition;
+import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -38,13 +40,13 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import static com.alexthw.sauce.Sauce.*;
-import static net.minecraft.core.registries.Registries.ATTRIBUTE;
-import static net.minecraft.core.registries.Registries.SOUND_EVENT;
+import static net.minecraft.core.registries.Registries.*;
 
 public class ModRegistry {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.createItems(MODID);
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.createBlocks(MODID);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(BLOCK_ENTITY_TYPE, MODID);
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(SOUND_EVENT, MODID);
     public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(ATTRIBUTE, MODID);
     private static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.FLUID_TYPES, MODID);
@@ -56,6 +58,7 @@ public class ModRegistry {
 
     public static void registerRegistries(IEventBus bus) {
         BLOCKS.register(bus);
+        BLOCK_ENTITIES.register(bus);
         ITEMS.register(bus);
         SOUNDS.register(bus);
         ATTRIBUTES.register(bus);
@@ -79,17 +82,15 @@ public class ModRegistry {
 
     }
 
-    public static final DeferredHolder<Item, ? extends Item> EXAMPLE;
-
     //this is an example of how to register a sound. You also need to add the sound to the sound.json file, referencing your ogg files, and a texture for the button under textures/sounds.
     //this example will use one of the existing sounds randomly
     public static DeferredHolder<SoundEvent, SoundEvent> EXAMPLE_FAMILY = SOUNDS.register("example_sound", () -> makeSound("example_sound"));
     public static SpellSound EXAMPLE_SPELL_SOUND = new SpellSound(ModRegistry.EXAMPLE_FAMILY, Component.literal("Example"), prefix("example_random_sound"));
 
-
-    static {
-        EXAMPLE = ITEMS.register("star_hat", () -> new ExampleCosmetic(new Item.Properties()));
-    }
+    /**
+     * Use {@link BlockEntityTypeAddBlocksEvent} to add blocks to the BlockEntityType after registry.
+     */
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends FocusEnhancedSpellTurretTile>> FOCUS_TURRET = BLOCK_ENTITIES.register("focus_turret", () -> BlockEntityType.Builder.of(FocusEnhancedSpellTurretTile::new).build(null));
 
     static SoundEvent makeSound(@NotNull String name) {
         return SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(MODID, name));
