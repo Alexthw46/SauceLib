@@ -1,11 +1,10 @@
-package com.alexthw.sauce.client;
+package com.alexthw.sauce.common.recipe.jei;
 
 import com.alexthw.sauce.Sauce;
 import com.alexthw.sauce.common.recipe.CharmChargingRecipe;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.drawable.IDrawableStatic;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -14,6 +13,7 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 public class CharmChargingRecipeCategory implements IRecipeCategory<CharmChargingRecipe> {
     public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(Sauce.MODID, "charm_charging");
@@ -29,12 +29,12 @@ public class CharmChargingRecipeCategory implements IRecipeCategory<CharmChargin
     }
 
     @Override
-    public RecipeType<CharmChargingRecipe> getRecipeType() {
-        return ModPlugin.CHARM_CHARGING_RECIPE_TYPE;
+    public @NotNull RecipeType<CharmChargingRecipe> getRecipeType() {
+        return JeiSaucePlugin.CHARM_CHARGING_RECIPE_TYPE;
     }
 
     @Override
-    public Component getTitle() {
+    public @NotNull Component getTitle() {
         return title;
     }
 
@@ -49,7 +49,7 @@ public class CharmChargingRecipeCategory implements IRecipeCategory<CharmChargin
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, CharmChargingRecipe recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, CharmChargingRecipe recipe, @NotNull IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 20, 20)
                 .addItemStack(new ItemStack(recipe.input()));
 

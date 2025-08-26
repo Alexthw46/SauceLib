@@ -59,7 +59,7 @@ public class ElementalUpgradeRecipeCategory extends EnchantingApparatusRecipeCat
 
     @Override
     public @NotNull RecipeType<ElementalArmorRecipe> getRecipeType() {
-        return JeiArsExtraPlugin.ELEMENTAL_ARMOR_TYPE;
+        return JeiSaucePlugin.ELEMENTAL_ARMOR_TYPE;
     }
 
     @Override
