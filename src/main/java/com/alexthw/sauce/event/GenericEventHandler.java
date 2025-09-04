@@ -16,7 +16,10 @@ import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
 
 import java.util.UUID;
 
-import static com.alexthw.sauce.common.entity.EnthrallUtil.*;
+import static com.alexthw.sauce.common.entity.EnthrallUtil.THRALL_KEY;
+import static com.alexthw.sauce.common.entity.EnthrallUtil.handleEnthralledTargeting;
+import static com.alexthw.sauce.common.entity.EnthrallUtil.isEnthralled;
+import static com.alexthw.sauce.common.entity.EnthrallUtil.isEnthralledBy;
 
 public class GenericEventHandler {
 
@@ -35,13 +38,13 @@ public class GenericEventHandler {
             newTarget = handleEnthralledTargeting(lastHurt, lastHurtBy, event.getEntity());
         }
 
-        if (newTarget == null) {
+        if (event.getEntity() instanceof NeutralMob angry) {
             // If the player has no last hurt mob, set the target to null.
-            event.setNewAboutToBeSetTarget(null);
-            if (event.getEntity() instanceof NeutralMob angry) angry.setRemainingPersistentAngerTime(0);
+            if (newTarget == null) angry.setRemainingPersistentAngerTime(0);
+            else angry.setPersistentAngerTarget(newTarget.getUUID());
+        }
 
-        } else if (event.getEntity() instanceof NeutralMob angry)
-            angry.setPersistentAngerTarget(newTarget.getUUID());
+        event.setNewAboutToBeSetTarget(newTarget);
     }
 
     @SubscribeEvent

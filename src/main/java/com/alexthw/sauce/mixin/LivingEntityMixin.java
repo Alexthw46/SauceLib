@@ -18,7 +18,7 @@ import static com.alexthw.sauce.common.entity.EnthrallUtil.THRALL_KEY;
 public class LivingEntityMixin {
 
     @Inject(method = "canAttack(Lnet/minecraft/world/entity/LivingEntity;)Z", at = @At("TAIL"), cancellable = true)
-    public void eidolonrepraised$canAttack(LivingEntity pTarget, CallbackInfoReturnable<Boolean> cir) {
+    public void sauce$canAttack(LivingEntity pTarget, CallbackInfoReturnable<Boolean> cir) {
         if (!Sauce.ENABLE_ENTHRALL) return;
         if (((Entity) (Object) this) instanceof LivingEntity living && pTarget != null) {
             if (EnthrallUtil.isEnthralled(living)) {
