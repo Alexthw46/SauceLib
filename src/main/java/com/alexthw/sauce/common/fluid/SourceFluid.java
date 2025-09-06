@@ -20,7 +20,9 @@ import net.neoforged.neoforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
-import static com.alexthw.sauce.registry.ModRegistry.*;
+import static com.alexthw.sauce.registry.ModRegistry.SOURCE_FLUID;
+import static com.alexthw.sauce.registry.ModRegistry.SOURCE_FLUID_BLOCK;
+import static com.alexthw.sauce.registry.ModRegistry.SOURCE_FLUID_FLOWING;
 
 public class SourceFluid extends FluidType {
     /**
@@ -91,11 +93,13 @@ public class SourceFluid extends FluidType {
         }
 
         public void clientSetup(FMLClientSetupEvent ignoredEvent) {
+            if (!Sauce.ENABLE_LIQUID_SOURCE) return;
             ItemBlockRenderTypes.setRenderLayer(SOURCE_FLUID.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(SOURCE_FLUID_FLOWING.get(), RenderType.translucent());
         }
 
         private void registerBlockColors(RegisterColorHandlersEvent.Block event) {
+            if (!Sauce.ENABLE_LIQUID_SOURCE) return;
             event.register((state, getter, pos, index) ->
             {
                 if (getter != null && pos != null) {

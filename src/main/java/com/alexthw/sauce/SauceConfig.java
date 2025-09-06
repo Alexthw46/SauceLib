@@ -13,6 +13,8 @@ public class SauceConfig {
     public static final ModConfigSpec COMMON_SPEC;
     public static final Server SERVER;
     public static final ModConfigSpec SERVER_SPEC;
+    public static final Startup STARTUP;
+    public static final ModConfigSpec STARTUP_SPEC;
 
     static {
 
@@ -24,6 +26,9 @@ public class SauceConfig {
         SERVER_SPEC = specClientPair.getRight();
         SERVER = specClientPair.getLeft();
 
+        final Pair<Startup, ModConfigSpec> specStartupPair = new ModConfigSpec.Builder().configure(Startup::new);
+        STARTUP_SPEC = specStartupPair.getRight();
+        STARTUP = specStartupPair.getLeft();
     }
 
     public static class Common {
@@ -34,18 +39,33 @@ public class SauceConfig {
     }
 
     public static class Server {
-
+        public static ModConfigSpec.BooleanValue ENABLE_SPELL_CRIT;
         public Server(ModConfigSpec.Builder builder) {
+            builder.comment("Enable Spell Critical Hits").push("spell_crit");
+            ENABLE_SPELL_CRIT = builder
+                    .comment("Enable Spell Critical Hits, if another mod doesn't enable it already.")
+                    .define("enable_spell_crit", true);
+            builder.pop();
+        }
+
+    }
+
+    public static class Startup {
+
+        public Startup(ModConfigSpec.Builder builder) {
+
         }
 
     }
 
     @SubscribeEvent
     public static void onLoad(final ModConfigEvent.Loading configEvent) {
+        Sauce.ENABLE_SPELL_CRIT = Sauce.ENABLE_SPELL_CRIT || SauceConfig.Server.ENABLE_SPELL_CRIT.get();
     }
 
     @SubscribeEvent
     public static void onReload(final ModConfigEvent.Reloading configEvent) {
+        Sauce.ENABLE_SPELL_CRIT = Sauce.ENABLE_SPELL_CRIT || SauceConfig.Server.ENABLE_SPELL_CRIT.get();
     }
 
 }

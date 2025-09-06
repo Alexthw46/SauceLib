@@ -47,10 +47,11 @@ public class Sauce {
         modEventBus.addListener(this::registerClientExtensions);
         modContainer.registerConfig(ModConfig.Type.SERVER, SauceConfig.SERVER_SPEC);
         modContainer.registerConfig(ModConfig.Type.COMMON, SauceConfig.COMMON_SPEC);
+        modContainer.registerConfig(ModConfig.Type.STARTUP, SauceConfig.STARTUP_SPEC);
         NeoForge.EVENT_BUS.register(DamageEventHandler.class);
         NeoForge.EVENT_BUS.register(AttributeEventHandler.class);
         NeoForge.EVENT_BUS.register(GenericEventHandler.class);
-        if (FMLEnvironment.dist.isClient() && ENABLE_LIQUID_SOURCE) {
+        if (FMLEnvironment.dist.isClient()) {
             new SourceFluid.FluidTypeSourceClient(modEventBus);
         }
     }

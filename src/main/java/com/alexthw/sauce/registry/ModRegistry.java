@@ -39,8 +39,12 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
-import static com.alexthw.sauce.Sauce.*;
-import static net.minecraft.core.registries.Registries.*;
+import static com.alexthw.sauce.Sauce.ENABLE_LIQUID_SOURCE;
+import static com.alexthw.sauce.Sauce.MODID;
+import static com.alexthw.sauce.Sauce.prefix;
+import static net.minecraft.core.registries.Registries.ATTRIBUTE;
+import static net.minecraft.core.registries.Registries.BLOCK_ENTITY_TYPE;
+import static net.minecraft.core.registries.Registries.SOUND_EVENT;
 
 public class ModRegistry {
 
@@ -85,11 +89,12 @@ public class ModRegistry {
     //this is an example of how to register a sound. You also need to add the sound to the sound.json file, referencing your ogg files, and a texture for the button under textures/sounds.
     //this example will use one of the existing sounds randomly
     public static DeferredHolder<SoundEvent, SoundEvent> EXAMPLE_FAMILY = SOUNDS.register("example_sound", () -> makeSound("example_sound"));
-    public static SpellSound EXAMPLE_SPELL_SOUND = new SpellSound(ModRegistry.EXAMPLE_FAMILY, Component.literal("Example"), prefix("example_random_sound"));
+    public static SpellSound EXAMPLE_SPELL_SOUND = new SpellSound(ModRegistry.EXAMPLE_FAMILY, Component.literal("Random"), prefix("example_random_sound"));
 
     /**
      * Use {@link BlockEntityTypeAddBlocksEvent} to add blocks to the BlockEntityType after registry.
      */
+    @SuppressWarnings("DataFlowIssue")
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends FocusEnhancedSpellTurretTile>> FOCUS_TURRET = BLOCK_ENTITIES.register("focus_turret", () -> BlockEntityType.Builder.of(FocusEnhancedSpellTurretTile::new).build(null));
 
     static SoundEvent makeSound(@NotNull String name) {
@@ -111,50 +116,95 @@ public class ModRegistry {
         return new BaseFlowingFluid.Properties(SOURCE_FLUID_TYPE, SOURCE_FLUID, SOURCE_FLUID_FLOWING).block(SOURCE_FLUID_BLOCK).bucket(SOURCE_FLUID_BUCKET);
     }
 
-    public static final DeferredHolder<Attribute, Attribute> SUMMON_POWER = PerkAttributes.registerAttribute("sauce.perk.summon_power",
+    public static final DeferredHolder<Attribute, Attribute> SUMMON_POWER = PerkAttributes.registerAttribute(
+            "sauce.perk.summon_power",
             (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
             "ee3a4090-c5f5-4a26-a9c2-6044e9e609de"
     );
-
+    public static final DeferredHolder<Attribute, Attribute> CONJURATION_RESISTANCE = PerkAttributes.registerAttribute(
+            "sauce.perk.summon_resistance",
+            (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
+            "f1a2b3c4-d5e6-4f17-9a2b-1234567890aa"
+    );
     public static final DeferredHolder<Attribute, Attribute> ABJURATION_POWER = PerkAttributes.registerAttribute(
             "sauce.perk.abjuration_power",
             (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
             "a1b2c3d4-e5f6-4a1b-9c8d-1234567890ab"
+    );
+    public static final DeferredHolder<Attribute, Attribute> ABJURATION_RESISTANCE = PerkAttributes.registerAttribute(
+            "sauce.perk.abjuration_resistance",
+            (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
+            "b2c3d4e5-f6a1-4b9c-8d12-1234567890ac"
     );
     public static final DeferredHolder<Attribute, Attribute> NECROMANCY_POWER = PerkAttributes.registerAttribute(
             "sauce.perk.necromancy_power",
             (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
             "b2c3d4e5-f6a1-4b9c-8d12-234567890abc"
     );
+    public static final DeferredHolder<Attribute, Attribute> NECROMANCY_RESISTANCE = PerkAttributes.registerAttribute(
+            "sauce.perk.necromancy_resistance",
+            (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
+            "c3d4e5f6-a1b2-4c9d-8e12-234567890abd"
+    );
     public static final DeferredHolder<Attribute, Attribute> MANIPULATION_POWER = PerkAttributes.registerAttribute(
             "sauce.perk.manipulation_power",
             (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
             "c3d4e5f6-a1b2-4c9d-8e12-34567890abcd"
+    );
+    public static final DeferredHolder<Attribute, Attribute> MANIPULATION_RESISTANCE = PerkAttributes.registerAttribute(
+            "sauce.perk.manipulation_resistance",
+            (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
+            "d4e5f6a1-b2c3-4d9e-8f12-34567890abce"
     );
     public static final DeferredHolder<Attribute, Attribute> AIR_POWER = PerkAttributes.registerAttribute(
             "sauce.perk.air_power",
             (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
             "d4e5f6a1-b2c3-4d9e-8f12-4567890abcde"
     );
+    public static final DeferredHolder<Attribute, Attribute> AIR_RESISTANCE = PerkAttributes.registerAttribute(
+            "sauce.perk.air_resistance",
+            (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
+            "e5f6a1b2-c3d4-4e9f-8012-4567890abcef"
+    );
     public static final DeferredHolder<Attribute, Attribute> EARTH_POWER = PerkAttributes.registerAttribute(
             "sauce.perk.earth_power",
             (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
             "e5f6a1b2-c3d4-4e9f-8012-567890abcdef"
+    );
+    public static final DeferredHolder<Attribute, Attribute> EARTH_RESISTANCE = PerkAttributes.registerAttribute(
+            "sauce.perk.earth_resistance",
+            (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
+            "f6a1b2c3-d4e5-4f90-8112-567890abcdf0"
     );
     public static final DeferredHolder<Attribute, Attribute> FIRE_POWER = PerkAttributes.registerAttribute(
             "sauce.perk.fire_power",
             (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
             "f6a1b2c3-d4e5-4f90-8112-67890abcdef0"
     );
+    public static final DeferredHolder<Attribute, Attribute> FIRE_RESISTANCE = PerkAttributes.registerAttribute(
+            "sauce.perk.fire_resistance",
+            (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
+            "a7b8c9d0-e1f2-4a91-8212-67890abcdef1"
+    );
     public static final DeferredHolder<Attribute, Attribute> WATER_POWER = PerkAttributes.registerAttribute(
             "sauce.perk.water_power",
             (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
             "a7b8c9d0-e1f2-4a91-8212-7890abcdef01"
     );
+    public static final DeferredHolder<Attribute, Attribute> WATER_RESISTANCE = PerkAttributes.registerAttribute(
+            "sauce.perk.water_resistance",
+            (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
+            "b8c9d0e1-f2a3-4b92-8312-7890abcdef02"
+    );
     public static final DeferredHolder<Attribute, Attribute> ELEMENTAL_POWER = PerkAttributes.registerAttribute(
             "sauce.perk.elemental_power",
             (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
             "b8c9d0e1-f2a3-4b92-8312-890abcdef012"
+    );
+    public static final DeferredHolder<Attribute, Attribute> ELEMENTAL_RESISTANCE = PerkAttributes.registerAttribute(
+            "sauce.perk.elemental_resistance",
+            (id) -> new RangedAttribute(id, 0, -10000, 10000.0D),
+            "c9d0e1f2-a3b4-4c93-8412-890abc890013"
     );
     public static final DeferredHolder<Attribute, Attribute> MANA_DISCOUNT = PerkAttributes.registerAttribute(
             "sauce.perk.mana_discount",
@@ -186,4 +236,5 @@ public class ModRegistry {
     public static Item.Properties defaultItemProperties() {
         return new Item.Properties();
     }
+
 }

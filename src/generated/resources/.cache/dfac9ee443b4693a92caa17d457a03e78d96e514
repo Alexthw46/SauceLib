@@ -1,0 +1,5 @@
+// 1.21.1	2025-09-06T12:32:04.4368502	Tags for minecraft:damage_type mod id sauce
+06cf7471d2b34f8f4e71a9221b97b356b33ca298 data/sauce/tags/damage_type/air_damage.json
+70806d01b1110d02b7d62948073a0e5c8794e177 data/sauce/tags/damage_type/earth_damage.json
+5f02acbda2500df496f5763de2937e982622c494 data/sauce/tags/damage_type/fire_damage.json
+0d3a7ecf8efe540eac512b2dbf9761cd51a9633e data/sauce/tags/damage_type/water_damage.json

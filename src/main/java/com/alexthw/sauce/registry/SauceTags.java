@@ -1,6 +1,8 @@
 package com.alexthw.sauce.registry;
 
 import com.hollingsworth.arsnouveau.ArsNouveau;
+import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
+import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -11,6 +13,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import top.theillusivec4.curios.api.CuriosApi;
+
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static com.alexthw.sauce.Sauce.prefix;
 
@@ -38,5 +44,12 @@ public class SauceTags {
     public static TagKey<DamageType> EARTH_DAMAGE = TagKey.create(Registries.DAMAGE_TYPE, prefix("earth_damage"));
     public static TagKey<DamageType> AIR_DAMAGE = TagKey.create(Registries.DAMAGE_TYPE, prefix("air_damage"));
 
+    public static final Map<SpellSchool, List<TagKey<DamageType>>> SCHOOL_TO_DAMAGE_TYPES = new ConcurrentHashMap<>(Map.of(
+            SpellSchools.ELEMENTAL_FIRE, List.of(FIRE_DAMAGE),
+            SpellSchools.ELEMENTAL_WATER, List.of(WATER_DAMAGE),
+            SpellSchools.ELEMENTAL_EARTH, List.of(EARTH_DAMAGE),
+            SpellSchools.ELEMENTAL_AIR, List.of(AIR_DAMAGE),
+            SpellSchools.ELEMENTAL, List.of(FIRE_DAMAGE, WATER_DAMAGE, EARTH_DAMAGE, AIR_DAMAGE)
+    ));
 
 }

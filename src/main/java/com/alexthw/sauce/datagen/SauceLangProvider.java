@@ -32,6 +32,15 @@ public class SauceLangProvider extends LanguageProvider {
         add("sauce.perk.fire_power", "Fire Spell Power");
         add("sauce.perk.water_power", "Water Spell Power");
         add("sauce.perk.elemental_power", "Elemental Spell Power");
+        add("sauce.perk.summon_resistance", "Conjuration Spell Resistance");
+        add("sauce.perk.manipulation_resistance", "Manipulation Spell Resistance");
+        add("sauce.perk.abjuration_resistance", "Abjuration Spell Resistance");
+        add("sauce.perk.necromancy_resistance", "Necromancy Spell Resistance");
+        add("sauce.perk.air_resistance", "Air Spell Resistance");
+        add("sauce.perk.earth_resistance", "Earth Spell Resistance");
+        add("sauce.perk.fire_resistance", "Fire Spell Resistance");
+        add("sauce.perk.water_resistance", "Water Spell Resistance");
+        add("sauce.perk.elemental_resistance", "Elemental Spell Resistance");
         add("sauce.perk.spell_crit", "Spell Critical Strike Chance");
         add("sauce.perk.spell_crit_damage", "Spell Critical Damage Boost");
         add("sauce.perk.mana_discount", "Mana Cost Reduction");
