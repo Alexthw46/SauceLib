@@ -3,18 +3,24 @@ package com.alexthw.sauce.common.recipe.jei;
 import com.alexthw.sauce.Sauce;
 import com.alexthw.sauce.common.recipe.CharmChargingRecipe;
 import com.alexthw.sauce.common.recipe.ElementalArmorRecipe;
+import com.alexthw.sauce.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.neoforge.NeoForgeTypes;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.runtime.IIngredientManager;
+import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.neoforged.neoforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -65,6 +71,15 @@ public class JeiSaucePlugin implements IModPlugin {
         registry.addRecipeCatalyst(new ItemStack(BlockRegistry.IMBUEMENT_BLOCK), CHARM_CHARGING_RECIPE_TYPE);
     }
 
+
+    @Override
+    public void onRuntimeAvailable(@NotNull IJeiRuntime jeiRuntime) {
+        if (!Sauce.SHOW_LIQUID_SOURCE) {
+            IIngredientManager ingredientManager = jeiRuntime.getJeiHelpers().getIngredientManager();
+            ingredientManager.removeIngredientsAtRuntime(VanillaTypes.ITEM_STACK, List.of(ModRegistry.SOURCE_FLUID_BUCKET.get().getDefaultInstance()));
+            ingredientManager.removeIngredientsAtRuntime(NeoForgeTypes.FLUID_STACK, List.of(new FluidStack(ModRegistry.SOURCE_FLUID.get(), 1000)));
+        }
+    }
 }
 
 

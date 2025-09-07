@@ -7,6 +7,7 @@ import com.alexthw.sauce.event.GenericEventHandler;
 import com.alexthw.sauce.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.common.lib.LibBlockNames;
+import com.hollingsworth.arsnouveau.setup.registry.CreativeTabRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
@@ -20,6 +21,7 @@ import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -35,7 +37,7 @@ public class Sauce {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public static boolean ENABLE_LIQUID_SOURCE = !FMLEnvironment.production;
+    public static boolean SHOW_LIQUID_SOURCE = true;
     public static boolean ENABLE_ENTHRALL = !FMLEnvironment.production;
     public static boolean ENABLE_SPELL_CRIT = !FMLEnvironment.production;
 
@@ -45,6 +47,7 @@ public class Sauce {
         modEventBus.addListener(this::setup);
         modEventBus.addListener(this::doClientStuff);
         modEventBus.addListener(this::registerClientExtensions);
+        modEventBus.addListener(this::addToTab);
         modContainer.registerConfig(ModConfig.Type.SERVER, SauceConfig.SERVER_SPEC);
         modContainer.registerConfig(ModConfig.Type.COMMON, SauceConfig.COMMON_SPEC);
         modContainer.registerConfig(ModConfig.Type.STARTUP, SauceConfig.STARTUP_SPEC);
@@ -65,13 +68,11 @@ public class Sauce {
     }
 
     public void registerClientExtensions(RegisterClientExtensionsEvent event) {
-        if (!ENABLE_LIQUID_SOURCE) return;
         event.registerFluidType(SourceFluid.extension, ModRegistry.SOURCE_FLUID_TYPE);
     }
 
     private void setup(final FMLCommonSetupEvent ignoredEvent) {
         ArsNouveauRegistry.postInit();
-        if (!ENABLE_LIQUID_SOURCE) return;
         try {
             FluidInteractionRegistry.addInteraction(SOURCE_FLUID_TYPE.get(),
                     new FluidInteractionRegistry.InteractionInformation(
@@ -85,6 +86,12 @@ public class Sauce {
                             Objects.requireNonNull(BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, LibBlockNames.SOURCESTONE))).defaultBlockState()));
         } catch (NullPointerException npe) {
             System.out.println("Sourcestone not found, skipping interaction.");
+        }
+    }
+
+    public void addToTab(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTab() == CreativeTabRegistry.BLOCKS.get() && SHOW_LIQUID_SOURCE) {
+            event.accept(ModRegistry.SOURCE_FLUID_BUCKET.get());
         }
     }
 
