@@ -37,7 +37,7 @@ public class Sauce {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public static boolean SHOW_LIQUID_SOURCE = true;
+    public static boolean SHOW_LIQUID_SOURCE = !FMLEnvironment.production;
     public static boolean ENABLE_ENTHRALL = !FMLEnvironment.production;
     public static boolean ENABLE_SPELL_CRIT = !FMLEnvironment.production;
 
