@@ -85,9 +85,13 @@ public class AttributeEventHandler {
                 List<TagKey<DamageType>> tags = SauceTags.SCHOOL_TO_DAMAGE_TYPES.getOrDefault(school, List.of());
                 if (tags.stream().anyMatch(tag -> pre.damageSource.is(tag))) {
                     schools.add(school);
-                    schools.addAll(school.getSubSchools());
+                    // Added to support Elemancy mixed schools
+                    // Avoids including all elemental schools, since all elemental glyphs have ELEMENTAL as one of the schools
+                    if (school != SpellSchools.ELEMENTAL)
+                        schools.addAll(school.getSubSchools());
                 }
             }
+            // Translate the schools into attributes and apply the resistances
             for (SpellSchool school : schools) {
                 Holder<Attribute> attribute = schoolToDefenseAttribute.get(school);
                 if (attribute != null) {
@@ -100,7 +104,6 @@ public class AttributeEventHandler {
                     }
                 }
             }
-
         }
     }
 
@@ -110,9 +113,10 @@ public class AttributeEventHandler {
         if (schools.isEmpty()) return;
         for (SpellSchool school : schools) {
             empowerSchool(event, school);
-            for (SpellSchool subSchool : school.getSubSchools()) {
-                empowerSchool(event, subSchool);
-            }
+            if (school != SpellSchools.ELEMENTAL)
+                for (SpellSchool subSchool : school.getSubSchools()) {
+                    empowerSchool(event, subSchool);
+                }
         }
     }
 
