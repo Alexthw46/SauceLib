@@ -99,7 +99,7 @@ public class AttributeEventHandler {
                     if (attrInstance != null) {
                         double resistance = attrInstance.getValue();
                         if (resistance != 0) {
-                            pre.damage *= (float) (1 - resistance / 100.0);
+                            pre.damage *= (float) Math.pow(2.0, -resistance / 100.0);
                         }
                     }
                 }

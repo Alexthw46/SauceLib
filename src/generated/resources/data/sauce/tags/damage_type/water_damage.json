@@ -1,8 +1,8 @@
 {
   "values": [
-    "#minecraft:is_freezing",
-    "#minecraft:is_drowning",
     "minecraft:trident",
-    "minecraft:magic"
+    "minecraft:magic",
+    "#minecraft:is_freezing",
+    "#minecraft:is_drowning"
   ]
 }

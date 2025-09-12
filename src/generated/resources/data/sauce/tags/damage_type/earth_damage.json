@@ -7,6 +7,14 @@
     "minecraft:falling_anvil",
     "minecraft:sting",
     "minecraft:sweet_berry_bush",
-    "#neoforge:is_poison"
+    "#neoforge:is_poison",
+    {
+      "id": "ars_nouveau:crush",
+      "required": false
+    },
+    {
+      "id": "ars_nouveau:sourceberry_bush",
+      "required": false
+    }
   ]
 }
