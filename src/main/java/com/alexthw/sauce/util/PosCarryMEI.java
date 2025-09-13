@@ -6,8 +6,8 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PosCarryMEI extends MobEffectInstance {
 
@@ -15,14 +15,14 @@ public class PosCarryMEI extends MobEffectInstance {
         return origin;
     }
 
-    public List<BlockPos> getAllOrigins() {
+    public Set<BlockPos> getAllOrigins() {
         return origins;
     }
 
     @Deprecated
     BlockPos origin;
 
-    List<BlockPos> origins = new ArrayList<>();
+    Set<BlockPos> origins = new HashSet<>();
 
     public PosCarryMEI(Holder<MobEffect> pEffect, int duration, int amp, boolean ambient, boolean show, BlockPos origin) {
         super(pEffect, duration, amp, ambient, show);
