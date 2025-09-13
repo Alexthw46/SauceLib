@@ -122,6 +122,17 @@ public class DamageEventHandler {
                         }
                     }
                 }
+            } else if (dealer instanceof EnchantedFallingBlock) {
+                Holder<Attribute> attribute = ModRegistry.MANIPULATION_RESISTANCE;
+                if (attribute != null) {
+                    AttributeInstance attrInstance = target.getAttribute(attribute);
+                    if (attrInstance != null) {
+                        double resistance = attrInstance.getValue();
+                        if (resistance != 0) {
+                            event.setAmount(event.getAmount() * (float) Math.pow(2.0, -resistance / 100.0));
+                        }
+                    }
+                }
             }
 
 

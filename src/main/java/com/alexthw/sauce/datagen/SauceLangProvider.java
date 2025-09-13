@@ -24,26 +24,46 @@ public class SauceLangProvider extends LanguageProvider {
         add("tooltip.sauce.charm.charges", "Charges %s / %s");
         add("tooltip.sauce.caster_tome", "Mimics the abilities of a school focus.");
         add("sauce.perk.summon_power", "Summoning Spell Power");
+        add("sauce.perk.summon_power.desc", "Increases the power of summoning spells.");
         add("sauce.perk.manipulation_power", "Manipulation Spell Power");
+        add("sauce.perk.manipulation_power.desc", "Increases the power of manipulation spells.");
         add("sauce.perk.abjuration_power", "Abjuration Spell Power");
+        add("sauce.perk.abjuration_power.desc", "Increases the power of abjuration spells.");
         add("sauce.perk.necromancy_power", "Necromancy Spell Power");
+        add("sauce.perk.necromancy_power.desc", "Increases the power of anima spells.");
         add("sauce.perk.air_power", "Air Spell Power");
+        add("sauce.perk.air_power.desc", "Increases the power of air spells.");
         add("sauce.perk.earth_power", "Earth Spell Power");
+        add("sauce.perk.earth_power.desc", "Increases the power of earth spells.");
         add("sauce.perk.fire_power", "Fire Spell Power");
+        add("sauce.perk.fire_power.desc", "Increases the power of fire spells.");
         add("sauce.perk.water_power", "Water Spell Power");
+        add("sauce.perk.water_power.desc", "Increases the power of water spells.");
         add("sauce.perk.elemental_power", "Elemental Spell Power");
+        add("sauce.perk.elemental_power.desc", "Increases the power of elemental spells.");
         add("sauce.perk.summon_resistance", "Conjuration Spell Resistance");
+        add("sauce.perk.summon_resistance.desc", "Reduces damage taken from summoning spells and summons.");
         add("sauce.perk.manipulation_resistance", "Manipulation Spell Resistance");
+        add("sauce.perk.manipulation_resistance.desc", "Reduces damage taken from manipulation spells and blockshaping.");
         add("sauce.perk.abjuration_resistance", "Abjuration Spell Resistance");
+        add("sauce.perk.abjuration_resistance.desc", "Reduces damage taken from abjuration spells.");
         add("sauce.perk.necromancy_resistance", "Necromancy Spell Resistance");
+        add("sauce.perk.necromancy_resistance.desc", "Reduces damage taken from anima spells.");
         add("sauce.perk.air_resistance", "Air Spell Resistance");
+        add("sauce.perk.air_resistance.desc", "Reduces damage taken from air spells.");
         add("sauce.perk.earth_resistance", "Earth Spell Resistance");
+        add("sauce.perk.earth_resistance.desc", "Reduces damage taken from earth spells.");
         add("sauce.perk.fire_resistance", "Fire Spell Resistance");
+        add("sauce.perk.fire_resistance.desc", "Reduces damage taken from fire spells.");
         add("sauce.perk.water_resistance", "Water Spell Resistance");
+        add("sauce.perk.water_resistance.desc", "Reduces damage taken from water spells.");
         add("sauce.perk.elemental_resistance", "Elemental Spell Resistance");
+        add("sauce.perk.elemental_resistance.desc", "Reduces damage taken from elemental spells.");
         add("sauce.perk.spell_crit", "Spell Critical Strike Chance");
+        add("sauce.perk.spell_crit.desc", "Chance of critical strikes with spells.");
         add("sauce.perk.spell_crit_damage", "Spell Critical Damage Boost");
+        add("sauce.perk.spell_crit_damage.desc", "Damage increase of spell critical strikes.");
         add("sauce.perk.mana_discount", "Mana Cost Reduction");
-
+        add("sauce.perk.mana_discount.desc", "Reduces the mana cost of spells.");
     }
 }
