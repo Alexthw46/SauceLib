@@ -12,11 +12,14 @@ import com.hollingsworth.arsnouveau.common.entity.EnchantedFallingBlock;
 import com.hollingsworth.arsnouveau.common.entity.EntityEvokerFangs;
 import com.hollingsworth.arsnouveau.setup.registry.CapabilityRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -63,15 +66,16 @@ public class DamageEventHandler {
 
         boolean not_bypassEnchants = !event.getSource().is(DamageTypeTags.BYPASSES_ENCHANTMENTS);
 
-        if (target instanceof Player) {
+        if (target instanceof Player player) {
 
             Set<SpellSchool> schools = ISchoolFocus.getFociSchools(target);
 
-            if (not_bypassEnchants) {
-                //reduce damage from elytra if you have air focus
-                if (event.getSource().is(DamageTypes.FLY_INTO_WALL) && schools.contains(ELEMENTAL_AIR)) {
-                    event.setAmount(event.getAmount() * .1F);
-                }
+            //reduce damage from elytra if you have air focus
+            if (event.getSource().is(DamageTypes.FLY_INTO_WALL) && schools.contains(ELEMENTAL_AIR)) {
+                event.setAmount(event.getAmount() * .1F);
+            }
+
+            if (not_bypassEnchants && !bonusMap.isEmpty()) {
 
                 //if you have 4 pieces of the fire school, fire is removed. Apply the fire focus buff if you have it, since it wouldn't detect the fire otherwise
                 if (bonusMap.getOrDefault(SpellSchools.ELEMENTAL_FIRE, 0) == 4 && event.getSource().is(DamageTypeTags.IS_FIRE)) {
@@ -86,8 +90,9 @@ public class DamageEventHandler {
                     target.setAirSupply(target.getMaxAirSupply());
                     bonusReduction += 5;
                 }
+
                 //if you have 4 pieces of the earth school, you get extra food when you are low
-                if (target instanceof Player player && bonusMap.getOrDefault(ELEMENTAL_EARTH, 0) == 4 && target.getEyePosition().y() < 20 && player.getFoodData().getFoodLevel() < 4) {
+                if (bonusMap.getOrDefault(ELEMENTAL_EARTH, 0) == 4 && target.getEyePosition().y() < 20 && player.getFoodData().getFoodLevel() < 4) {
                     player.getFoodData().setFoodLevel(20);
                 }
 
@@ -104,8 +109,22 @@ public class DamageEventHandler {
                         event.getEntity().addEffect(new MobEffectInstance(ModPotions.MANA_REGEN_EFFECT, 200, bonusReduction / 2));
                     }
                 }
-
             }
+
+            if (dealer instanceof ISummon) {
+                Holder<Attribute> attribute = ModRegistry.CONJURATION_RESISTANCE;
+                if (attribute != null) {
+                    AttributeInstance attrInstance = target.getAttribute(attribute);
+                    if (attrInstance != null) {
+                        double resistance = attrInstance.getValue();
+                        if (resistance != 0) {
+                            event.setAmount(event.getAmount() * (float) Math.pow(2.0, -resistance / 100.0));
+                        }
+                    }
+                }
+            }
+
+
         }
 
         if (bonusReduction > 0 && not_bypassEnchants)
