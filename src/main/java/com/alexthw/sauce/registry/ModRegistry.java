@@ -205,7 +205,7 @@ public class ModRegistry {
     );
     public static final DeferredHolder<Attribute, Attribute> MANA_DISCOUNT = PerkAttributes.registerAttribute(
             "sauce.perk.mana_discount",
-            (id) -> new RangedAttribute(id, 0.0, -Double.MAX_VALUE, Double.MAX_VALUE).setSyncable(true),
+            (id) -> new RangedAttribute(id, 0.0, -1000000, 1000000).setSyncable(true),
             "c9d0e1f2-a3b4-4c93-8412-90abcdef0123"
     );
     public static final DeferredHolder<Attribute, Attribute> SPELL_CRIT_DAMAGE = PerkAttributes.registerAttribute(
