@@ -65,5 +65,7 @@ public class SauceLangProvider extends LanguageProvider {
         add("sauce.perk.spell_crit_damage.desc", "Damage increase of spell critical strikes.");
         add("sauce.perk.mana_discount", "Mana Cost Reduction");
         add("sauce.perk.mana_discount.desc", "Reduces the mana cost of spells.");
+
+        add("ars_nouveau.tier.prerequired", "Requires Tier %s upgrade");
     }
 }

@@ -65,7 +65,7 @@ public class ElementalUpgradeRecipeCategory extends EnchantingApparatusRecipeCat
     @Override
     public void draw(ElementalArmorRecipe recipe, @NotNull IRecipeSlotsView slotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         Font renderer = Minecraft.getInstance().font;
-        guiGraphics.drawString(renderer, Component.translatable("ars_nouveau.tier", recipe.tier), 0, 0, 10, false);
+        guiGraphics.drawString(renderer, Component.translatable("ars_nouveau.tier.prerequired", recipe.tier), 0, 0, 10, false);
 
         if (recipe.consumesSource())
             guiGraphics.drawString(renderer, Component.translatable("ars_nouveau.source", recipe.sourceCost()), 0, 100, 10, false);
