@@ -30,6 +30,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.PercentageAttribute;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
@@ -210,12 +211,12 @@ public class ModRegistry {
     );
     public static final DeferredHolder<Attribute, Attribute> SPELL_CRIT_DAMAGE = PerkAttributes.registerAttribute(
             "sauce.perk.spell_crit_damage",
-            (id) -> new RangedAttribute(id, 25.0, -100.0, 1000.0).setSyncable(true),
+            (id) -> new PercentageAttribute(id, 25.0, -100.0, 1000.0).setSyncable(true),
             "d0e1f2a3-b4c5-4d94-8512-0abcdef05678"
     );
     public static final DeferredHolder<Attribute, Attribute> SPELL_CRIT = PerkAttributes.registerAttribute(
             "sauce.perk.spell_crit",
-            (id) -> new RangedAttribute(id, 1.0, 0.0, 100.0).setSyncable(true),
+            (id) -> new PercentageAttribute(id, 1.0, 0.0, 100.0).setSyncable(true),
             "d0e1f2a3-b4c5-4d94-8512-0abcdef01234"
     );
 
