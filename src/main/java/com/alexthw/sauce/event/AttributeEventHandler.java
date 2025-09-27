@@ -109,6 +109,7 @@ public class AttributeEventHandler {
 
     @SubscribeEvent
     public static void empowerBySchool(SpellModifierEvent event) {
+        if (event.spellPart == null) return;
         List<SpellSchool> schools = event.spellPart.spellSchools;
         if (schools.isEmpty()) return;
         for (SpellSchool school : schools) {
