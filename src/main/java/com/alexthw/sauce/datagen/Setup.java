@@ -28,8 +28,9 @@ public class Setup {
 //        gen.addProvider(event.includeServer(), new ArsProviders.GlyphProvider(gen));
 //        gen.addProvider(event.includeServer(), new ArsProviders.EnchantingAppProvider(gen));
         gen.addProvider(event.includeClient(), new SauceLangProvider(output, Sauce.MODID, "en_us"));
-        gen.addProvider(event.includeServer(), new SauceTagProviders.DamageType(gen, provider, existingFileHelper));
-
+        gen.addProvider(event.includeServer(), new SauceTagProviders.DamageType(output, provider, existingFileHelper));
+        gen.addProvider(event.includeServer(), new SauceTagProviders.BannerTags(output, provider, existingFileHelper));
+        gen.addProvider(event.includeServer(), new SauceBootstrapProviders(output, provider));
     }
 
 }

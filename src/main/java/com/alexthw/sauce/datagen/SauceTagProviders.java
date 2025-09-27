@@ -1,9 +1,12 @@
 package com.alexthw.sauce.datagen;
 
+import com.alexthw.sauce.ArsNouveauRegistry;
+import com.alexthw.sauce.Sauce;
 import com.alexthw.sauce.registry.SauceTags;
 import com.hollingsworth.arsnouveau.setup.registry.DamageTypesRegistry;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.BannerPatternTagsProvider;
 import net.minecraft.data.tags.DamageTypeTagsProvider;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -15,13 +18,14 @@ import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.CompletableFuture;
 
 import static com.alexthw.sauce.Sauce.MODID;
+import static com.hollingsworth.arsnouveau.common.datagen.BannerTagsProvider.bannerTag;
 
 public class SauceTagProviders {
 
     public static class DamageType extends DamageTypeTagsProvider {
 
-        public DamageType(DataGenerator pGenerator, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
-            super(pGenerator.getPackOutput(), provider, MODID, existingFileHelper);
+        public DamageType(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
+            super(output, provider, MODID, existingFileHelper);
         }
 
         @Override
@@ -55,6 +59,18 @@ public class SauceTagProviders {
                             DamageTypes.SONIC_BOOM)
                     .addTag(DamageTypeTags.IS_LIGHTNING)
                     .addOptional(DamageTypesRegistry.WINDSHEAR.location());
+        }
+    }
+
+
+    public static class BannerTags extends BannerPatternTagsProvider {
+        public BannerTags(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
+            super(output, provider, Sauce.MODID, existingFileHelper);
+        }
+
+        @Override
+        protected void addTags(HolderLookup.@NotNull Provider provider) {
+            tag(bannerTag).addOptional(ArsNouveauRegistry.ANIMA_ICON.location());
         }
     }
 
