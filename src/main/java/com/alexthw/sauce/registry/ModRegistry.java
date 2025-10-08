@@ -1,9 +1,11 @@
 package com.alexthw.sauce.registry;
 
+import alexthw.ars_elemental.registry.ModItems;
 import com.alexthw.sauce.api.item.components.CharmData;
 import com.alexthw.sauce.api.item.components.SchoolCasterTomeData;
 import com.alexthw.sauce.common.block.FocusEnhancedSpellTurretTile;
 import com.alexthw.sauce.common.fluid.SourceFluid;
+import com.alexthw.sauce.common.item.NecroEssence;
 import com.alexthw.sauce.common.recipe.CharmChargingRecipe;
 import com.alexthw.sauce.common.recipe.ElementalArmorRecipe;
 import com.hollingsworth.arsnouveau.ArsNouveau;
@@ -30,6 +32,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.common.PercentageAttribute;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
@@ -113,6 +116,8 @@ public class ModRegistry {
     private static BaseFlowingFluid.Properties fluidProperties() {
         return new BaseFlowingFluid.Properties(SOURCE_FLUID_TYPE, SOURCE_FLUID, SOURCE_FLUID_FLOWING).block(SOURCE_FLUID_BLOCK).bucket(SOURCE_FLUID_BUCKET);
     }
+
+    public static final DeferredHolder<Item, ? extends Item> ANIMA_ESSENCE = ModList.get().isLoaded("ars_elemental") ? ModItems.ANIMA_ESSENCE : ITEMS.register("anima_essence", () -> new NecroEssence(defaultItemProperties().stacksTo(64)));
 
     public static final DeferredHolder<Attribute, Attribute> SUMMON_POWER = PerkAttributes.registerAttribute(
             "sauce.perk.summon_power",

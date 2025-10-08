@@ -49,3 +49,11 @@ modId = "ars_nouveau"
 versionRange = "[1.21.1-5.10,)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[dependencies.sauce]]
+modId = "ars_elemental"
+versionRange = "[1.21.1-0.7.6.0,)"
+ordering = "BEFORE"
+side = "BOTH"
+type = "optional"
+reason = "integration"
