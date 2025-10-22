@@ -10,6 +10,7 @@ import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.TileCaster;
 import com.hollingsworth.arsnouveau.api.util.SourceUtil;
 import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
+import com.hollingsworth.arsnouveau.common.block.RotatingSpellTurret;
 import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
 import com.hollingsworth.arsnouveau.common.network.Networking;
 import com.hollingsworth.arsnouveau.common.network.PacketOneShotAnimation;
@@ -72,7 +73,7 @@ public class FocusEnhancedSpellTurretTile extends RotatingTurretTile {
         if (manaCost > 0 && SourceUtil.takeSourceMultiple(pos, world, 10, manaCost) == null)
             return;
         Networking.sendToNearbyClient(world, pos, new PacketOneShotAnimation(pos));
-        Position iposition = BasicSpellTurret.getDispensePosition(pos, world.getBlockState(pos).getValue(BasicSpellTurret.FACING));
+        Position iposition = RotatingSpellTurret.getDispensePosition(pos, world.getBlockState(pos).getValue(BasicSpellTurret.FACING));
         Direction direction = world.getBlockState(pos).getValue(BasicSpellTurret.FACING);
         UUID uuid = ((TurretAccessor) this).getUuid();
         FakePlayer fakePlayer = uuid != null
