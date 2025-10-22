@@ -28,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-import static com.hollingsworth.arsnouveau.common.block.BasicSpellTurret.TURRET_BEHAVIOR_MAP;
+import static com.hollingsworth.arsnouveau.common.block.RotatingSpellTurret.ROT_TURRET_BEHAVIOR_MAP;
 
 public class FocusEnhancedSpellTurretTile extends RotatingTurretTile {
 
@@ -80,8 +80,8 @@ public class FocusEnhancedSpellTurretTile extends RotatingTurretTile {
                 : ANFakePlayer.getPlayer(world);
         fakePlayer.setPos(pos.getX(), pos.getY(), pos.getZ());
         var resolver = new FocusEnhancedSpellTurret.FocusTurretSpellResolver(new SpellContext(world, spellCaster.getSpell(), fakePlayer, new TileCaster(this, SpellContext.CasterType.TURRET)), getSchool());
-        if (resolver.castType != null && TURRET_BEHAVIOR_MAP.containsKey(resolver.castType)) {
-            TURRET_BEHAVIOR_MAP.get(resolver.castType).onCast(resolver, world, pos, fakePlayer, iposition, direction);
+        if (resolver.castType != null && ROT_TURRET_BEHAVIOR_MAP.containsKey(resolver.castType)) {
+            ROT_TURRET_BEHAVIOR_MAP.get(resolver.castType).onCast(resolver, world, pos, fakePlayer, iposition, direction);
         }
     }
 
