@@ -30,10 +30,14 @@ public class EntityCarryMEI extends MobEffectInstance {
         if (pOther instanceof EntityCarryMEI toUpdate) {
 
             if (this.owner != toUpdate.getOwner()) {
+                // changing the owner, remove effect from old owner
+                owner.removeEffect(this.getEffect());
                 owner = toUpdate.getOwner();
             }
 
             if (this.target != toUpdate.getTarget()) {
+                // changing the target, remove effect from old target
+                target.removeEffect(this.getEffect());
                 target = toUpdate.getTarget();
             }
 
