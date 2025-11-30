@@ -1,7 +1,11 @@
 package com.alexthw.sauce.common.block;
 
 import com.alexthw.sauce.api.item.ISchoolFocus;
-import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.api.spell.EntitySpellResolver;
+import com.hollingsworth.arsnouveau.api.spell.SpellContext;
+import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
+import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
+import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
 import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
 import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
@@ -32,21 +36,21 @@ public class FocusEnhancedSpellTurret extends BasicSpellTurret {
         if (!(world.getBlockEntity(pos) instanceof RotatingTurretTile turretTile)) return;
         switch (orientation) {
             case DOWN:
-                turretTile.rotationY = -90F;
+                turretTile.neededRotationY = -90F;
                 break;
             case UP:
-                turretTile.rotationY = 90F;
+                turretTile.neededRotationY = 90F;
                 break;
             case NORTH:
-                turretTile.rotationX = 270F;
+                turretTile.neededRotationX = 270F;
                 break;
             case SOUTH:
-                turretTile.rotationX = 90F;
+                turretTile.neededRotationX = 90F;
                 break;
             case WEST:
                 break;
             case EAST:
-                turretTile.rotationX = 180F;
+                turretTile.neededRotationX = 180F;
                 break;
         }
     }
