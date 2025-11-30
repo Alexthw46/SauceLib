@@ -1,7 +1,6 @@
 package com.alexthw.sauce.mixin;
 
-import com.alexthw.sauce.common.recipe.ElementalArmorRecipe;
-import com.alexthw.sauce.documentation.AEArmorEntry;
+import com.alexthw.sauce.ArsNouveauRegistry;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.documentation.SinglePageCtor;
 import com.hollingsworth.arsnouveau.setup.registry.Documentation;
@@ -26,11 +25,7 @@ public class DocumentationMixin {
         RecipeManager manager = level.getRecipeManager();
         Optional<RecipeHolder<?>> recipe = manager.byKey(recipeId);
 
-        recipe.ifPresent(holder -> {
-            if (holder.value() instanceof ElementalArmorRecipe)
-                //noinspection unchecked
-                cir.getReturnValue().add(AEArmorEntry.create((RecipeHolder<ElementalArmorRecipe>) holder));
-        });
+        recipe.ifPresent(holder -> ArsNouveauRegistry.recipePageConsumers.forEach(page -> page.accept(holder, cir)));
     }
 
 
