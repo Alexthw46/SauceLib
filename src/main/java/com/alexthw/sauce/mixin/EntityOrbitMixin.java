@@ -61,7 +61,7 @@ public abstract class EntityOrbitMixin extends EntityProjectileSpell {
 
     @Unique
     private boolean sauce$shouldTarget(LivingEntity e) {
-        if (sauce$ignore == null) return false;
+        if (sauce$ignore == null) return true;
         for (Predicate<LivingEntity> p : sauce$getIgnored()) {
             if (p.test(e)) {
                 return false;
