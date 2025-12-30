@@ -16,6 +16,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -28,8 +29,8 @@ public class ElementalUpgradeRecipeCategory extends EnchantingApparatusRecipeCat
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, ElementalArmorRecipe recipe, IFocusGroup focuses) {
-        MultiProvider provider = multiProvider.apply(recipe);
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<ElementalArmorRecipe> holder, IFocusGroup focuses) {
+        MultiProvider provider = multiProvider.apply(holder.value());
         List<Ingredient> inputs = provider.input();
         double angleBetweenEach = 360.0 / inputs.size();
         if (provider.optionalCenter() != null) {
@@ -58,12 +59,13 @@ public class ElementalUpgradeRecipeCategory extends EnchantingApparatusRecipeCat
     }
 
     @Override
-    public @NotNull RecipeType<ElementalArmorRecipe> getRecipeType() {
-        return JeiSaucePlugin.ELEMENTAL_ARMOR_TYPE;
+    public @NotNull RecipeType<RecipeHolder<ElementalArmorRecipe>> getRecipeType() {
+        return JeiSaucePlugin.ELEMENTAL_ARMOR_TYPE.get();
     }
 
     @Override
-    public void draw(ElementalArmorRecipe recipe, @NotNull IRecipeSlotsView slotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(RecipeHolder<ElementalArmorRecipe> holder, @NotNull IRecipeSlotsView slotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        ElementalArmorRecipe recipe = holder.value();
         Font renderer = Minecraft.getInstance().font;
         guiGraphics.drawString(renderer, Component.translatable("ars_nouveau.tier.prerequired", recipe.tier), 0, 0, 10, false);
 

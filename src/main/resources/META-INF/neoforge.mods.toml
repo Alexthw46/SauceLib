@@ -45,6 +45,13 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.sauce]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1.200,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.sauce]]
 modId = "ars_nouveau"
 versionRange = "[1.21.1-5.10,)"
 ordering = "AFTER"

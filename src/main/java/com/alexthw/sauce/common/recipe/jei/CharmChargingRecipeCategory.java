@@ -13,9 +13,10 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import org.jetbrains.annotations.NotNull;
 
-public class CharmChargingRecipeCategory implements IRecipeCategory<CharmChargingRecipe> {
+public class CharmChargingRecipeCategory implements IRecipeCategory<RecipeHolder<CharmChargingRecipe>> {
     public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(Sauce.MODID, "charm_charging");
 
     private final IDrawable background;
@@ -29,8 +30,8 @@ public class CharmChargingRecipeCategory implements IRecipeCategory<CharmChargin
     }
 
     @Override
-    public @NotNull RecipeType<CharmChargingRecipe> getRecipeType() {
-        return JeiSaucePlugin.CHARM_CHARGING_RECIPE_TYPE;
+    public @NotNull RecipeType<RecipeHolder<CharmChargingRecipe>> getRecipeType() {
+        return JeiSaucePlugin.CHARM_CHARGING_RECIPE_TYPE.get();
     }
 
     @Override
@@ -49,7 +50,8 @@ public class CharmChargingRecipeCategory implements IRecipeCategory<CharmChargin
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, CharmChargingRecipe recipe, @NotNull IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<CharmChargingRecipe> holder, @NotNull IFocusGroup focuses) {
+        CharmChargingRecipe recipe = holder.value();
         builder.addSlot(RecipeIngredientRole.INPUT, 20, 20)
                 .addItemStack(new ItemStack(recipe.input()));
 

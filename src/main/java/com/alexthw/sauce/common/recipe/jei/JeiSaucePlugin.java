@@ -25,12 +25,17 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
+
+import static mezz.jei.api.recipe.RecipeType.createFromDeferredVanilla;
 
 @JeiPlugin
 public class JeiSaucePlugin implements IModPlugin {
 
-    public static final RecipeType<ElementalArmorRecipe> ELEMENTAL_ARMOR_TYPE = RecipeType.create(Sauce.MODID, "armor_upgrade", ElementalArmorRecipe.class);
-    public static final RecipeType<CharmChargingRecipe> CHARM_CHARGING_RECIPE_TYPE = RecipeType.create(Sauce.MODID, "charm_charging", CharmChargingRecipe.class);
+    public static final Supplier<RecipeType<RecipeHolder<ElementalArmorRecipe>>> ELEMENTAL_ARMOR_TYPE = createFromDeferredVanilla(ModRegistry.ELEMENTAL_ARMOR_UP);
+    public static final Supplier<RecipeType<RecipeHolder<CharmChargingRecipe>>> CHARM_CHARGING_RECIPE_TYPE = createFromDeferredVanilla(ModRegistry.CHARM_CHARGING_TYPE);
+
+
 
     @Override
     public @NotNull ResourceLocation getPluginUid() {
@@ -47,28 +52,29 @@ public class JeiSaucePlugin implements IModPlugin {
         );
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void registerRecipes(@NotNull IRecipeRegistration registry) {
         assert Minecraft.getInstance().level != null;
         RecipeManager manager = Minecraft.getInstance().level.getRecipeManager();
-        List<ElementalArmorRecipe> armorRecipes = new ArrayList<>();
-        List<CharmChargingRecipe> charmChargingRecipes = new ArrayList<>();
+        List<RecipeHolder<ElementalArmorRecipe>> armorRecipes = new ArrayList<>();
+        List<RecipeHolder<CharmChargingRecipe>> charmChargingRecipes = new ArrayList<>();
         for (RecipeHolder<?> i : manager.getRecipes()) {
             switch (i.value()) {
-                case CharmChargingRecipe recipe -> charmChargingRecipes.add(recipe);
-                case ElementalArmorRecipe recipe -> armorRecipes.add(recipe);
+                case CharmChargingRecipe recipe -> charmChargingRecipes.add((RecipeHolder<CharmChargingRecipe>) i);
+                case ElementalArmorRecipe recipe -> armorRecipes.add((RecipeHolder<ElementalArmorRecipe>) i);
                 default -> {
                 }
             }
         }
-        registry.addRecipes(ELEMENTAL_ARMOR_TYPE, armorRecipes);
-        registry.addRecipes(CHARM_CHARGING_RECIPE_TYPE, charmChargingRecipes);
+        registry.addRecipes(ELEMENTAL_ARMOR_TYPE.get(), armorRecipes);
+        registry.addRecipes(CHARM_CHARGING_RECIPE_TYPE.get(), charmChargingRecipes);
     }
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registry) {
-        registry.addRecipeCatalyst(new ItemStack(BlockRegistry.ENCHANTING_APP_BLOCK), ELEMENTAL_ARMOR_TYPE);
-        registry.addRecipeCatalyst(new ItemStack(BlockRegistry.IMBUEMENT_BLOCK), CHARM_CHARGING_RECIPE_TYPE);
+        registry.addRecipeCatalyst(new ItemStack(BlockRegistry.ENCHANTING_APP_BLOCK), ELEMENTAL_ARMOR_TYPE.get());
+        registry.addRecipeCatalyst(new ItemStack(BlockRegistry.IMBUEMENT_BLOCK), CHARM_CHARGING_RECIPE_TYPE.get());
     }
 
 
