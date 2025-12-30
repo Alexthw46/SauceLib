@@ -67,5 +67,6 @@ public class SauceLangProvider extends LanguageProvider {
         add("sauce.perk.mana_discount.desc", "Reduces the mana cost of spells.");
 
         add("ars_nouveau.tier.prerequired", "Requires Tier %s upgrade");
+        add("ars_nouveau.subform_icon_tooltip", "Subforms: Gives the rest of the spell a new form or edits its behavior.");
     }
 }

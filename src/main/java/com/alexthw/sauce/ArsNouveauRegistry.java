@@ -1,5 +1,6 @@
 package com.alexthw.sauce;
 
+import com.alexthw.sauce.api.IPropagator;
 import com.alexthw.sauce.api.spell_style.GravityWellMotion;
 import com.alexthw.sauce.common.recipe.ElementalArmorRecipe;
 import com.alexthw.sauce.documentation.AEArmorEntry;
@@ -15,6 +16,8 @@ import com.hollingsworth.arsnouveau.api.particle.timelines.LingerTimeline;
 import com.hollingsworth.arsnouveau.api.registry.GlyphRegistry;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
+import com.hollingsworth.arsnouveau.client.gui.book.GlyphFormatter;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -25,11 +28,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.BiConsumer;
 
 import static com.hollingsworth.arsnouveau.api.registry.ParticleMotionRegistry.PARTICLE_CONFIG;
+import static com.hollingsworth.arsnouveau.client.gui.book.GlyphFormatter.CATEGORIES;
 
 public class ArsNouveauRegistry {
 
     public static List<AbstractSpellPart> registeredSpells = new ArrayList<>(); //this will come handy for datagen
     public static final DocAssets.BlitInfo ANIMA_ICON = new DocAssets.BlitInfo(ArsNouveau.prefix("textures/gui/documentation/doc_icon_anima.png"), 10, 10);
+    public static final DocAssets.BlitInfo SUBFORM_ICON_CRAFTING = new DocAssets.BlitInfo(ArsNouveau.prefix("textures/gui/documentation/doc_spellcrafting_icon_subform.png"), 18, 16);
 
     public static final List<BiConsumer<RecipeHolder<?>, CallbackInfoReturnable<List<SinglePageCtor>>>> recipePageConsumers = new CopyOnWriteArrayList<>();
 
@@ -54,6 +59,6 @@ public class ArsNouveauRegistry {
         ArsNouveauAPI.getInstance().getEnchantingRecipeTypes().add(ModRegistry.ELEMENTAL_ARMOR_UP.get());
 
         LingerTimeline.TRAIL_OPTIONS.add(GRAVITY_FIELD_TYPE.get());
-
+        CATEGORIES.add(new GlyphFormatter.Category(ArsNouveau.prefix("subform"), i -> i instanceof IPropagator, Component.translatable("ars_nouveau.subform_icon_tooltip"), SUBFORM_ICON_CRAFTING));
     }
 }
