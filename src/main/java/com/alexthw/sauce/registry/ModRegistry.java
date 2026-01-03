@@ -10,11 +10,9 @@ import com.alexthw.sauce.common.recipe.CharmChargingRecipe;
 import com.alexthw.sauce.common.recipe.ElementalArmorRecipe;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.perk.PerkAttributes;
-import com.hollingsworth.arsnouveau.api.sound.SpellSound;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -41,7 +39,6 @@ import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import org.jetbrains.annotations.NotNull;
 
 import static com.alexthw.sauce.Sauce.MODID;
 import static com.alexthw.sauce.Sauce.prefix;
@@ -56,8 +53,8 @@ public class ModRegistry {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(BLOCK_ENTITY_TYPE, MODID);
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(SOUND_EVENT, MODID);
     public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(ATTRIBUTE, MODID);
-    private static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.FLUID_TYPES, MODID);
-    private static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(BuiltInRegistries.FLUID, MODID);
+    public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.FLUID_TYPES, MODID);
+    public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(BuiltInRegistries.FLUID, MODID);
     public static final DeferredRegister<RecipeType<?>> RECIPES = DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE, MODID);
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, MODID);
     public static final DeferredRegister<DataComponentType<?>> DATA_COMPONENT_TYPES = DeferredRegister.create(BuiltInRegistries.DATA_COMPONENT_TYPE, MODID);
@@ -84,23 +81,13 @@ public class ModRegistry {
         ITEMS.addAlias(ResourceLocation.fromNamespaceAndPath("starbunclemania", "source_fluid_bucket"), prefix("source_fluid_bucket"));
         DATA_COMPONENT_TYPES.addAlias(ResourceLocation.fromNamespaceAndPath("ars_elemental", "elemental_tome_caster"), prefix("school_tome_caster"));
         DATA_COMPONENT_TYPES.addAlias(ResourceLocation.fromNamespaceAndPath("ars_additions", "charm_data"), prefix("charm_data"));
-
     }
-
-    //this is an example of how to register a sound. You also need to add the sound to the sound.json file, referencing your ogg files, and a texture for the button under textures/sounds.
-    //this example will use one of the existing sounds randomly
-    public static DeferredHolder<SoundEvent, SoundEvent> EXAMPLE_FAMILY = SOUNDS.register("example_sound", () -> makeSound("example_sound"));
-    public static SpellSound EXAMPLE_SPELL_SOUND = new SpellSound(ModRegistry.EXAMPLE_FAMILY, Component.literal("Random"), prefix("example_random_sound"));
 
     /**
      * Use {@link BlockEntityTypeAddBlocksEvent} to add blocks to the BlockEntityType after registry.
      */
     @SuppressWarnings("DataFlowIssue")
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends FocusEnhancedSpellTurretTile>> FOCUS_TURRET = BLOCK_ENTITIES.register("focus_turret", () -> BlockEntityType.Builder.of(FocusEnhancedSpellTurretTile::new).build(null));
-
-    static SoundEvent makeSound(@NotNull String name) {
-        return SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(MODID, name));
-    }
 
     public static final DeferredHolder<FluidType, FluidType> SOURCE_FLUID_TYPE = FLUID_TYPES.register("source_fluid", SourceFluid::new);
 
@@ -117,6 +104,7 @@ public class ModRegistry {
         return new BaseFlowingFluid.Properties(SOURCE_FLUID_TYPE, SOURCE_FLUID, SOURCE_FLUID_FLOWING).block(SOURCE_FLUID_BLOCK).bucket(SOURCE_FLUID_BUCKET);
     }
 
+    // Redirects to Ars Elemental's Anima Essence if the mod is present, registers a new item otherwise. Will become the main reference in next major version.
     public static final DeferredHolder<Item, ? extends Item> ANIMA_ESSENCE = ModList.get().isLoaded("ars_elemental") ? ModItems.ANIMA_ESSENCE : ITEMS.register("anima_essence", () -> new NecroEssence(defaultItemProperties().stacksTo(64)));
 
     public static final DeferredHolder<Attribute, Attribute> SUMMON_POWER = PerkAttributes.registerAttribute(
