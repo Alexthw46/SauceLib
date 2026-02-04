@@ -40,6 +40,7 @@ public class SauceConfig {
 
     public static class Server {
         public static ModConfigSpec.BooleanValue ENABLE_SPELL_CRIT;
+
         public Server(ModConfigSpec.Builder builder) {
             builder.comment("Enable Spell Critical Hits").push("spell_crit");
             ENABLE_SPELL_CRIT = builder
@@ -52,7 +53,14 @@ public class SauceConfig {
 
     public static class Startup {
 
+        public static ModConfigSpec.BooleanValue SHOW_SOURCE_FLUID;
+
         public Startup(ModConfigSpec.Builder builder) {
+            builder.comment("Source Fluid").push("source_fluid");
+            SHOW_SOURCE_FLUID = builder
+                    .comment("Show the liquid source bucket and fluid in JEI and Creative Tabs, valid only if another mod doesn't enable it already.")
+                    .define("show_source_fluid", false);
+            builder.pop();
 
         }
 
@@ -61,11 +69,13 @@ public class SauceConfig {
     @SubscribeEvent
     public static void onLoad(final ModConfigEvent.Loading configEvent) {
         Sauce.ENABLE_SPELL_CRIT = Sauce.ENABLE_SPELL_CRIT || SauceConfig.Server.ENABLE_SPELL_CRIT.get();
+        Sauce.SHOW_LIQUID_SOURCE = Sauce.SHOW_LIQUID_SOURCE || SauceConfig.Startup.SHOW_SOURCE_FLUID.get();
     }
 
     @SubscribeEvent
     public static void onReload(final ModConfigEvent.Reloading configEvent) {
         Sauce.ENABLE_SPELL_CRIT = Sauce.ENABLE_SPELL_CRIT || SauceConfig.Server.ENABLE_SPELL_CRIT.get();
+        Sauce.SHOW_LIQUID_SOURCE = Sauce.SHOW_LIQUID_SOURCE || SauceConfig.Startup.SHOW_SOURCE_FLUID.get();
     }
 
 }
