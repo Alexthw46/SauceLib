@@ -167,9 +167,10 @@ dependencies {
 
     // cyanide to debug worldgen, localRuntime configuration won't mark is a dependency
     // localRuntime "curse.maven:cyanide-541676:5782674"
-    implementation ("com.alexthw.ars_elemental:ars_elemental-${minecraft_version}:${elemental_version}") { transitive = false }
-
-
+    // Small compile-time only dependency for Ars Elemental switch of the anima essence
+    compileOnly("com.alexthw.ars_elemental:ars_elemental-${minecraft_version}:${elemental_version}") { transitive = false }
+    localRuntime("com.alexthw.ars_elemental:ars_elemental-${minecraft_version}:${elemental_version}") { transitive = false }
+    localRuntime("com.alexthw.not_enough_glyphs:not_enough_glyphs-${minecraft_version}:${neg_version}") { transitive = false }
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
