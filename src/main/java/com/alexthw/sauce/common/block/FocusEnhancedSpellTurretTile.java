@@ -73,7 +73,7 @@ public class FocusEnhancedSpellTurretTile extends RotatingTurretTile {
         if (manaCost > 0 && SourceUtil.takeSourceMultiple(pos, world, 10, manaCost) == null)
             return;
         Networking.sendToNearbyClient(world, pos, new PacketOneShotAnimation(pos));
-        Position iposition = RotatingSpellTurret.getDispensePosition(pos, world.getBlockState(pos).getValue(BasicSpellTurret.FACING));
+        Position iposition = RotatingSpellTurret.getDispensePosition(pos, this);
         Direction direction = world.getBlockState(pos).getValue(BasicSpellTurret.FACING);
         UUID uuid = ((TurretAccessor) this).getUuid();
         FakePlayer fakePlayer = uuid != null
