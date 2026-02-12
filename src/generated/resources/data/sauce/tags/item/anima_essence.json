@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "sauce:anima_essence",
+      "required": false
+    },
+    {
+      "id": "ars_elemental:anima_essence",
+      "required": false
+    }
+  ]
+}
