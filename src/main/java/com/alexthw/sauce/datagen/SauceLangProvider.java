@@ -72,6 +72,8 @@ public class SauceLangProvider extends LanguageProvider {
         add("sauce.tooltip.buffer", "Source Buffer %d / %d");
         add("sauce.tooltip.transfer_rate", "Transfer Rate %d Source/s");
         add("sauce.tooltip.cost", "Expending %d Source/cast");
+        add("sauce.tooltip.required", "Requires %d Source");
+
 
     }
 }

@@ -22,7 +22,7 @@ public abstract class JarTileMixin extends AbstractSourceMachine {
     }
 
     @Inject(method = "getTooltip", at = @At("TAIL"), remap = false)
-    public void ars_elemental$getTooltip(List<Component> tooltip, CallbackInfo ci) {
+    public void sauce$getTooltip(List<Component> tooltip, CallbackInfo ci) {
         if (!ArsNouveauAPI.ENABLE_DEBUG_NUMBERS) return;
         tooltip.add(Component.translatable("sauce.tooltip.buffer", this.getSource(), this.getMaxSource()));
         tooltip.add(Component.translatable("sauce.tooltip.transfer_rate", this.getTransferRate()));
