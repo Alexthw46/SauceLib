@@ -61,7 +61,7 @@ public class GlyphEffectUtil {
         boolean flag = true;
         if (filters == null) return true;
         for (IFilter spellPart : filters) {
-            flag &= spellPart.shouldAffect(new EntityHitResult(e), e.level());
+            flag = flag && spellPart.shouldAffect(new EntityHitResult(e), e.level());
         }
         return !flag;
     }

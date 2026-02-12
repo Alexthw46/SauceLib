@@ -55,7 +55,7 @@ public abstract class EntityOrbitMixin extends EntityProjectileSpell {
     @Override
     protected boolean canHitEntity(Entity entity) {
         boolean b = super.canHitEntity(entity);
-        if (entity instanceof LivingEntity) b &= sauce$shouldTarget((LivingEntity) entity);
+        if (entity instanceof LivingEntity) b = b && sauce$shouldTarget((LivingEntity) entity);
         return b;
     }
 

@@ -68,5 +68,10 @@ public class SauceLangProvider extends LanguageProvider {
 
         add("ars_nouveau.tier.prerequired", "Requires Tier %s upgrade");
         add("ars_nouveau.subform_icon_tooltip", "Subforms: Gives the rest of the spell a new form or edits its behavior.");
+
+        add("sauce.tooltip.buffer", "Source Buffer %d / %d");
+        add("sauce.tooltip.transfer_rate", "Transfer Rate %d Source/s");
+        add("sauce.tooltip.cost", "Expending %d Source/cast");
+
     }
 }

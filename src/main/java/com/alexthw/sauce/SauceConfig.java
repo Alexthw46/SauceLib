@@ -1,13 +1,14 @@
 package com.alexthw.sauce;
 
 
+import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber()
 public class SauceConfig {
     public static final Common COMMON;
     public static final ModConfigSpec COMMON_SPEC;
@@ -54,6 +55,7 @@ public class SauceConfig {
     public static class Startup {
 
         public static ModConfigSpec.BooleanValue SHOW_SOURCE_FLUID;
+        public static ModConfigSpec.BooleanValue SHOW_DEBUG_NUMBERS;
 
         public Startup(ModConfigSpec.Builder builder) {
             builder.comment("Source Fluid").push("source_fluid");
@@ -61,7 +63,11 @@ public class SauceConfig {
                     .comment("Show the liquid source bucket and fluid in JEI and Creative Tabs, valid only if another mod doesn't enable it already.")
                     .define("show_source_fluid", false);
             builder.pop();
-
+            builder.comment("Debug Numbers").push("debug_numbers");
+            SHOW_DEBUG_NUMBERS = builder
+                    .comment("Show numeric values overlays for source and mana.")
+                    .define("show_debug_numbers", false);
+            builder.pop();
         }
 
     }
@@ -70,12 +76,14 @@ public class SauceConfig {
     public static void onLoad(final ModConfigEvent.Loading configEvent) {
         Sauce.ENABLE_SPELL_CRIT = Sauce.ENABLE_SPELL_CRIT || SauceConfig.Server.ENABLE_SPELL_CRIT.get();
         Sauce.SHOW_LIQUID_SOURCE = Sauce.SHOW_LIQUID_SOURCE || SauceConfig.Startup.SHOW_SOURCE_FLUID.get();
+        ArsNouveauAPI.ENABLE_DEBUG_NUMBERS = ArsNouveauAPI.ENABLE_DEBUG_NUMBERS || SauceConfig.Startup.SHOW_DEBUG_NUMBERS.get();
     }
 
     @SubscribeEvent
     public static void onReload(final ModConfigEvent.Reloading configEvent) {
         Sauce.ENABLE_SPELL_CRIT = Sauce.ENABLE_SPELL_CRIT || SauceConfig.Server.ENABLE_SPELL_CRIT.get();
         Sauce.SHOW_LIQUID_SOURCE = Sauce.SHOW_LIQUID_SOURCE || SauceConfig.Startup.SHOW_SOURCE_FLUID.get();
+        ArsNouveauAPI.ENABLE_DEBUG_NUMBERS = ArsNouveauAPI.ENABLE_DEBUG_NUMBERS || SauceConfig.Startup.SHOW_DEBUG_NUMBERS.get();
     }
 
 }
