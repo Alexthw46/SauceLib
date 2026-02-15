@@ -74,6 +74,9 @@ public class SauceLangProvider extends LanguageProvider {
         add("sauce.tooltip.cost", "Expending %d Source/cast");
         add("sauce.tooltip.required", "Requires %d Source");
 
+        add("effect.sauce.contingency", "Contingency Spell");
+        add("effect.sauce.contingency.desc", "When a specific event triggers, it will cast the spell on the entity.");
+
 
     }
 }

@@ -6,6 +6,7 @@ import com.alexthw.sauce.api.item.components.SchoolCasterTomeData;
 import com.alexthw.sauce.common.block.FocusEnhancedSpellTurretTile;
 import com.alexthw.sauce.common.fluid.SourceFluid;
 import com.alexthw.sauce.common.item.NecroEssence;
+import com.alexthw.sauce.common.mob_effect.ContingencyEffect;
 import com.alexthw.sauce.common.recipe.CharmChargingRecipe;
 import com.alexthw.sauce.common.recipe.ElementalArmorRecipe;
 import com.hollingsworth.arsnouveau.ArsNouveau;
@@ -15,6 +16,7 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.item.BucketItem;
@@ -44,6 +46,7 @@ import static com.alexthw.sauce.Sauce.MODID;
 import static com.alexthw.sauce.Sauce.prefix;
 import static net.minecraft.core.registries.Registries.ATTRIBUTE;
 import static net.minecraft.core.registries.Registries.BLOCK_ENTITY_TYPE;
+import static net.minecraft.core.registries.Registries.MOB_EFFECT;
 import static net.minecraft.core.registries.Registries.SOUND_EVENT;
 
 public class ModRegistry {
@@ -52,6 +55,7 @@ public class ModRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.createBlocks(MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(BLOCK_ENTITY_TYPE, MODID);
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(SOUND_EVENT, MODID);
+    public static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(MOB_EFFECT, MODID);
     public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(ATTRIBUTE, MODID);
     public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.FLUID_TYPES, MODID);
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(BuiltInRegistries.FLUID, MODID);
@@ -64,6 +68,7 @@ public class ModRegistry {
         BLOCKS.register(bus);
         BLOCK_ENTITIES.register(bus);
         ITEMS.register(bus);
+        MOB_EFFECTS.register(bus);
         SOUNDS.register(bus);
         ATTRIBUTES.register(bus);
         FLUID_TYPES.register(bus);
@@ -223,6 +228,7 @@ public class ModRegistry {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<CharmData>> CHARM_DATA = DATA_COMPONENT_TYPES.register("charm_data",
             () -> DataComponentType.<CharmData>builder().persistent(CharmData.CODEC).networkSynchronized(CharmData.STREAM_CODEC).build()
     );
+    public static final DeferredHolder<MobEffect, MobEffect> CONTINGENCY = MOB_EFFECTS.register("contingency", ContingencyEffect::new);
 
     public static Item.Properties defaultItemProperties() {
         return new Item.Properties();

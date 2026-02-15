@@ -6,6 +6,8 @@
   "curios.identifier.bundle": "Bundle",
   "curios.modifiers.an_focus": "While in spell focus slot:",
   "curios.modifiers.bangle": "While in bangle slot:",
+  "effect.sauce.contingency": "Contingency Spell",
+  "effect.sauce.contingency.desc": "When a specific event triggers, it will cast the spell on the entity.",
   "fluid_type.sauce.source_fluid": "Liquefied Source",
   "item.sauce.source_fluid_bucket": "Liquefied Source Bucket",
   "jei.sauce.charm_charging": "Charm Charging",
