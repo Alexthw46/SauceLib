@@ -75,7 +75,7 @@ public class ContingencyEffectInstance extends MobEffectInstance {
         return super.tick(entity, newExpirationRunnable) && activations <= max_activations;
     }
 
-    public ContingencyTrigger EXPIRE = new ContingencyTrigger() {
+    public static final ContingencyTrigger EXPIRE = new ContingencyTrigger() {
     };
 
     /*
