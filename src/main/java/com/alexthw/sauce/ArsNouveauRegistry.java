@@ -2,6 +2,7 @@ package com.alexthw.sauce;
 
 import com.alexthw.sauce.api.IPropagator;
 import com.alexthw.sauce.api.spell_style.GravityWellMotion;
+import com.alexthw.sauce.common.glyphs.AbstractContingency;
 import com.alexthw.sauce.common.recipe.ElementalArmorRecipe;
 import com.alexthw.sauce.documentation.AEArmorEntry;
 import com.alexthw.sauce.mixin.SpellSchoolAccessor;
@@ -35,6 +36,7 @@ public class ArsNouveauRegistry {
     public static List<AbstractSpellPart> registeredSpells = new ArrayList<>(); //this will come handy for datagen
     public static final DocAssets.BlitInfo ANIMA_ICON = new DocAssets.BlitInfo(ArsNouveau.prefix("textures/gui/documentation/doc_icon_anima.png"), 10, 10);
     public static final DocAssets.BlitInfo SUBFORM_ICON_CRAFTING = new DocAssets.BlitInfo(ArsNouveau.prefix("textures/gui/documentation/doc_spellcrafting_icon_subform.png"), 18, 16);
+    public static final DocAssets.BlitInfo CONTINGENCY_ICON_CRAFTING = new DocAssets.BlitInfo(ArsNouveau.prefix("textures/gui/documentation/doc_spellcrafting_icon_contingency.png"), 18, 16);
 
     public static final List<BiConsumer<RecipeHolder<?>, CallbackInfoReturnable<List<SinglePageCtor>>>> recipePageConsumers = new CopyOnWriteArrayList<>();
 
@@ -59,6 +61,8 @@ public class ArsNouveauRegistry {
         ArsNouveauAPI.getInstance().getEnchantingRecipeTypes().add(ModRegistry.ELEMENTAL_ARMOR_UP.get());
 
         LingerTimeline.TRAIL_OPTIONS.add(GRAVITY_FIELD_TYPE.get());
+        CATEGORIES.add(new GlyphFormatter.Category(ArsNouveau.prefix("contingency"), i -> i instanceof AbstractContingency, Component.translatable("ars_nouveau.contingency_icon_tooltip"), CONTINGENCY_ICON_CRAFTING));
         CATEGORIES.add(new GlyphFormatter.Category(ArsNouveau.prefix("subform"), i -> i instanceof IPropagator, Component.translatable("ars_nouveau.subform_icon_tooltip"), SUBFORM_ICON_CRAFTING));
+
     }
 }
