@@ -1,6 +1,7 @@
 package com.alexthw.sauce.common.item;
 
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
+import com.hollingsworth.arsnouveau.common.items.AbstractEssence;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -15,16 +16,20 @@ import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.animal.horse.SkeletonHorse;
 import net.minecraft.world.entity.animal.horse.ZombieHorse;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.NotNull;
 
-public class NecroEssence extends Item {
+public class NecroEssence extends AbstractEssence {
 
+    @Deprecated
     public NecroEssence(Properties pProperties) {
-        super(pProperties);
+        this();
+    }
+
+    public NecroEssence() {
+        super("necromancy");
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -46,7 +51,7 @@ public class NecroEssence extends Item {
 
             // copy attributes
             if (horse.isTamed()) newHorse.tameWithName(pPlayer);
-            if (horse.isSaddled()) newHorse.equipSaddle(Items.SADDLE.getDefaultInstance(),SoundSource.PLAYERS);
+            if (horse.isSaddled()) newHorse.equipSaddle(Items.SADDLE.getDefaultInstance(), SoundSource.PLAYERS);
             if (horse.isWearingBodyArmor()) pPlayer.spawnAtLocation(horse.getItemBySlot(EquipmentSlot.CHEST));
 
             // copy position

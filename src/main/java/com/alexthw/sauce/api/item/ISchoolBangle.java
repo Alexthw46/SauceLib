@@ -1,5 +1,6 @@
 package com.alexthw.sauce.api.item;
 
+import com.alexthw.sauce.event.AttributeEventHandler;
 import com.alexthw.sauce.util.CompatUtils;
 import com.hollingsworth.arsnouveau.api.item.ISpellModifierItem;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
@@ -44,12 +45,17 @@ public interface ISchoolBangle extends ISpellModifierItem, ISchoolProvider {
     }
 
 
+    @Deprecated(forRemoval = true)
     default SpellStats.Builder applyItemModifiers(ItemStack stack, SpellStats.Builder builder, AbstractSpellPart spellPart, HitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellContext spellContext) {
-        // isPartOfSchool also checks sub-schools
-        if (getSchool().isPartOfSchool(spellPart)) {
-            builder.addDamageModifier(2.0D);
-        }
 
+        if (AttributeEventHandler.schoolToPowerAttribute.get(getSchool()) == null) {
+            // Legacy support for old school-based damage modifiers, should be removed in the future
+            // Kept to not break Elemancy
+            // isPartOfSchool also checks sub-schools
+            if (getSchool().isPartOfSchool(spellPart)) {
+                builder.addDamageModifier(2.0D);
+            }
+        }
         return applyModifiers(builder, spellPart, rayTraceResult, world, shooter, spellContext);
     }
 

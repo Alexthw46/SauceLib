@@ -15,6 +15,10 @@ public class SauceLangProvider extends LanguageProvider {
         add("fluid_type.sauce.source_fluid", "Liquefied Source");
         add("block.sauce.source_fluid_block", "Liquified Source");
 
+        add("ars_nouveau.school.necromancy", "Anima");
+        add("ars_nouveau.rune.rune_necromancy", "Anima Rune");
+        add("item.sauce.anima_essence", "Anima Essence");
+
         add("curios.modifiers.an_focus", "While in spell focus slot:");
         add("curios.modifiers.bangle", "While in bangle slot:");
         add("curios.identifier.bundle", "Bundle");
@@ -29,7 +33,7 @@ public class SauceLangProvider extends LanguageProvider {
         add("sauce.perk.manipulation_power.desc", "Increases the power of manipulation spells.");
         add("sauce.perk.abjuration_power", "Abjuration Spell Power");
         add("sauce.perk.abjuration_power.desc", "Increases the power of abjuration spells.");
-        add("sauce.perk.necromancy_power", "Necromancy Spell Power");
+        add("sauce.perk.necromancy_power", "Anima Spell Power");
         add("sauce.perk.necromancy_power.desc", "Increases the power of anima spells.");
         add("sauce.perk.air_power", "Air Spell Power");
         add("sauce.perk.air_power.desc", "Increases the power of air spells.");
@@ -47,7 +51,7 @@ public class SauceLangProvider extends LanguageProvider {
         add("sauce.perk.manipulation_resistance.desc", "Reduces damage taken from manipulation spells and blockshaping. Exponential decay formula.");
         add("sauce.perk.abjuration_resistance", "Abjuration Spell Resistance");
         add("sauce.perk.abjuration_resistance.desc", "Reduces damage taken from abjuration spells. Exponential decay formula.");
-        add("sauce.perk.necromancy_resistance", "Necromancy Spell Resistance");
+        add("sauce.perk.necromancy_resistance", "Anima Spell Resistance");
         add("sauce.perk.necromancy_resistance.desc", "Reduces damage taken from anima spells. Exponential decay formula.");
         add("sauce.perk.air_resistance", "Air Spell Resistance");
         add("sauce.perk.air_resistance.desc", "Reduces damage taken from air spells. Exponential decay formula.");

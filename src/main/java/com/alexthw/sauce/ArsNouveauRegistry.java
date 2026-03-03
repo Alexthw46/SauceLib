@@ -13,6 +13,7 @@ import com.hollingsworth.arsnouveau.api.documentation.DocAssets;
 import com.hollingsworth.arsnouveau.api.documentation.SinglePageCtor;
 import com.hollingsworth.arsnouveau.api.particle.configurations.IParticleMotionType;
 import com.hollingsworth.arsnouveau.api.particle.configurations.SimpleParticleMotionType;
+import com.hollingsworth.arsnouveau.api.particle.configurations.properties.RuneTextureProperty;
 import com.hollingsworth.arsnouveau.api.particle.timelines.LingerTimeline;
 import com.hollingsworth.arsnouveau.api.registry.GlyphRegistry;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
@@ -63,6 +64,7 @@ public class ArsNouveauRegistry {
         LingerTimeline.TRAIL_OPTIONS.add(GRAVITY_FIELD_TYPE.get());
         CATEGORIES.add(new GlyphFormatter.Category(ArsNouveau.prefix("contingency"), i -> i instanceof AbstractContingency, Component.translatable("ars_nouveau.contingency_icon_tooltip"), CONTINGENCY_ICON_CRAFTING));
         CATEGORIES.add(new GlyphFormatter.Category(ArsNouveau.prefix("subform"), i -> i instanceof IPropagator, Component.translatable("ars_nouveau.subform_icon_tooltip"), SUBFORM_ICON_CRAFTING));
+        RuneTextureProperty.TEXTURES.add("rune_necromancy");
 
     }
 }
