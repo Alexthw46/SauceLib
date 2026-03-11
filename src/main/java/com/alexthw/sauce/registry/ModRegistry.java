@@ -3,10 +3,14 @@ package com.alexthw.sauce.registry;
 import alexthw.ars_elemental.registry.ModItems;
 import com.alexthw.sauce.api.item.components.CharmData;
 import com.alexthw.sauce.api.item.components.SchoolCasterTomeData;
+import com.alexthw.sauce.common.block.DynamicSourceJarTile;
 import com.alexthw.sauce.common.block.FocusEnhancedSpellTurretTile;
+import com.alexthw.sauce.common.block.SourceJarCore;
+import com.alexthw.sauce.common.block.SourceJarFrame;
 import com.alexthw.sauce.common.fluid.SourceFluid;
 import com.alexthw.sauce.common.item.NecroEssence;
 import com.alexthw.sauce.common.mob_effect.ContingencyEffect;
+import com.alexthw.sauce.common.mob_effect.RageEffect;
 import com.alexthw.sauce.common.recipe.CharmChargingRecipe;
 import com.alexthw.sauce.common.recipe.ElementalArmorRecipe;
 import com.hollingsworth.arsnouveau.ArsNouveau;
@@ -18,7 +22,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -33,6 +39,7 @@ import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.PercentageAttribute;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
@@ -42,12 +49,15 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
+import java.util.function.Supplier;
+
 import static com.alexthw.sauce.Sauce.MODID;
 import static com.alexthw.sauce.Sauce.prefix;
 import static net.minecraft.core.registries.Registries.ATTRIBUTE;
 import static net.minecraft.core.registries.Registries.BLOCK_ENTITY_TYPE;
 import static net.minecraft.core.registries.Registries.MOB_EFFECT;
 import static net.minecraft.core.registries.Registries.SOUND_EVENT;
+import static net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL;
 
 public class ModRegistry {
 
@@ -110,7 +120,7 @@ public class ModRegistry {
     }
 
     // Redirects to Ars Elemental's Anima Essence if the mod is present, registers a new item otherwise. Will become the main reference in next major version.
-    public static final DeferredHolder<Item, ? extends Item> ANIMA_ESSENCE = ModList.get().isLoaded("ars_elemental") ? ModItems.ANIMA_ESSENCE : ITEMS.register("anima_essence", () -> new NecroEssence(defaultItemProperties().stacksTo(64)));
+    public static final DeferredHolder<Item, ? extends Item> ANIMA_ESSENCE = ModList.get().isLoaded("ars_elemental") ? ModItems.ANIMA_ESSENCE : ITEMS.register("anima_essence", () -> new NecroEssence());
 
     public static final DeferredHolder<Attribute, Attribute> SUMMON_POWER = PerkAttributes.registerAttribute(
             "sauce.perk.summon_power",
@@ -229,9 +239,22 @@ public class ModRegistry {
             () -> DataComponentType.<CharmData>builder().persistent(CharmData.CODEC).networkSynchronized(CharmData.STREAM_CODEC).build()
     );
     public static final DeferredHolder<MobEffect, MobEffect> CONTINGENCY = MOB_EFFECTS.register("contingency", ContingencyEffect::new);
+    public static final DeferredHolder<MobEffect, MobEffect> RAGE = MOB_EFFECTS.register("rage", () -> new RageEffect().addAttributeModifier(Attributes.ATTACK_DAMAGE, prefix("rage_strength"), 0.25f, ADD_MULTIPLIED_TOTAL));
 
     public static Item.Properties defaultItemProperties() {
         return new Item.Properties();
+    }
+
+    public static final DeferredHolder<Block, ? extends Block> SOURCE_JAR_FRAME = addBlock("source_jar_frame", () -> new SourceJarFrame(BlockBehaviour.Properties.of().strength(3.0F).noOcclusion()));
+    public static final DeferredHolder<Block, ? extends Block> SOURCE_JAR_CORE = addBlock("source_jar_core", () -> new SourceJarCore(BlockBehaviour.Properties.of().strength(3.0F).noOcclusion()));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends DynamicSourceJarTile>> BIG_SOURCE_JAR = BLOCK_ENTITIES.register("big_source_jar", () -> BlockEntityType.Builder.of(DynamicSourceJarTile::new, SOURCE_JAR_CORE.get()).build(null));
+
+    static DeferredHolder<Block, ? extends Block> addBlock(String name, Supplier<Block> blockSupp) {
+        DeferredHolder<Block, ? extends Block> block = BLOCKS.register(name, blockSupp);
+        if (!FMLEnvironment.production) // Keep them secret
+            ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
+        return block;
     }
 
 }

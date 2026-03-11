@@ -78,6 +78,8 @@ public class SauceLangProvider extends LanguageProvider {
         add("sauce.tooltip.cost", "Expending %d Source/cast");
         add("sauce.tooltip.required", "Requires %d Source");
 
+        add("effect.sauce.rage", "Rage");
+        add("effect.sauce.rage.desc", "Causes the target to attack nearby entities, even allies, and deal more melee damage.");
         add("effect.sauce.contingency", "Contingency Spell");
         add("effect.sauce.contingency.desc", "When a specific event triggers, it will cast the spell on the entity.");
         add("ars_nouveau.contingency_icon_tooltip", "Contingencies: Stores the rest of the spell for later, resuming it when the specified condition is met. Only one can be active at a time.");

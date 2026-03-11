@@ -11,6 +11,8 @@
   "curios.modifiers.bangle": "While in bangle slot:",
   "effect.sauce.contingency": "Contingency Spell",
   "effect.sauce.contingency.desc": "When a specific event triggers, it will cast the spell on the entity.",
+  "effect.sauce.rage": "Rage",
+  "effect.sauce.rage.desc": "Causes the target to attack nearby entities, even allies, and deal more melee damage.",
   "fluid_type.sauce.source_fluid": "Liquefied Source",
   "item.sauce.anima_essence": "Anima Essence",
   "item.sauce.source_fluid_bucket": "Liquefied Source Bucket",
