@@ -68,7 +68,7 @@ public class SourceJarFrame extends ModBlock {
                 controller.validateMultiblock();
                 // Note: We deliberately do NOT `break;` here.
                 // If a player places a frame between two different battery
-                // structures, we want to update both of them.
+                // structures, we want to try update both of them.
             }
         }
     }

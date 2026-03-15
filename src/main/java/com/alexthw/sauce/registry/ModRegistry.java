@@ -15,12 +15,15 @@ import com.alexthw.sauce.common.recipe.CharmChargingRecipe;
 import com.alexthw.sauce.common.recipe.ElementalArmorRecipe;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.perk.PerkAttributes;
+import com.hollingsworth.arsnouveau.common.potions.PublicEffect;
 import com.mojang.serialization.MapCodec;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
@@ -38,19 +41,23 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.PercentageAttribute;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
+import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
+import java.util.List;
 import java.util.function.Supplier;
 
+import static com.alexthw.sauce.ArsNouveauRegistry.CASTER_ENTITIES;
 import static com.alexthw.sauce.Sauce.MODID;
 import static com.alexthw.sauce.Sauce.prefix;
 import static net.minecraft.core.registries.Registries.ATTRIBUTE;
@@ -58,6 +65,7 @@ import static net.minecraft.core.registries.Registries.BLOCK_ENTITY_TYPE;
 import static net.minecraft.core.registries.Registries.MOB_EFFECT;
 import static net.minecraft.core.registries.Registries.SOUND_EVENT;
 import static net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL;
+import static net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE;
 
 public class ModRegistry {
 
@@ -96,6 +104,8 @@ public class ModRegistry {
         ITEMS.addAlias(ResourceLocation.fromNamespaceAndPath("starbunclemania", "source_fluid_bucket"), prefix("source_fluid_bucket"));
         DATA_COMPONENT_TYPES.addAlias(ResourceLocation.fromNamespaceAndPath("ars_elemental", "elemental_tome_caster"), prefix("school_tome_caster"));
         DATA_COMPONENT_TYPES.addAlias(ResourceLocation.fromNamespaceAndPath("ars_additions", "charm_data"), prefix("charm_data"));
+
+        bus.addListener(ModRegistry::modifyEntityAttributes);
     }
 
     /**
@@ -240,6 +250,8 @@ public class ModRegistry {
     );
     public static final DeferredHolder<MobEffect, MobEffect> CONTINGENCY = MOB_EFFECTS.register("contingency", ContingencyEffect::new);
     public static final DeferredHolder<MobEffect, MobEffect> RAGE = MOB_EFFECTS.register("rage", () -> new RageEffect().addAttributeModifier(Attributes.ATTACK_DAMAGE, prefix("rage_strength"), 0.25f, ADD_MULTIPLIED_TOTAL));
+    public static final DeferredHolder<MobEffect, MobEffect> SPELL_CRIT_UP = MOB_EFFECTS.register("spell_crit_up", () -> new PublicEffect(MobEffectCategory.BENEFICIAL, 8080895).addAttributeModifier(PerkAttributes.MAX_MANA, prefix("spell_crit_up"), 0.1f, ADD_VALUE));
+    public static final DeferredHolder<MobEffect, MobEffect> DISCOUNT_MANA = MOB_EFFECTS.register("mana_cost_down", () -> new PublicEffect(MobEffectCategory.BENEFICIAL, 8080895).addAttributeModifier(MANA_DISCOUNT, prefix("mana_cost_down"), 25f, ADD_VALUE));
 
     public static Item.Properties defaultItemProperties() {
         return new Item.Properties();
@@ -255,6 +267,36 @@ public class ModRegistry {
         if (!FMLEnvironment.production) // Keep them secret
             ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
         return block;
+    }
+
+    @SubscribeEvent
+    public static void modifyEntityAttributes(EntityAttributeModificationEvent event) {
+        List<Holder<Attribute>> ATTRIBUTES_TO_ADD = List.of(
+                SUMMON_POWER,
+                CONJURATION_RESISTANCE,
+                ABJURATION_POWER,
+                ABJURATION_RESISTANCE,
+                NECROMANCY_POWER,
+                NECROMANCY_RESISTANCE,
+                MANIPULATION_POWER,
+                MANIPULATION_RESISTANCE,
+                AIR_POWER,
+                AIR_RESISTANCE,
+                EARTH_POWER,
+                EARTH_RESISTANCE,
+                FIRE_POWER,
+                FIRE_RESISTANCE,
+                WATER_POWER,
+                WATER_RESISTANCE,
+                ELEMENTAL_POWER,
+                ELEMENTAL_RESISTANCE,
+                PerkAttributes.SPELL_DAMAGE_BONUS
+        );
+        event.getTypes().stream().filter(CASTER_ENTITIES::contains).forEach(e -> {
+            for (Holder<Attribute> v : ATTRIBUTES_TO_ADD) {
+                event.add(e, v);
+            }
+        });
     }
 
 }

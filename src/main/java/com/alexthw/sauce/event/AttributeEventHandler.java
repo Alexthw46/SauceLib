@@ -1,5 +1,6 @@
 package com.alexthw.sauce.event;
 
+import alexthw.ars_elemental.common.entity.mages.EntityMageBase;
 import com.alexthw.sauce.Sauce;
 import com.alexthw.sauce.registry.ModRegistry;
 import com.alexthw.sauce.registry.SauceTags;
@@ -12,6 +13,7 @@ import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.LivingCaster;
 import net.minecraft.core.Holder;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
@@ -77,7 +79,8 @@ public class AttributeEventHandler {
 
     @SubscribeEvent
     public static void elementalDefense(SpellDamageEvent.Pre pre) {
-        if (pre.target instanceof Player player) {
+        if (!(pre.target instanceof LivingEntity living)) return;
+        if (living instanceof Player || living instanceof EntityMageBase) {
             Set<SpellSchool> schools = new HashSet<>();
             // we don't have the spell part, so we need to deduce the schools from the damage type tags
             for (Map.Entry<SpellSchool, Holder<Attribute>> entry : schoolToDefenseAttribute.entrySet()) {
@@ -95,7 +98,7 @@ public class AttributeEventHandler {
             for (SpellSchool school : schools) {
                 Holder<Attribute> attribute = schoolToDefenseAttribute.get(school);
                 if (attribute != null) {
-                    AttributeInstance attrInstance = player.getAttribute(attribute);
+                    AttributeInstance attrInstance = living.getAttribute(attribute);
                     if (attrInstance != null) {
                         double resistance = attrInstance.getValue();
                         if (resistance != 0) {

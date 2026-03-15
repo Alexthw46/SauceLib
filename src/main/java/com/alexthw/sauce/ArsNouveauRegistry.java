@@ -20,6 +20,7 @@ import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.client.gui.book.GlyphFormatter;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -40,6 +41,8 @@ public class ArsNouveauRegistry {
     public static final DocAssets.BlitInfo CONTINGENCY_ICON_CRAFTING = new DocAssets.BlitInfo(ArsNouveau.prefix("textures/gui/documentation/doc_spellcrafting_icon_contingency.png"), 18, 16);
 
     public static final List<BiConsumer<RecipeHolder<?>, CallbackInfoReturnable<List<SinglePageCtor>>>> recipePageConsumers = new CopyOnWriteArrayList<>();
+
+    public static final List<EntityType<?>> CASTER_ENTITIES = new CopyOnWriteArrayList<>();
 
     public static void register(AbstractSpellPart spellPart) {
         GlyphRegistry.registerSpell(spellPart);

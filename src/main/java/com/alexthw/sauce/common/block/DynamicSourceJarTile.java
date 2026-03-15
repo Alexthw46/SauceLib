@@ -94,7 +94,7 @@ public class DynamicSourceJarTile extends SourceJarTile {
 
         frames.add(start);
 
-        // 1. Setup the initial flood-fill queue
+        // 1. Set up the initial flood-fill queue
         for (Direction dir : Direction.values()) {
             BlockPos offset = start.relative(dir);
             if (isFrame(offset)) {
