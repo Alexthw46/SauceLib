@@ -93,6 +93,7 @@ public class Sauce {
         if (event.getTab() == CreativeTabRegistry.BLOCKS.get() && SHOW_LIQUID_SOURCE) {
             event.accept(ModRegistry.SOURCE_FLUID_BUCKET.get());
         }
+        event.accept(ModRegistry.ANIMA_ESSENCE.get());
     }
 
 }

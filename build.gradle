@@ -169,7 +169,7 @@ dependencies {
     // localRuntime "curse.maven:cyanide-541676:5782674"
     // Small compile-time only dependency for Ars Elemental switch of the anima essence
     compileOnly("com.alexthw.ars_elemental:ars_elemental-${minecraft_version}:${elemental_version}") { transitive = false }
-    localRuntime("com.alexthw.ars_elemental:ars_elemental-${minecraft_version}:${elemental_version}") { transitive = false }
+    //localRuntime("com.alexthw.ars_elemental:ars_elemental-${minecraft_version}:${elemental_version}") { transitive = false }
     localRuntime("com.alexthw.not_enough_glyphs:not_enough_glyphs-${minecraft_version}:${neg_version}") { transitive = false }
 }
 

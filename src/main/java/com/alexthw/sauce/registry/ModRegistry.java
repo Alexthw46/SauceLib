@@ -1,6 +1,5 @@
 package com.alexthw.sauce.registry;
 
-import alexthw.ars_elemental.registry.ModItems;
 import com.alexthw.sauce.api.item.components.CharmData;
 import com.alexthw.sauce.api.item.components.SchoolCasterTomeData;
 import com.alexthw.sauce.common.block.DynamicSourceJarTile;
@@ -42,7 +41,6 @@ import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.PercentageAttribute;
 import net.neoforged.neoforge.common.conditions.ICondition;
@@ -102,6 +100,7 @@ public class ModRegistry {
         FLUIDS.addAlias(ResourceLocation.fromNamespaceAndPath("starbunclemania", "source_fluid_flowing"), prefix("source_fluid_flowing"));
         BLOCKS.addAlias(ResourceLocation.fromNamespaceAndPath("starbunclemania", "source_fluid_block"), prefix("source_fluid_block"));
         ITEMS.addAlias(ResourceLocation.fromNamespaceAndPath("starbunclemania", "source_fluid_bucket"), prefix("source_fluid_bucket"));
+        ITEMS.addAlias(ResourceLocation.fromNamespaceAndPath("ars_elemental", "anima_essence"), prefix("anima_essence"));
         DATA_COMPONENT_TYPES.addAlias(ResourceLocation.fromNamespaceAndPath("ars_elemental", "elemental_tome_caster"), prefix("school_tome_caster"));
         DATA_COMPONENT_TYPES.addAlias(ResourceLocation.fromNamespaceAndPath("ars_additions", "charm_data"), prefix("charm_data"));
 
@@ -129,8 +128,7 @@ public class ModRegistry {
         return new BaseFlowingFluid.Properties(SOURCE_FLUID_TYPE, SOURCE_FLUID, SOURCE_FLUID_FLOWING).block(SOURCE_FLUID_BLOCK).bucket(SOURCE_FLUID_BUCKET);
     }
 
-    // Redirects to Ars Elemental's Anima Essence if the mod is present, registers a new item otherwise. Will become the main reference in next major version.
-    public static final DeferredHolder<Item, ? extends Item> ANIMA_ESSENCE = ModList.get().isLoaded("ars_elemental") ? ModItems.ANIMA_ESSENCE : ITEMS.register("anima_essence", () -> new NecroEssence());
+    public static final DeferredHolder<Item, ? extends Item> ANIMA_ESSENCE = ITEMS.register("anima_essence", () -> new NecroEssence());
 
     public static final DeferredHolder<Attribute, Attribute> SUMMON_POWER = PerkAttributes.registerAttribute(
             "sauce.perk.summon_power",

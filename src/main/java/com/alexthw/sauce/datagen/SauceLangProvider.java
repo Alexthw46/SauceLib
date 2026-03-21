@@ -15,6 +15,9 @@ public class SauceLangProvider extends LanguageProvider {
         add("fluid_type.sauce.source_fluid", "Liquefied Source");
         add("block.sauce.source_fluid_block", "Liquified Source");
 
+        add("block.sauce.source_jar_core", "Source Jar Core");
+        add("block.sauce.source_jar_frame", "Source Jar Frame");
+
         add("ars_nouveau.school.necromancy", "Anima");
         add("ars_nouveau.rune.rune_necromancy", "Anima Rune");
         add("item.sauce.anima_essence", "Anima Essence");

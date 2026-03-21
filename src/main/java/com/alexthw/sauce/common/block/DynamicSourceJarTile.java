@@ -207,7 +207,7 @@ public class DynamicSourceJarTile extends SourceJarTile {
                 });
 
             // Sync to clients
-            level.sendBlockUpdated(worldPosition, getBlockState().trySetValue(FORMED, formed), getBlockState(), 3);
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState().trySetValue(FORMED, formed), 3);
 
             setChanged(); // Marks the chunk as needing a save
 
