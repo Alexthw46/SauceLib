@@ -33,11 +33,11 @@ public class DynamicSourceJarRenderer implements BlockEntityRenderer<DynamicSour
 
     @Override
     public @NotNull AABB getRenderBoundingBox(DynamicSourceJarTile blockEntity) {
-        if (!blockEntity.getIsFormed()) {
-            // When not formed, only render the block itself (so it can be seen during construction).
-            return new AABB(blockEntity.getBlockPos());
+        if (blockEntity.getIsFormed()) {
+            return new AABB(blockEntity.getMaxPos().getCenter(), blockEntity.getMinPos().getCenter());
         }
-        return new AABB(blockEntity.getMaxPos().getCenter(), blockEntity.getMinPos().getCenter());
+        // When not formed, only render the block itself (so it can be seen during construction).
+        return new AABB(blockEntity.getBlockPos());
     }
 
     public static void renderFluid(float percentageFill, int color, int luminosity, ResourceLocation texture, PoseStack matrixStackIn, MultiBufferSource bufferIn, int light, boolean shading, Vector3f fluidVec) {
