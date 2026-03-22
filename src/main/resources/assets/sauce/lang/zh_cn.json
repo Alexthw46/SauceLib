@@ -16,7 +16,7 @@
   "effect.sauce.mana_cost_down": "秘术师的祝福",
   "effect.sauce.mana_cost_down.desc": "降低法术的魔力消耗。",
   "effect.sauce.rage": "狂暴",
-  "effect.sauce.rage.desc": "使得受影响实体攻击附近实体，包括其盟友；增加造出的近战伤害。",
+  "effect.sauce.rage.desc": "使得受影响实体攻击附近实体，不论敌我；增加造成的近战伤害。",
   "effect.sauce.spell_crit_up": "法术亲和",
   "effect.sauce.spell_crit_up.desc": "增加法术的暴击率。",
   "fluid_type.sauce.source_fluid": "液态魔源",
