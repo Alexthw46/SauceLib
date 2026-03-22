@@ -15,6 +15,9 @@ public class SauceLangProvider extends LanguageProvider {
         add("fluid_type.sauce.source_fluid", "Liquefied Source");
         add("block.sauce.source_fluid_block", "Liquified Source");
 
+        add("block.sauce.source_jar_core", "Source Jar Core");
+        add("block.sauce.source_jar_frame", "Source Jar Frame");
+
         add("ars_nouveau.school.necromancy", "Anima");
         add("ars_nouveau.rune.rune_necromancy", "Anima Rune");
         add("item.sauce.anima_essence", "Anima Essence");
@@ -77,6 +80,15 @@ public class SauceLangProvider extends LanguageProvider {
         add("sauce.tooltip.transfer_rate", "Transfer Rate %d Source/s");
         add("sauce.tooltip.cost", "Expending %d Source/cast");
         add("sauce.tooltip.required", "Requires %d Source");
+
+        add("effect.sauce.rage", "Rage");
+        add("effect.sauce.rage.desc", "Causes the target to attack nearby entities, even allies, and deal more melee damage.");
+
+        add("effect.sauce.spell_crit_up", "Spell Affinity");
+        add("effect.sauce.spell_crit_up.desc", "Increases critical strike chance of spells.");
+
+        add("effect.sauce.mana_cost_down", "Arcanist Blessing");
+        add("effect.sauce.mana_cost_down.desc", "Decreases mana cost of spells.");
 
         add("effect.sauce.contingency", "Contingency Spell");
         add("effect.sauce.contingency.desc", "When a specific event triggers, it will cast the spell on the entity.");

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=true": {
+      "model": "minecraft:block/air"
+    },
+    "formed=false": {
+      "model": "minecraft:block/copper_bulb"
+    }
+  }
+}

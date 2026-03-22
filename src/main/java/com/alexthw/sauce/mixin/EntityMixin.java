@@ -2,6 +2,7 @@ package com.alexthw.sauce.mixin;
 
 import com.alexthw.sauce.Sauce;
 import com.alexthw.sauce.common.entity.EnthrallUtil;
+import com.alexthw.sauce.registry.ModRegistry;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,7 +16,9 @@ public class EntityMixin {
     public void sauce$isAlliedTo(Entity pEntity, CallbackInfoReturnable<Boolean> cir) {
         if (!Sauce.ENABLE_ENTHRALL) return;
         if (((Entity) (Object) this) instanceof LivingEntity living && pEntity instanceof LivingEntity target) {
-            if (EnthrallUtil.isEnthralled(living)) {
+            if (living.hasEffect(ModRegistry.RAGE)) {
+                cir.setReturnValue(false);
+            } else if (EnthrallUtil.isEnthralled(living)) {
                 cir.setReturnValue(EnthrallUtil.isEnthralledBy(living, target) || EnthrallUtil.sameMaster(living, target));
             }
         }
