@@ -54,9 +54,9 @@ public class AttributeEventHandler {
     public static void discountSpell(final SpellCostCalcEvent event) {
         if (event.context.getCaster() instanceof LivingCaster caster) {
             if (caster.livingEntity instanceof Player player && !(player instanceof FakePlayer)) {
-                AttributeInstance perk = player.getAttribute(ModRegistry.MANA_DISCOUNT);
-                if (perk != null) {
-                    event.currentCost -= (int) perk.getValue();
+                AttributeInstance attribute = player.getAttribute(ModRegistry.MANA_DISCOUNT);
+                if (attribute != null) {
+                    event.currentCost -= (int) attribute.getValue();
                 }
             }
         }

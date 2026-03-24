@@ -249,7 +249,7 @@ public class ModRegistry {
     public static final DeferredHolder<MobEffect, MobEffect> CONTINGENCY = MOB_EFFECTS.register("contingency", ContingencyEffect::new);
     public static final DeferredHolder<MobEffect, MobEffect> RAGE = MOB_EFFECTS.register("rage", () -> new RageEffect().addAttributeModifier(Attributes.ATTACK_DAMAGE, prefix("rage_strength"), 0.25f, ADD_MULTIPLIED_TOTAL));
     public static final DeferredHolder<MobEffect, MobEffect> SPELL_CRIT_UP = MOB_EFFECTS.register("spell_crit_up", () -> new PublicEffect(MobEffectCategory.BENEFICIAL, 8080895).addAttributeModifier(PerkAttributes.MAX_MANA, prefix("spell_crit_up"), 0.1f, ADD_VALUE));
-    public static final DeferredHolder<MobEffect, MobEffect> DISCOUNT_MANA = MOB_EFFECTS.register("mana_cost_down", () -> new PublicEffect(MobEffectCategory.BENEFICIAL, 8080895).addAttributeModifier(MANA_DISCOUNT, prefix("mana_cost_down"), 25f, ADD_VALUE));
+    public static final DeferredHolder<MobEffect, MobEffect> DISCOUNT_MANA = MOB_EFFECTS.register("mana_cost_down", () -> new PublicEffect(MobEffectCategory.BENEFICIAL, 8080895).addAttributeModifier(MANA_DISCOUNT, prefix("mana_cost_down"), 15f, ADD_VALUE));
 
     public static Item.Properties defaultItemProperties() {
         return new Item.Properties();
