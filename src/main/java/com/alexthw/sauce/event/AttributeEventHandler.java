@@ -1,6 +1,5 @@
 package com.alexthw.sauce.event;
 
-import alexthw.ars_elemental.common.entity.mages.EntityMageBase;
 import com.alexthw.sauce.Sauce;
 import com.alexthw.sauce.registry.ModRegistry;
 import com.alexthw.sauce.registry.SauceTags;
@@ -80,34 +79,35 @@ public class AttributeEventHandler {
     @SubscribeEvent
     public static void elementalDefense(SpellDamageEvent.Pre pre) {
         if (!(pre.target instanceof LivingEntity living)) return;
-        if (living instanceof Player || living instanceof EntityMageBase) {
-            Set<SpellSchool> schools = new HashSet<>();
-            // we don't have the spell part, so we need to deduce the schools from the damage type tags
-            for (Map.Entry<SpellSchool, Holder<Attribute>> entry : schoolToDefenseAttribute.entrySet()) {
-                SpellSchool school = entry.getKey();
-                List<TagKey<DamageType>> tags = SauceTags.SCHOOL_TO_DAMAGE_TYPES.getOrDefault(school, List.of());
-                if (tags.stream().anyMatch(tag -> pre.damageSource.is(tag))) {
-                    schools.add(school);
-                    // Added to support Elemancy mixed schools
-                    // Avoids including all elemental schools, since all elemental glyphs have ELEMENTAL as one of the schools
-                    if (school != SpellSchools.ELEMENTAL)
-                        schools.addAll(school.getSubSchools());
-                }
+        if (living.getAttribute(ModRegistry.ELEMENTAL_RESISTANCE) == null)
+            return; // if the target doesn't have elemental resistance, it won't have any other resistances either, so we can skip the rest of the method {
+        Set<SpellSchool> schools = new HashSet<>();
+        // we don't have the spell part, so we need to deduce the schools from the damage type tags
+        for (Map.Entry<SpellSchool, Holder<Attribute>> entry : schoolToDefenseAttribute.entrySet()) {
+            SpellSchool school = entry.getKey();
+            List<TagKey<DamageType>> tags = SauceTags.SCHOOL_TO_DAMAGE_TYPES.getOrDefault(school, List.of());
+            if (tags.stream().anyMatch(tag -> pre.damageSource.is(tag))) {
+                schools.add(school);
+                // Added to support Elemancy mixed schools
+                // Avoids including all elemental schools, since all elemental glyphs have ELEMENTAL as one of the schools
+                if (school != SpellSchools.ELEMENTAL)
+                    schools.addAll(school.getSubSchools());
             }
-            // Translate the schools into attributes and apply the resistances
-            for (SpellSchool school : schools) {
-                Holder<Attribute> attribute = schoolToDefenseAttribute.get(school);
-                if (attribute != null) {
-                    AttributeInstance attrInstance = living.getAttribute(attribute);
-                    if (attrInstance != null) {
-                        double resistance = attrInstance.getValue();
-                        if (resistance != 0) {
-                            pre.damage *= (float) Math.pow(2.0, -resistance / 100.0);
-                        }
+        }
+        // Translate the schools into attributes and apply the resistances
+        for (SpellSchool school : schools) {
+            Holder<Attribute> attribute = schoolToDefenseAttribute.get(school);
+            if (attribute != null) {
+                AttributeInstance attrInstance = living.getAttribute(attribute);
+                if (attrInstance != null) {
+                    double resistance = attrInstance.getValue();
+                    if (resistance != 0) {
+                        pre.damage *= (float) Math.pow(2.0, -resistance / 100.0);
                     }
                 }
             }
         }
+
     }
 
     @SubscribeEvent
