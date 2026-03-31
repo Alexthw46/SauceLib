@@ -66,7 +66,7 @@ public class DynamicSourceJarTile extends SourceJarTile {
             // Calculate capacity based on the size of the multiblock. Each block adds 10k capacity.
             int blocksCount = (maxPos.getX() - minPos.getX() + 1) * (maxPos.getY() - minPos.getY() + 1) * (maxPos.getZ() - minPos.getZ() + 1);
 
-            return new SourceStorage(10000 * blocksCount, 10000) {
+            return new SourceStorage(15000 * blocksCount, 10000) {
                 @Override
                 public void onContentsChanged() {
                     DynamicSourceJarTile.this.updateBlock();

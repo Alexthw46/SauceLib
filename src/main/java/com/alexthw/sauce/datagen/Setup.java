@@ -24,6 +24,7 @@ public class Setup {
         provider = event.getLookupProvider();
         output = gen.getPackOutput();
 
+        gen.addProvider(event.includeClient(), new SauceModelProvider.ItemModels(gen, existingFileHelper));
 //        gen.addProvider(event.includeServer(), new ArsProviders.ImbuementProvider(gen));
 //        gen.addProvider(event.includeServer(), new ArsProviders.GlyphProvider(gen));
 //        gen.addProvider(event.includeServer(), new ArsProviders.EnchantingAppProvider(gen));

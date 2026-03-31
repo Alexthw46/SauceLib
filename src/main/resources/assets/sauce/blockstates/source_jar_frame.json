@@ -4,7 +4,7 @@
       "model": "minecraft:block/air"
     },
     "formed=false": {
-      "model": "minecraft:block/copper_bulb"
+      "model": "sauce:block/source_jar_frame"
     }
   }
 }
