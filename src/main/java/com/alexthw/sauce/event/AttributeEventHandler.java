@@ -69,8 +69,8 @@ public class AttributeEventHandler {
             AttributeInstance critDamage = player.getAttribute(ModRegistry.SPELL_CRIT_DAMAGE);
             if (critChance != null && critDamage != null) {
                 double chance = critChance.getValue();
-                if (chance > 0 && pre.caster.getRandom().nextDouble() < (chance / 100)) {
-                    pre.damage *= (float) (1 + critDamage.getValue() / 100.0);
+                if (chance > 0 && pre.caster.getRandom().nextDouble() < chance) {
+                    pre.damage *= (float) (1 + critDamage.getValue());
                 }
             }
         }

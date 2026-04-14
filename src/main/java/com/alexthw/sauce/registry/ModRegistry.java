@@ -227,12 +227,12 @@ public class ModRegistry {
     );
     public static final DeferredHolder<Attribute, Attribute> SPELL_CRIT_DAMAGE = PerkAttributes.registerAttribute(
             "sauce.perk.spell_crit_damage",
-            (id) -> new PercentageAttribute(id, 25.0, -100.0, 1000.0).setSyncable(true),
+            (id) -> new PercentageAttribute(id, 0.50, -1.0, 10.0).setSyncable(true),
             "d0e1f2a3-b4c5-4d94-8512-0abcdef05678"
     );
     public static final DeferredHolder<Attribute, Attribute> SPELL_CRIT = PerkAttributes.registerAttribute(
             "sauce.perk.spell_crit",
-            (id) -> new PercentageAttribute(id, 1.0, 0.0, 100.0).setSyncable(true),
+            (id) -> new PercentageAttribute(id, 0.05, 0.0, 1.0).setSyncable(true),
             "d0e1f2a3-b4c5-4d94-8512-0abcdef01234"
     );
 
@@ -248,7 +248,7 @@ public class ModRegistry {
     );
     public static final DeferredHolder<MobEffect, MobEffect> CONTINGENCY = MOB_EFFECTS.register("contingency", ContingencyEffect::new);
     public static final DeferredHolder<MobEffect, MobEffect> RAGE = MOB_EFFECTS.register("rage", () -> new RageEffect().addAttributeModifier(Attributes.ATTACK_DAMAGE, prefix("rage_strength"), 0.25f, ADD_MULTIPLIED_TOTAL));
-    public static final DeferredHolder<MobEffect, MobEffect> SPELL_CRIT_UP = MOB_EFFECTS.register("spell_crit_up", () -> new PublicEffect(MobEffectCategory.BENEFICIAL, 8080895).addAttributeModifier(PerkAttributes.MAX_MANA, prefix("spell_crit_up"), 0.1f, ADD_VALUE));
+    public static final DeferredHolder<MobEffect, MobEffect> SPELL_CRIT_UP = MOB_EFFECTS.register("spell_crit_up", () -> new PublicEffect(MobEffectCategory.BENEFICIAL, 8080895).addAttributeModifier(SPELL_CRIT, prefix("spell_crit_up"), 0.15f, ADD_VALUE));
     public static final DeferredHolder<MobEffect, MobEffect> DISCOUNT_MANA = MOB_EFFECTS.register("mana_cost_down", () -> new PublicEffect(MobEffectCategory.BENEFICIAL, 8080895).addAttributeModifier(MANA_DISCOUNT, prefix("mana_cost_down"), 15f, ADD_VALUE));
 
     public static Item.Properties defaultItemProperties() {
