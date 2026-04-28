@@ -226,14 +226,14 @@ public class ModRegistry {
             "c9d0e1f2-a3b4-4c93-8412-90abcdef0123"
     );
     public static final DeferredHolder<Attribute, Attribute> SPELL_CRIT_DAMAGE = PerkAttributes.registerAttribute(
-            "sauce.perk.spell_crit_damage",
+            "sauce.perk.spell_crit_damage_modifier",
             (id) -> new PercentageAttribute(id, 0.50, -1.0, 10.0).setSyncable(true),
-            "d0e1f2a3-b4c5-4d94-8512-0abcdef05678"
+            "d0e1f2a3-b4c5-4d94-8512-0abcdef05672"
     );
     public static final DeferredHolder<Attribute, Attribute> SPELL_CRIT = PerkAttributes.registerAttribute(
-            "sauce.perk.spell_crit",
+            "sauce.perk.spell_crit_chance",
             (id) -> new PercentageAttribute(id, 0.05, 0.0, 1.0).setSyncable(true),
-            "d0e1f2a3-b4c5-4d94-8512-0abcdef01234"
+            "d0e1f2a3-b4c5-4d94-8512-0abcdef01239"
     );
 
     public static final DeferredHolder<RecipeType<?>, RecipeType<ElementalArmorRecipe>> ELEMENTAL_ARMOR_UP = RECIPES.register("armor_upgrade", () -> RecipeType.simple(prefix("armor_upgrade")));
