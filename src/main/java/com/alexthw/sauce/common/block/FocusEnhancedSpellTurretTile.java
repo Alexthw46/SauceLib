@@ -12,8 +12,10 @@ import com.hollingsworth.arsnouveau.api.util.SourceUtil;
 import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
 import com.hollingsworth.arsnouveau.common.block.RotatingSpellTurret;
 import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
+import com.hollingsworth.arsnouveau.common.entity.EntityFollowProjectile;
 import com.hollingsworth.arsnouveau.common.network.Networking;
 import com.hollingsworth.arsnouveau.common.network.PacketOneShotAnimation;
+import com.hollingsworth.arsnouveau.setup.registry.CapabilityRegistry;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -70,8 +72,26 @@ public class FocusEnhancedSpellTurretTile extends RotatingTurretTile {
         if (spellCaster.getSpell().isEmpty() || !(this.level instanceof ServerLevel world))
             return;
         int manaCost = getManaCost();
-        if (manaCost > 0 && SourceUtil.takeSourceMultiple(pos, world, 10, manaCost) == null)
-            return;
+        if (manaCost > 0) {
+            var sp = this.getLinkedSourceProvider();
+
+            if (this.level instanceof ServerLevel serverLevel && sp != null) {
+                var cap = this.level.getCapability(CapabilityRegistry.SOURCE_CAPABILITY, sp.first(), sp.second().orElse(null));
+                if (cap == null) {
+                    this.setLinkedSourceProvider(null);
+                    return;
+                }
+
+                if (cap.extractSource(manaCost, true) < manaCost) {
+                    return;
+                }
+
+                cap.extractSource(manaCost, false);
+                EntityFollowProjectile.spawn(serverLevel, sp.first(), this.worldPosition);
+            } else if (SourceUtil.takeSourceMultipleWithParticles(pos, level, 10, manaCost) == null) {
+                return;
+            }
+        }
         Networking.sendToNearbyClient(world, pos, new PacketOneShotAnimation(pos));
         Position iposition = RotatingSpellTurret.getDispensePosition(pos, this);
         Direction direction = world.getBlockState(pos).getValue(BasicSpellTurret.FACING);
