@@ -41,12 +41,18 @@ public class SauceConfig {
 
     public static class Server {
         public static ModConfigSpec.BooleanValue ENABLE_SPELL_CRIT;
+        public static ModConfigSpec.BooleanValue ENABLE_BIG_JARS;
+        public static ModConfigSpec.IntValue SOURCE_CAPACITY_PER_FRAME;
 
         public Server(ModConfigSpec.Builder builder) {
             builder.comment("Enable Spell Critical Hits").push("spell_crit");
             ENABLE_SPELL_CRIT = builder
                     .comment("Enable Spell Critical Hits, if another mod doesn't enable it already.")
                     .define("enable_spell_crit", true);
+            builder.pop();
+            builder.comment("Big Source Jars").push("big_source_jars");
+            ENABLE_BIG_JARS = builder.comment("Enable the blocks to make dynamic source jars, which can be scaled up to hold more source than the classic counterpart.").define("enable_big_jars", false);
+            SOURCE_CAPACITY_PER_FRAME = builder.comment("How much each source jar frame increase the overall capacity of a source jar multiblock").defineInRange("source_capacity_per_frame", 15000, 100, 1000000);
             builder.pop();
         }
 
@@ -68,6 +74,7 @@ public class SauceConfig {
                     .comment("Show numeric values overlays for source and mana.")
                     .define("show_debug_numbers", false);
             builder.pop();
+
         }
 
     }

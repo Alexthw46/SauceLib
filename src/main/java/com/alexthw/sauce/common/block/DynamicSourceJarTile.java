@@ -1,5 +1,6 @@
 package com.alexthw.sauce.common.block;
 
+import com.alexthw.sauce.SauceConfig;
 import com.alexthw.sauce.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.common.block.tile.SourceJarTile;
@@ -26,10 +27,6 @@ import static com.alexthw.sauce.common.block.SourceJarFrame.FORMED;
 public class DynamicSourceJarTile extends SourceJarTile {
     public DynamicSourceJarTile(BlockPos pos, BlockState state) {
         super(ModRegistry.BIG_SOURCE_JAR.get(), pos, state);
-    }
-
-    public DynamicSourceJarTile(BlockEntityType<? extends SourceJarTile> tileTileEntityType, BlockPos pos, BlockState state) {
-        super(tileTileEntityType, pos, state);
     }
 
     @Override
@@ -66,7 +63,7 @@ public class DynamicSourceJarTile extends SourceJarTile {
             // Calculate capacity based on the size of the multiblock. Each block adds 10k capacity.
             int blocksCount = (maxPos.getX() - minPos.getX() + 1) * (maxPos.getY() - minPos.getY() + 1) * (maxPos.getZ() - minPos.getZ() + 1);
 
-            return new SourceStorage(15000 * blocksCount, 10000) {
+            return new SourceStorage(SauceConfig.Server.SOURCE_CAPACITY_PER_FRAME.get() * blocksCount, 10000) {
                 @Override
                 public void onContentsChanged() {
                     DynamicSourceJarTile.this.updateBlock();
@@ -175,9 +172,16 @@ public class DynamicSourceJarTile extends SourceJarTile {
     }
 
     private boolean isFrame(BlockPos pos) {
+        if (level == null) return false;
+        Block block = level.getBlockState(pos).getBlock();
+        return block instanceof SourceJarFrame;
+    }
+
+    private boolean isValve(BlockPos pos) {
+        if (level == null) return false;
         // Replace with your actual frame block reference
         Block block = level.getBlockState(pos).getBlock();
-        return block == ModRegistry.SOURCE_JAR_FRAME.get();
+        return block == ModRegistry.SOURCE_JAR_VALVE.get();
     }
 
     public void setFormed(boolean formed) {
@@ -187,7 +191,7 @@ public class DynamicSourceJarTile extends SourceJarTile {
             // Update the source storage capacity based on the new formed state
             if (formed) {
                 int blocksCount = (maxPos.getX() - minPos.getX() + 1) * (maxPos.getY() - minPos.getY() + 1) * (maxPos.getZ() - minPos.getZ() + 1);
-                this.getSourceStorage().setMaxSource(10000 * blocksCount);
+                this.getSourceStorage().setMaxSource(SauceConfig.Server.SOURCE_CAPACITY_PER_FRAME.get() * blocksCount);
                 this.getSourceStorage().setMaxExtract(10000);
                 this.getSourceStorage().setMaxReceive(10000);
             } else {
@@ -202,6 +206,9 @@ public class DynamicSourceJarTile extends SourceJarTile {
                 BlockPos.betweenClosed(minPos, maxPos).forEach(pos -> {
                     if (isFrame(pos)) {
                         BlockState state = level.getBlockState(pos);
+                        if (isValve(pos) && level.getBlockEntity(pos) instanceof DynamicSourceJarTileValve valveTile) {
+                            valveTile.corePos = formed ? this.worldPosition : null;
+                        }
                         level.setBlock(pos, state.setValue(FORMED, formed), 3);
                     }
                 });
@@ -256,6 +263,5 @@ public class DynamicSourceJarTile extends SourceJarTile {
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
-
 
 }

@@ -3,9 +3,11 @@ package com.alexthw.sauce.registry;
 import com.alexthw.sauce.api.item.components.CharmData;
 import com.alexthw.sauce.api.item.components.SchoolCasterTomeData;
 import com.alexthw.sauce.common.block.DynamicSourceJarTile;
+import com.alexthw.sauce.common.block.DynamicSourceJarTileValve;
 import com.alexthw.sauce.common.block.FocusEnhancedSpellTurretTile;
 import com.alexthw.sauce.common.block.SourceJarCore;
 import com.alexthw.sauce.common.block.SourceJarFrame;
+import com.alexthw.sauce.common.block.SourceJarValve;
 import com.alexthw.sauce.common.fluid.SourceFluid;
 import com.alexthw.sauce.common.item.NecroEssence;
 import com.alexthw.sauce.common.mob_effect.ContingencyEffect;
@@ -41,7 +43,6 @@ import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.PercentageAttribute;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
@@ -256,14 +257,15 @@ public class ModRegistry {
     }
 
     public static final DeferredHolder<Block, ? extends Block> SOURCE_JAR_FRAME = addBlock("source_jar_frame", () -> new SourceJarFrame(BlockBehaviour.Properties.of().strength(3.0F).noOcclusion()));
+    public static final DeferredHolder<Block, ? extends Block> SOURCE_JAR_VALVE = addBlock("source_jar_valve", () -> new SourceJarValve(BlockBehaviour.Properties.of().strength(3.0F).noOcclusion()));
     public static final DeferredHolder<Block, ? extends Block> SOURCE_JAR_CORE = addBlock("source_jar_core", () -> new SourceJarCore(BlockBehaviour.Properties.of().strength(3.0F).noOcclusion()));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends DynamicSourceJarTile>> BIG_SOURCE_JAR = BLOCK_ENTITIES.register("big_source_jar", () -> BlockEntityType.Builder.of(DynamicSourceJarTile::new, SOURCE_JAR_CORE.get()).build(null));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends DynamicSourceJarTileValve>> BIG_SOURCE_JAR_VALVE = BLOCK_ENTITIES.register("big_source_jar_valve", () -> BlockEntityType.Builder.of(DynamicSourceJarTileValve::new, SOURCE_JAR_VALVE.get()).build(null));
 
     static DeferredHolder<Block, ? extends Block> addBlock(String name, Supplier<Block> blockSupp) {
         DeferredHolder<Block, ? extends Block> block = BLOCKS.register(name, blockSupp);
-        if (!FMLEnvironment.production) // Keep them secret
-            ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
+        ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
         return block;
     }
 

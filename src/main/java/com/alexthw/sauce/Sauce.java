@@ -94,6 +94,11 @@ public class Sauce {
         if (SHOW_LIQUID_SOURCE) {
             event.accept(ModRegistry.SOURCE_FLUID_BUCKET.get());
         }
+        if (SauceConfig.Server.ENABLE_BIG_JARS.get()) {
+            event.accept(ModRegistry.SOURCE_JAR_FRAME.get());
+            event.accept(ModRegistry.SOURCE_JAR_VALVE.get());
+            event.accept(ModRegistry.SOURCE_JAR_CORE.get());
+        }
         event.accept(ModRegistry.ANIMA_ESSENCE.get());
     }
 
