@@ -54,10 +54,20 @@ public class GlyphEffectUtil {
         return false;
     }
 
+    @Deprecated(forRemoval = true)
+    public static boolean checkIgnoreFilters(Entity e, Set<IFilter> filters) {
+        boolean flag = true;
+        if (filters == null) return true;
+        for (IFilter spellPart : filters) {
+            flag = flag && spellPart.shouldAffect(new EntityHitResult(e), e.level());
+        }
+        return !flag;
+    }
+
     /**
      * Returns true if the given entity is affected by the given filters.
      */
-    public static boolean checkIgnoreFilters(Entity e, Set<IFilter> filters) {
+    public static boolean checkIgnoreFilters(Entity e, Set<IFilter> filters, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         boolean flag = true;
         if (filters == null) return true;
         for (IFilter spellPart : filters) {
