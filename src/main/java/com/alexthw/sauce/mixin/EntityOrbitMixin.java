@@ -29,7 +29,7 @@ public abstract class EntityOrbitMixin extends EntityProjectileSpell {
         Set<IFilter> filters = GlyphEffectUtil.getFilters(resolver.spell.unsafeList(), 0);
         List<Predicate<LivingEntity>> ignore = new ArrayList<>();
         if (!filters.isEmpty()) {
-            ignore.add((entity) -> GlyphEffectUtil.checkIgnoreFilters(entity, filters));
+            ignore.add((entity) -> GlyphEffectUtil.checkIgnoreFilters(entity, filters, resolver.getCastStats(), resolver.spellContext, resolver));
             sauce$setIgnored(ignore);
         }
     }

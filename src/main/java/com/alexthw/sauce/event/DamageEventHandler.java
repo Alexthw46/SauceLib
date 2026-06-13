@@ -4,8 +4,6 @@ import com.alexthw.sauce.api.item.IElementalArmor;
 import com.alexthw.sauce.api.item.ISchoolFocus;
 import com.alexthw.sauce.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
-import com.hollingsworth.arsnouveau.api.event.SpellDamageEvent;
-import com.hollingsworth.arsnouveau.api.spell.IFilter;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import com.hollingsworth.arsnouveau.common.entity.EnchantedFallingBlock;
@@ -35,17 +33,6 @@ import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_AIR;
 import static com.hollingsworth.arsnouveau.api.spell.SpellSchools.ELEMENTAL_EARTH;
 
 public class DamageEventHandler {
-
-    @SubscribeEvent
-    public static void betterFilters(SpellDamageEvent.Pre event) {
-        //if the spell has a filter, and the target of the attack is not valid, cancel the event
-        // event.context.getCurrentIndex() - 1 is the current, we check the one before it
-        if (event.context != null && event.context.getCurrentIndex() > 1 && event.context.getSpell().unsafeList().get(event.context.getCurrentIndex() - 2) instanceof IFilter filter) {
-            if (!filter.shouldResolveOnEntity(event.target, event.target.level())) {
-                event.setCanceled(true);
-            }
-        }
-    }
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void elementalDamageReduction(LivingIncomingDamageEvent event) {
