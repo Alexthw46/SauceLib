@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_21",
   "refmap": "sauce.refmap.json",
   "mixins": [
+    "AliasSpellMap",
     "DocumentationMixin",
     "EntityMixin",
     "EntityOrbitMixin",
