@@ -35,7 +35,6 @@ public class SourceFluid extends FluidType {
     public static IClientFluidTypeExtensions extension = (new IClientFluidTypeExtensions() {
         private static final ResourceLocation STILL = ResourceLocation.fromNamespaceAndPath(Sauce.MODID, "block/source_still"),
                 FLOW = ResourceLocation.fromNamespaceAndPath(Sauce.MODID, "block/source_flow"),
-                OVERLAY = ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "block/sourcestone"),
                 VIEW_OVERLAY = ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "textures/block/sourcestone.png");
 
         @Override
@@ -46,11 +45,6 @@ public class SourceFluid extends FluidType {
         @Override
         public @NotNull ResourceLocation getFlowingTexture() {
             return FLOW;
-        }
-
-        @Override
-        public ResourceLocation getOverlayTexture() {
-            return OVERLAY;
         }
 
         @Override
