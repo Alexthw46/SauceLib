@@ -73,6 +73,24 @@ public class SauceLangProvider extends LanguageProvider {
         add("sauce.perk.spell_crit_damage_modifier.desc", "Damage increase of spell critical strikes.");
         add("sauce.perk.mana_discount", "Mana Cost Reduction");
         add("sauce.perk.mana_discount.desc", "Reduces the mana cost of spells.");
+        add("sauce.perk.mana_discount.fire", "Fire Glyph Cost Reduction");
+        add("sauce.perk.mana_discount.fire.desc", "Reduces the mana cost of fire spells.");
+        add("sauce.perk.mana_discount.water", "Water Glyph Cost Reduction");
+        add("sauce.perk.mana_discount.water.desc", "Reduces the mana cost of water spells.");
+        add("sauce.perk.mana_discount.air", "Air Glyph Cost Reduction");
+        add("sauce.perk.mana_discount.air.desc", "Reduces the mana cost of air spells.");
+        add("sauce.perk.mana_discount.earth", "Earth Glyph Cost Reduction");
+        add("sauce.perk.mana_discount.earth.desc", "Reduces the mana cost of earth spells.");
+        add("sauce.perk.mana_discount.necromancy", "Anima Glyph Cost Reduction");
+        add("sauce.perk.mana_discount.necromancy.desc", "Reduces the mana cost of anima spells.");
+        add("sauce.perk.mana_discount.abjuration", "Abjuration Glyph Cost Reduction");
+        add("sauce.perk.mana_discount.abjuration.desc", "Reduces the mana cost of abjuration spells.");
+        add("sauce.perk.mana_discount.manipulation", "Manipulation Glyph Cost Reduction");
+        add("sauce.perk.mana_discount.manipulation.desc", "Reduces the mana cost of manipulation spells.");
+        add("sauce.perk.mana_discount.conjuration", "Conjuration Glyph Cost Reduction");
+        add("sauce.perk.mana_discount.conjuration.desc", "Reduces the mana cost of conjuration spells.");
+        add("sauce.perk.mana_discount.elemental", "Elemental Glyph Cost Reduction");
+        add("sauce.perk.mana_discount.elemental.desc", "Reduces the mana cost of glyphs belonging to an elemental school.");
 
         add("ars_nouveau.tier.prerequired", "Requires Tier %s upgrade");
         add("ars_nouveau.subform_icon_tooltip", "Subforms: Gives the rest of the spell a new form or edits its behavior.");

@@ -29,33 +29,47 @@ public class AttributeEventHandler {
 
     public static final Map<SpellSchool, Holder<Attribute>> schoolToPowerAttribute = new ConcurrentHashMap<>();
     public static final Map<SpellSchool, Holder<Attribute>> schoolToDefenseAttribute = new ConcurrentHashMap<>();
+    public static final Map<SpellSchool, Holder<Attribute>> schoolToDiscountAttribute = new ConcurrentHashMap<>();
 
-    public static void linkSchoolToAttribute(SpellSchool school, Holder<Attribute> powerAttribute, Holder<Attribute> defenseAttribute) {
+    public static void linkSchoolToAttribute(SpellSchool school, Holder<Attribute> powerAttribute, Holder<Attribute> defenseAttribute, Holder<Attribute> discountAttribute) {
         if (powerAttribute != null)
             schoolToPowerAttribute.put(school, powerAttribute);
         if (defenseAttribute != null)
             schoolToDefenseAttribute.put(school, defenseAttribute);
+        if (discountAttribute != null)
+            schoolToDiscountAttribute.put(school, discountAttribute);
     }
 
     static {
-        linkSchoolToAttribute(SpellSchools.MANIPULATION, ModRegistry.MANIPULATION_POWER, ModRegistry.MANIPULATION_RESISTANCE);
-        linkSchoolToAttribute(SpellSchools.CONJURATION, ModRegistry.SUMMON_POWER, ModRegistry.CONJURATION_RESISTANCE);
-        linkSchoolToAttribute(SpellSchools.ABJURATION, ModRegistry.ABJURATION_POWER, ModRegistry.ABJURATION_RESISTANCE);
-        linkSchoolToAttribute(SpellSchools.NECROMANCY, ModRegistry.NECROMANCY_POWER, ModRegistry.NECROMANCY_RESISTANCE);
-        linkSchoolToAttribute(SpellSchools.ELEMENTAL_AIR, ModRegistry.AIR_POWER, ModRegistry.AIR_RESISTANCE);
-        linkSchoolToAttribute(SpellSchools.ELEMENTAL_WATER, ModRegistry.WATER_POWER, ModRegistry.WATER_RESISTANCE);
-        linkSchoolToAttribute(SpellSchools.ELEMENTAL_EARTH, ModRegistry.EARTH_POWER, ModRegistry.EARTH_RESISTANCE);
-        linkSchoolToAttribute(SpellSchools.ELEMENTAL_FIRE, ModRegistry.FIRE_POWER, ModRegistry.FIRE_RESISTANCE);
-        linkSchoolToAttribute(SpellSchools.ELEMENTAL, ModRegistry.ELEMENTAL_POWER, ModRegistry.ELEMENTAL_RESISTANCE);
+        linkSchoolToAttribute(SpellSchools.MANIPULATION, ModRegistry.MANIPULATION_POWER, ModRegistry.MANIPULATION_RESISTANCE, ModRegistry.MANA_DISCOUNT_MANIPULATION);
+        linkSchoolToAttribute(SpellSchools.CONJURATION, ModRegistry.SUMMON_POWER, ModRegistry.CONJURATION_RESISTANCE, ModRegistry.MANA_DISCOUNT_CONJURATION);
+        linkSchoolToAttribute(SpellSchools.ABJURATION, ModRegistry.ABJURATION_POWER, ModRegistry.ABJURATION_RESISTANCE, ModRegistry.MANA_DISCOUNT_ABJURATION);
+        linkSchoolToAttribute(SpellSchools.NECROMANCY, ModRegistry.NECROMANCY_POWER, ModRegistry.NECROMANCY_RESISTANCE, ModRegistry.MANA_DISCOUNT_NECROMANCY);
+        linkSchoolToAttribute(SpellSchools.ELEMENTAL_AIR, ModRegistry.AIR_POWER, ModRegistry.AIR_RESISTANCE, ModRegistry.MANA_DISCOUNT_AIR);
+        linkSchoolToAttribute(SpellSchools.ELEMENTAL_WATER, ModRegistry.WATER_POWER, ModRegistry.WATER_RESISTANCE, ModRegistry.MANA_DISCOUNT_WATER);
+        linkSchoolToAttribute(SpellSchools.ELEMENTAL_EARTH, ModRegistry.EARTH_POWER, ModRegistry.EARTH_RESISTANCE, ModRegistry.MANA_DISCOUNT_EARTH);
+        linkSchoolToAttribute(SpellSchools.ELEMENTAL_FIRE, ModRegistry.FIRE_POWER, ModRegistry.FIRE_RESISTANCE, ModRegistry.MANA_DISCOUNT_FIRE);
+        linkSchoolToAttribute(SpellSchools.ELEMENTAL, ModRegistry.ELEMENTAL_POWER, ModRegistry.ELEMENTAL_RESISTANCE, ModRegistry.MANA_DISCOUNT_ELEMENTAL);
     }
 
     @SubscribeEvent
-    public static void discountSpell(final SpellCostCalcEvent event) {
+    public static void discountSpell(final SpellCostCalcEvent.Pre event) {
         if (event.context.getCaster() instanceof LivingCaster caster) {
             if (caster.livingEntity instanceof Player player && !(player instanceof FakePlayer)) {
                 AttributeInstance attribute = player.getAttribute(ModRegistry.MANA_DISCOUNT);
                 if (attribute != null) {
                     event.currentCost -= (int) attribute.getValue();
+                }
+                for (var glyph : event.context.getSpell().recipe()) {
+                    for (var school : glyph.spellSchools) {
+                        Holder<Attribute> discountAttribute = schoolToDiscountAttribute.get(school);
+                        if (discountAttribute != null) {
+                            AttributeInstance discountInstance = player.getAttribute(discountAttribute);
+                            if (discountInstance != null) {
+                                event.currentCost -= (int) discountInstance.getValue();
+                            }
+                        }
+                    }
                 }
             }
         }

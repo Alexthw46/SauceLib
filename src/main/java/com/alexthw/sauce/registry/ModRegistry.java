@@ -224,7 +224,7 @@ public class ModRegistry {
     public static final DeferredHolder<Attribute, Attribute> MANA_DISCOUNT = PerkAttributes.registerAttribute(
             "sauce.perk.mana_discount",
             (id) -> new RangedAttribute(id, 0.0, -1000000, 1000000).setSyncable(true),
-            "c9d0e1f2-a3b4-4c93-8412-90abcdef0123"
+            "c9d0e1f2-a3b4-4c93-8412-90abcdef0120"
     );
     public static final DeferredHolder<Attribute, Attribute> SPELL_CRIT_DAMAGE = PerkAttributes.registerAttribute(
             "sauce.perk.spell_crit_damage_modifier",
@@ -235,6 +235,60 @@ public class ModRegistry {
             "sauce.perk.spell_crit_chance",
             (id) -> new PercentageAttribute(id, 0.05, 0.0, 1.0).setSyncable(true),
             "d0e1f2a3-b4c5-4d94-8512-0abcdef01239"
+    );
+
+    public static final DeferredHolder<Attribute, Attribute> MANA_DISCOUNT_FIRE = PerkAttributes.registerAttribute(
+            "sauce.perk.mana_discount.fire",
+            (id) -> new RangedAttribute(id, 0.0, -1000000, 1000000).setSyncable(true),
+            "c9d0e1f2-a3b4-4c93-8412-90abcdef0123"
+    );
+
+    public static final DeferredHolder<Attribute, Attribute> MANA_DISCOUNT_WATER = PerkAttributes.registerAttribute(
+            "sauce.perk.mana_discount.water",
+            (id) -> new RangedAttribute(id, 0.0, -1000000, 1000000).setSyncable(true),
+            "c9d0e1f2-a3b4-4c93-8412-90abcdef0124"
+    );
+
+    public static final DeferredHolder<Attribute, Attribute> MANA_DISCOUNT_AIR = PerkAttributes.registerAttribute(
+            "sauce.perk.mana_discount.air",
+            (id) -> new RangedAttribute(id, 0.0, -1000000, 1000000).setSyncable(true),
+            "c9d0e1f2-a3b4-4c93-8412-90abcdef0125"
+    );
+
+    public static final DeferredHolder<Attribute, Attribute> MANA_DISCOUNT_EARTH = PerkAttributes.registerAttribute(
+            "sauce.perk.mana_discount.earth",
+            (id) -> new RangedAttribute(id, 0.0, -1000000, 1000000).setSyncable(true),
+            "c9d0e1f2-a3b4-4c93-8412-90abcdef0126"
+    );
+
+    public static final DeferredHolder<Attribute, Attribute> MANA_DISCOUNT_CONJURATION = PerkAttributes.registerAttribute(
+            "sauce.perk.mana_discount.conjuration",
+            (id) -> new RangedAttribute(id, 0.0, -1000000, 1000000).setSyncable(true),
+            "c9d0e1f2-a3b4-4c93-8412-90abcdef0127"
+    );
+
+    public static final DeferredHolder<Attribute, Attribute> MANA_DISCOUNT_ABJURATION = PerkAttributes.registerAttribute(
+            "sauce.perk.mana_discount.abjuration",
+            (id) -> new RangedAttribute(id, 0.0, -1000000, 1000000).setSyncable(true),
+            "c9d0e1f2-a3b4-4c93-8412-90abcdef0128"
+    );
+
+    public static final DeferredHolder<Attribute, Attribute> MANA_DISCOUNT_MANIPULATION = PerkAttributes.registerAttribute(
+            "sauce.perk.mana_discount.manipulation",
+            (id) -> new RangedAttribute(id, 0.0, -1000000, 1000000).setSyncable(true),
+            "c9d0e1f2-a3b4-4c93-8412-90abcdef0129"
+    );
+
+    public static final DeferredHolder<Attribute, Attribute> MANA_DISCOUNT_NECROMANCY = PerkAttributes.registerAttribute(
+            "sauce.perk.mana_discount.necromancy",
+            (id) -> new RangedAttribute(id, 0.0, -1000000, 1000000).setSyncable(true),
+            "c9d0e1f2-a3b4-4c93-8412-90abcdef0130"
+    );
+
+    public static final DeferredHolder<Attribute, Attribute> MANA_DISCOUNT_ELEMENTAL = PerkAttributes.registerAttribute(
+            "sauce.perk.mana_discount.elemental",
+            (id) -> new RangedAttribute(id, 0.0, -1000000, 1000000).setSyncable(true),
+            "c9d0e1f2-a3b4-4c93-8412-90abcdef0131"
     );
 
     public static final DeferredHolder<RecipeType<?>, RecipeType<ElementalArmorRecipe>> ELEMENTAL_ARMOR_UP = RECIPES.register("armor_upgrade", () -> RecipeType.simple(prefix("armor_upgrade")));
