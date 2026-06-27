@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=true": {
+      "model": "sauce:block/source_jar_valve"
+    },
+    "formed=false": {
+      "model": "sauce:block/source_jar_valve"
+    }
+  }
+}

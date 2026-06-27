@@ -3,12 +3,10 @@ package com.alexthw.sauce.event;
 import com.alexthw.sauce.Sauce;
 import com.alexthw.sauce.registry.ModRegistry;
 import com.alexthw.sauce.registry.SauceTags;
-import com.hollingsworth.arsnouveau.api.event.SpellCostCalcEvent;
 import com.hollingsworth.arsnouveau.api.event.SpellDamageEvent;
 import com.hollingsworth.arsnouveau.api.event.SpellModifierEvent;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
-import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.LivingCaster;
 import net.minecraft.core.Holder;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
@@ -50,29 +48,6 @@ public class AttributeEventHandler {
         linkSchoolToAttribute(SpellSchools.ELEMENTAL_EARTH, ModRegistry.EARTH_POWER, ModRegistry.EARTH_RESISTANCE, ModRegistry.MANA_DISCOUNT_EARTH);
         linkSchoolToAttribute(SpellSchools.ELEMENTAL_FIRE, ModRegistry.FIRE_POWER, ModRegistry.FIRE_RESISTANCE, ModRegistry.MANA_DISCOUNT_FIRE);
         linkSchoolToAttribute(SpellSchools.ELEMENTAL, ModRegistry.ELEMENTAL_POWER, ModRegistry.ELEMENTAL_RESISTANCE, ModRegistry.MANA_DISCOUNT_ELEMENTAL);
-    }
-
-    @SubscribeEvent
-    public static void discountSpell(final SpellCostCalcEvent.Pre event) {
-        if (event.context.getCaster() instanceof LivingCaster caster) {
-            if (caster.livingEntity instanceof Player player && !(player instanceof FakePlayer)) {
-                AttributeInstance attribute = player.getAttribute(ModRegistry.MANA_DISCOUNT);
-                if (attribute != null) {
-                    event.currentCost -= (int) attribute.getValue();
-                }
-                for (var glyph : event.context.getSpell().recipe()) {
-                    for (var school : glyph.spellSchools) {
-                        Holder<Attribute> discountAttribute = schoolToDiscountAttribute.get(school);
-                        if (discountAttribute != null) {
-                            AttributeInstance discountInstance = player.getAttribute(discountAttribute);
-                            if (discountInstance != null) {
-                                event.currentCost -= (int) discountInstance.getValue();
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
 
     @SubscribeEvent
