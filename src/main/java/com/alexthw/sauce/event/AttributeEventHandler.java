@@ -51,16 +51,18 @@ public class AttributeEventHandler {
     }
 
     @SubscribeEvent
-    public static void critChance(SpellDamageEvent.Pre pre) {
+    public static void critChanceAndDamageMultiplier(SpellDamageEvent.Pre pre) {
+        if (!(pre.caster instanceof Player player) || player instanceof FakePlayer) return;
+        AttributeInstance damageMult = player.getAttribute(ModRegistry.SPELL_DAMAGE_MULTIPLIER);
+        if (damageMult != null)
+            pre.damage *= (float) damageMult.getValue();
         if (!Sauce.ENABLE_SPELL_CRIT) return;
-        if (pre.caster instanceof Player player && !(player instanceof FakePlayer)) {
-            AttributeInstance critChance = player.getAttribute(ModRegistry.SPELL_CRIT);
-            AttributeInstance critDamage = player.getAttribute(ModRegistry.SPELL_CRIT_DAMAGE);
-            if (critChance != null && critDamage != null) {
-                double chance = critChance.getValue();
-                if (chance > 0 && pre.caster.getRandom().nextDouble() < chance) {
-                    pre.damage *= (float) (1 + critDamage.getValue());
-                }
+        AttributeInstance critChance = player.getAttribute(ModRegistry.SPELL_CRIT);
+        AttributeInstance critDamage = player.getAttribute(ModRegistry.SPELL_CRIT_DAMAGE);
+        if (critChance != null && critDamage != null) {
+            double chance = critChance.getValue();
+            if (chance > 0 && pre.caster.getRandom().nextDouble() < chance) {
+                pre.damage *= (float) (1 + critDamage.getValue());
             }
         }
     }
