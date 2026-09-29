@@ -3,6 +3,7 @@ package com.alexthw.sauce.event;
 import com.alexthw.sauce.client.DynamicSourceJarRenderer;
 import com.alexthw.sauce.client.FocusTurretRenderer;
 import com.alexthw.sauce.registry.ModRegistry;
+import com.hollingsworth.arsnouveau.client.renderer.tile.ArcanePedestalRenderer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -15,6 +16,7 @@ public class ClientEventHandler {
     public static void bindRenderers(final EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(ModRegistry.FOCUS_TURRET.get(), FocusTurretRenderer::new);
         event.registerBlockEntityRenderer(ModRegistry.BIG_SOURCE_JAR.get(), DynamicSourceJarRenderer::new);
+        event.registerBlockEntityRenderer(ModRegistry.ARCANE_PLINTH_TILE.get(), ArcanePedestalRenderer::new);
     }
 
 

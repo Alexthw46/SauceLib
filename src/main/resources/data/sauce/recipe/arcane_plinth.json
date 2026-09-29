@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": {
+      "item": "ars_nouveau:arcane_pedestal"
+    },
+    "S": {
+      "item": "ars_nouveau:sourcestone"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "SPS",
+    "SSS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "sauce:arcane_plinth"
+  }
+}

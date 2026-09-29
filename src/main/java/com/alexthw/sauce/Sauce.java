@@ -18,11 +18,14 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -48,6 +51,7 @@ public class Sauce {
         modEventBus.addListener(this::doClientStuff);
         modEventBus.addListener(this::registerClientExtensions);
         modEventBus.addListener(this::addToTab);
+        modEventBus.addListener(this::registerCapabilities);
         modContainer.registerConfig(ModConfig.Type.SERVER, SauceConfig.SERVER_SPEC);
         modContainer.registerConfig(ModConfig.Type.COMMON, SauceConfig.COMMON_SPEC);
         modContainer.registerConfig(ModConfig.Type.STARTUP, SauceConfig.STARTUP_SPEC);
@@ -100,6 +104,10 @@ public class Sauce {
             event.accept(ModRegistry.SOURCE_JAR_CORE.get());
         }
         event.accept(ModRegistry.ANIMA_ESSENCE.get());
+        event.accept(ModRegistry.ARCANE_PLINTH.get());
     }
 
+    public void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModRegistry.ARCANE_PLINTH_TILE.get(), (c, side) -> new InvWrapper(c));
+    }
 }

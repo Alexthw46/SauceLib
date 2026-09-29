@@ -1,5 +1,8 @@
-**Sauce 0.0.50**
+**Sauce 0.0.60**
 
+- Added a variant of the Arcane Pedestal that can hold up to 64 of a single item.
+
+**Sauce 0.0.50**
 - Added a new attribute that reduces in % unlike warding : "Spell Damage Reduction"
 - Added a check to account for Ars Controle compound filters
 

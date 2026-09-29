@@ -1,0 +1,29 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "sauce:block/arcane_plinth",
+      "y": 90,
+      "x": 90
+    },
+    "facing=north": {
+      "model": "sauce:block/arcane_plinth",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "sauce:block/arcane_plinth",
+      "x": -90
+    },
+    "facing=west": {
+      "model": "sauce:block/arcane_plinth",
+      "y": -90,
+      "x": 90
+    },
+    "facing=down": {
+      "model": "sauce:block/arcane_plinth",
+      "x": 180
+    },
+    "facing=up": {
+      "model": "sauce:block/arcane_plinth"
+    }
+  }
+}

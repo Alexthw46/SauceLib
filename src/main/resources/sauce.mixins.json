@@ -5,6 +5,7 @@
   "refmap": "sauce.refmap.json",
   "mixins": [
     "AliasSpellMap",
+    "ApparatusPedestalPatch",
     "BetterFilters",
     "DocumentationMixin",
     "EntityMixin",
