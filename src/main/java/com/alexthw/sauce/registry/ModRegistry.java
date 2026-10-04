@@ -446,11 +446,12 @@ public class ModRegistry {
                 PerkAttributes.SPELL_DAMAGE_BONUS
         );
 
-        event.getTypes().stream().filter(CASTER_ENTITIES::contains)
+        event.getTypes()
                 .forEach(mobType -> {
-                    for (Holder<Attribute> attribute : ATTRIBUTES_TO_ADD) {
-                        event.add(mobType, attribute);
-                    }
+                    if (CASTER_ENTITIES.contains(mobType))
+                        for (Holder<Attribute> attribute : ATTRIBUTES_TO_ADD) {
+                            event.add(mobType, attribute);
+                        }
                     event.add(mobType, SPELL_RESISTANCE);
                 });
     }
