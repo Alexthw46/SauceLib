@@ -445,11 +445,14 @@ public class ModRegistry {
                 ELEMENTAL_RESISTANCE,
                 PerkAttributes.SPELL_DAMAGE_BONUS
         );
-        event.getTypes().stream().filter(CASTER_ENTITIES::contains).forEach(e -> {
-            for (Holder<Attribute> v : ATTRIBUTES_TO_ADD) {
-                event.add(e, v);
-            }
-        });
+
+        event.getTypes().stream().filter(CASTER_ENTITIES::contains)
+                .forEach(mobType -> {
+                    for (Holder<Attribute> attribute : ATTRIBUTES_TO_ADD) {
+                        event.add(mobType, attribute);
+                    }
+                    event.add(mobType, SPELL_RESISTANCE);
+                });
     }
 
 }
