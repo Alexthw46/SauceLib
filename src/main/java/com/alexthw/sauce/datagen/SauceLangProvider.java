@@ -74,8 +74,8 @@ public class SauceLangProvider extends LanguageProvider {
         add("sauce.perk.spell_crit_damage_modifier.desc", "Damage increase of spell critical strikes.");
         add("sauce.perk.spell_damage_multiplier", "Spell Damage Multiplier (Ars)");
         add("sauce.perk.spell_damage_multiplier.desc", "Damage Multiplier of Ars Nouveau spells.");
-        add("sauce.perk.spell_resistance.desc", "Spell Resistance (Ars)");
-        add("sauce.perk.spell_resistance", "Reduces damage taken from spells. In percentage.");
+        add("sauce.perk.spell_resistance", "Spell Resistance (Ars)");
+        add("sauce.perk.spell_resistance.desc", "Reduces damage taken from spells. In percentage.");
         add("sauce.perk.mana_discount", "Mana Cost Reduction");
         add("sauce.perk.mana_discount.desc", "Reduces the mana cost of spells.");
         add("sauce.perk.mana_discount.fire", "Fire Glyph Cost Reduction");

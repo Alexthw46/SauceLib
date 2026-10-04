@@ -1,3 +1,8 @@
+**Sauce 0.0.61**
+
+- Fixed Lang name and desc of Spell Resistance being swapped
+- Spell Resistance attribute is now setup for all mobs, instead of just the player
+
 **Sauce 0.0.60**
 
 - Added a variant of the Arcane Pedestal that can hold up to 64 of a single item.
