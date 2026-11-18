@@ -4,6 +4,7 @@ import com.alexthw.sauce.common.fluid.SourceFluid;
 import com.alexthw.sauce.event.AttributeEventHandler;
 import com.alexthw.sauce.event.DamageEventHandler;
 import com.alexthw.sauce.event.GenericEventHandler;
+import com.alexthw.sauce.network.SauceNet;
 import com.alexthw.sauce.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.common.lib.LibBlockNames;
@@ -55,6 +56,8 @@ public class Sauce {
         modContainer.registerConfig(ModConfig.Type.SERVER, SauceConfig.SERVER_SPEC);
         modContainer.registerConfig(ModConfig.Type.COMMON, SauceConfig.COMMON_SPEC);
         modContainer.registerConfig(ModConfig.Type.STARTUP, SauceConfig.STARTUP_SPEC);
+        modEventBus.addListener(SauceNet::register);
+        NeoForge.EVENT_BUS.addListener(SauceNet::playerLogin);
         NeoForge.EVENT_BUS.register(DamageEventHandler.class);
         NeoForge.EVENT_BUS.register(AttributeEventHandler.class);
         NeoForge.EVENT_BUS.register(GenericEventHandler.class);

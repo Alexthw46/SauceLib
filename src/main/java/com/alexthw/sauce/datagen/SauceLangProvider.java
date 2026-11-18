@@ -23,6 +23,7 @@ public class SauceLangProvider extends LanguageProvider {
         add("ars_nouveau.school.necromancy", "Anima");
         add("ars_nouveau.rune.rune_necromancy", "Anima Rune");
         add("item.sauce.anima_essence", "Anima Essence");
+        add("item.sauce.book_of_friends", "Book of Friends");
 
         add("curios.modifiers.an_focus", "While in spell focus slot:");
         add("curios.modifiers.bangle", "While in bangle slot:");
@@ -117,6 +118,11 @@ public class SauceLangProvider extends LanguageProvider {
         add("effect.sauce.contingency", "Contingency Spell");
         add("effect.sauce.contingency.desc", "When a specific event triggers, it will cast the spell on the entity.");
         add("ars_nouveau.contingency_icon_tooltip", "Contingencies: Stores the rest of the spell for later, resuming it when the specified condition is met. Only one can be active at a time.");
+
+        add("gui.enter_player", "Enter Player/UUID");
+        add("gui.enter_entity_type", "Enter Entity Type");
+        add("ars_nouveau.settings.allies.players", "Allied Players");
+        add("ars_nouveau.settings.allies.entities", "Allied Entities");
 
     }
 }

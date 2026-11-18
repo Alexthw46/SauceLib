@@ -4,6 +4,7 @@ import com.alexthw.sauce.api.item.components.CharmData;
 import com.alexthw.sauce.api.item.components.SchoolCasterTomeData;
 import com.alexthw.sauce.common.block.*;
 import com.alexthw.sauce.common.fluid.SourceFluid;
+import com.alexthw.sauce.common.item.FriendBookItem;
 import com.alexthw.sauce.common.item.NecroEssence;
 import com.alexthw.sauce.common.mob_effect.ContingencyEffect;
 import com.alexthw.sauce.common.mob_effect.RageEffect;
@@ -11,51 +12,32 @@ import com.alexthw.sauce.common.recipe.CharmChargingRecipe;
 import com.alexthw.sauce.common.recipe.ElementalArmorRecipe;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.perk.PerkAttributes;
-import com.hollingsworth.arsnouveau.common.block.ArcanePedestal;
 import com.hollingsworth.arsnouveau.common.block.tile.ArcanePedestalTile;
 import com.hollingsworth.arsnouveau.common.potions.PublicEffect;
-import com.hollingsworth.arsnouveau.common.util.VoxelShapeUtils;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.BooleanOp;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.PercentageAttribute;
@@ -67,7 +49,6 @@ import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -141,11 +122,16 @@ public class ModRegistry {
         return new Item.Properties();
     }
 
+    static Item.Properties singleItemProperties() {
+        return new Item.Properties().stacksTo(1);
+    }
+
     private static BaseFlowingFluid.Properties fluidProperties() {
         return new BaseFlowingFluid.Properties(SOURCE_FLUID_TYPE, SOURCE_FLUID, SOURCE_FLUID_FLOWING).block(SOURCE_FLUID_BLOCK).bucket(SOURCE_FLUID_BUCKET);
     }
 
     public static final DeferredHolder<Item, ? extends Item> ANIMA_ESSENCE = ITEMS.register("anima_essence", () -> new NecroEssence());
+    public static final DeferredHolder<Item, ? extends Item> FRIEND_BOOK = ITEMS.register("book_of_friends", () -> new FriendBookItem(singleItemProperties()));
 
     // SCHOOL ATTRIBUTES
     public static final DeferredHolder<Attribute, Attribute> SUMMON_POWER = PerkAttributes.registerAttribute(
@@ -351,69 +337,14 @@ public class ModRegistry {
     public static final DeferredHolder<Block, ? extends Block> SOURCE_JAR_FRAME = addBlock("source_jar_frame", () -> new SourceJarFrame(BlockBehaviour.Properties.of().strength(3.0F).noOcclusion()));
     public static final DeferredHolder<Block, ? extends Block> SOURCE_JAR_VALVE = addBlock("source_jar_valve", () -> new SourceJarValve(BlockBehaviour.Properties.of().strength(3.0F).noOcclusion()));
     public static final DeferredHolder<Block, ? extends Block> SOURCE_JAR_CORE = addBlock("source_jar_core", () -> new SourceJarCore(BlockBehaviour.Properties.of().strength(3.0F).noOcclusion()));
-    public static final DeferredHolder<Block, ? extends Block> ARCANE_PLINTH = addBlock("arcane_plinth", () -> new ArcanePedestal() {
-        @Override
-        public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-            return new ArcanePlinthTile(pos, state);
-        }
-
-        public static final VoxelShape UP = makeShape();
-        public static final VoxelShape DOWN = VoxelShapeUtils.rotate(UP, Direction.UP);
-        public static final VoxelShape EAST = VoxelShapeUtils.rotate(UP, Direction.WEST);
-        public static final VoxelShape WEST = VoxelShapeUtils.rotate(UP, Direction.EAST);
-        public static final VoxelShape NORTH = VoxelShapeUtils.rotate(UP, Direction.SOUTH);
-        public static final VoxelShape SOUTH = VoxelShapeUtils.rotate(UP, Direction.NORTH);
-
-        static VoxelShape makeShape() {
-            VoxelShape shape = Shapes.empty();
-            shape = Shapes.join(shape, Shapes.box(0.125, 0.6875, 0.125, 0.875, 0.8125, 0.875), BooleanOp.OR);
-            shape = Shapes.join(shape, Shapes.box(0.125, -0.00625, 0.125, 0.875, 0.18125, 0.875), BooleanOp.OR);
-            shape = Shapes.join(shape, Shapes.box(0.1875, 0.5, 0.1875, 0.8125, 0.6875, 0.8125), BooleanOp.OR);
-            shape = Shapes.join(shape, Shapes.box(0.225, 0.1625, 0.225, 0.775, 0.525, 0.775), BooleanOp.OR);
-            return shape;
-        }
-
-        public @NotNull VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-            Direction facing = state.getValue(BlockStateProperties.FACING);
-            return switch (facing) {
-                case UP -> UP;
-                case DOWN -> DOWN;
-                case NORTH -> NORTH;
-                case SOUTH -> SOUTH;
-                case WEST -> WEST;
-                case EAST -> EAST;
-            };
-        }
-
-        @Override
-        public @NotNull ItemInteractionResult useItemOn(ItemStack pStack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-            if (handIn != InteractionHand.MAIN_HAND)
-                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-            if (!world.isClientSide && world.getBlockEntity(pos) instanceof ArcanePedestalTile tile) {
-                ItemStack pedestalStack = tile.getStack();
-                ItemStack handStack = player.getItemInHand(handIn);
-
-                if (!pedestalStack.isEmpty() && handStack.isEmpty()) {
-                    world.addFreshEntity(new ItemEntity(world, player.getX(), player.getY(), player.getZ(), pedestalStack.copy()));
-                    tile.setStack(ItemStack.EMPTY);
-                } else if (!handStack.isEmpty()) {
-                    if (!pedestalStack.isEmpty()) {
-                        world.addFreshEntity(new ItemEntity(world, player.getX(), player.getY(), player.getZ(), pedestalStack.copy()));
-                    }
-                    tile.setStack(handStack.copy());
-                    player.setItemInHand(handIn, ItemStack.EMPTY);
-                }
-
-                world.sendBlockUpdated(pos, state, state, 2);
-            }
-
-            return ItemInteractionResult.SUCCESS;
-        }
-    });
+    public static final DeferredHolder<Block, ? extends Block> ARCANE_PLINTH = addBlock("arcane_plinth", ArcanePlinth::new);
 
     // BLOCK ENTITIES
+    @SuppressWarnings("DataFlowIssue")
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends DynamicSourceJarTile>> BIG_SOURCE_JAR = BLOCK_ENTITIES.register("big_source_jar", () -> BlockEntityType.Builder.of(DynamicSourceJarTile::new, SOURCE_JAR_CORE.get()).build(null));
+    @SuppressWarnings("DataFlowIssue")
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends DynamicSourceJarTileValve>> BIG_SOURCE_JAR_VALVE = BLOCK_ENTITIES.register("big_source_jar_valve", () -> BlockEntityType.Builder.of(DynamicSourceJarTileValve::new, SOURCE_JAR_VALVE.get()).build(null));
+    @SuppressWarnings("DataFlowIssue")
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<? extends ArcanePedestalTile>> ARCANE_PLINTH_TILE = BLOCK_ENTITIES.register("arcane_plinth_tile", () -> BlockEntityType.Builder.of(ArcanePlinthTile::new, ARCANE_PLINTH.get()).build(null));
 
     static DeferredHolder<Block, ? extends Block> addBlock(String name, Supplier<Block> blockSupp) {

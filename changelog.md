@@ -1,3 +1,8 @@
+**Sauce 0.0.70**
+
+- Added Book of Friends: Allows to add Players and Entities as allies, to prevent damaging them with your spells and
+  more.
+
 **Sauce 0.0.61**
 
 - Fixed Lang name and desc of Spell Resistance being swapped
