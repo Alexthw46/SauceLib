@@ -1,8 +1,9 @@
 package com.alexthw.sauce.common.item;
 
-import com.alexthw.sauce.client.gui.GuiAlliesScreen;
+import com.alexthw.sauce.network.PacketOpenAllyScreen;
 import com.hollingsworth.arsnouveau.common.items.ModItem;
-import net.minecraft.client.Minecraft;
+import com.hollingsworth.arsnouveau.common.network.Networking;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -18,8 +19,8 @@ public class FriendBookItem extends ModItem {
 
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand usedHand) {
-        if (level.isClientSide)
-            Minecraft.getInstance().setScreen(new GuiAlliesScreen());
+        if (!level.isClientSide && player instanceof ServerPlayer sPlayer)
+            Networking.sendToPlayerClient(new PacketOpenAllyScreen(), sPlayer);
         return super.use(level, player, usedHand);
     }
 

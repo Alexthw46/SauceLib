@@ -14,6 +14,7 @@ public class SauceNet {
         // Sets the current network version
         final PayloadRegistrar reg = event.registrar("1");
         reg.playBidirectional(PacketSetAllies.TYPE, PacketSetAllies.CODEC, Networking::handle);
+        reg.playToClient(PacketOpenAllyScreen.TYPE, PacketOpenAllyScreen.CODEC, Networking::handle);
     }
 
 
