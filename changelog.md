@@ -1,3 +1,7 @@
+**Sauce 0.0.73**
+
+- Fix crash on servers
+  
 **Sauce 0.0.70**
 
 - Added Book of Friends: Allows to add Players and Entities as allies, to prevent damaging them with your spells and
