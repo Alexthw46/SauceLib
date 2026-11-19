@@ -8,10 +8,7 @@ import com.hollingsworth.arsnouveau.client.gui.buttons.ClearButton;
 import com.hollingsworth.arsnouveau.client.gui.buttons.GuiImageButton;
 import com.hollingsworth.arsnouveau.common.network.Networking;
 import com.mojang.authlib.GameProfile;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -29,8 +26,8 @@ public class GuiAlliesScreen extends BaseBook {
     private PlayerAlliesList playerList;
     private EntityAlliesList entityList;
 
-    private EditBox playerInput;
-    private EditBox entityInput;
+    private CustomEditBox playerInput;
+    private CustomEditBox entityInput;
 
     public GuiAlliesScreen() {
         super();
@@ -43,10 +40,10 @@ public class GuiAlliesScreen extends BaseBook {
         allies = AlliesSavedData.getLocalAllies();
 
         int listY = bookTop + 60;
-        int listHeight = 85;
+        int listHeight = 108;
 
         // Player section
-        playerInput = new BookEditBox(
+        playerInput = new CustomEditBox(
                 font,
                 bookLeft + 20,
                 bookTop + 35,
@@ -57,11 +54,11 @@ public class GuiAlliesScreen extends BaseBook {
             @Override
             public boolean charTyped(char codePoint, int modifiers) {
                 // if the text color is red, reset it to white since the user is typing again
-                playerInput.setTextColor(0xFFFFFF);
+                playerInput.setTextColor(0xFF927F68);
                 return super.charTyped(codePoint, modifiers);
             }
         };
-
+        playerInput.setHint(Component.translatable("gui.enter_player"));
         playerInput.setMaxLength(36); // UUIDs are 36 characters (including dashes)
         addRenderableWidget(playerInput);
 
@@ -72,21 +69,24 @@ public class GuiAlliesScreen extends BaseBook {
                 108,
                 listHeight,
                 listY,
-                20,
+                15,
                 allies,
                 this::syncAllies
         );
 
-        playerList.setX(bookLeft + 20);
+        playerList.setX(bookLeft + 25);
         addRenderableWidget(playerList);
 
         // Entity section
-        entityInput = new BookEditBox(
+        entityInput = new CustomEditBox(
                 font,
                 bookRight - 132,
                 bookTop + 35,
                 100,
                 20,
+                Component.translatable("gui.enter_entity_type")
+        );
+        entityInput.setHint(
                 Component.translatable("gui.enter_entity_type")
         );
 
@@ -100,12 +100,12 @@ public class GuiAlliesScreen extends BaseBook {
                 108,
                 listHeight,
                 listY,
-                20,
+                15,
                 allies,
                 this::syncAllies
         );
 
-        entityList.setX(bookRight - 125);
+        entityList.setX(bookRight - 128);
         addRenderableWidget(entityList);
 
         // Back button
@@ -172,7 +172,7 @@ public class GuiAlliesScreen extends BaseBook {
     }
 
     private void addEntity() {
-        String value = entityInput.getValue().trim();
+        String value = entityInput.getValue().trim().toLowerCase();
 
         if (value.isEmpty()) {
             return;
@@ -240,66 +240,4 @@ public class GuiAlliesScreen extends BaseBook {
 
     }
 
-    public static class BookEditBox extends EditBox {
-
-        private final Component placeholder;
-
-        public BookEditBox(
-                Font font,
-                int x,
-                int y,
-                int width,
-                int height,
-                Component placeholder
-        ) {
-            super(font, x, y, width, height, placeholder);
-            this.placeholder = placeholder;
-
-            setBordered(false);
-            setTextColor(0xFF403326);
-            setTextColorUneditable(0xFF807060);
-        }
-
-        @Override
-        public void renderWidget(
-                GuiGraphics graphics,
-                int mouseX,
-                int mouseY,
-                float partialTick
-        ) {
-            // Background
-            graphics.fill(
-                    getX(),
-                    getY(),
-                    getX() + width,
-                    getY() + height,
-                    0xFFE5D4B5
-            );
-
-            // Border
-            int borderColor = isFocused() ? 0xFF80613D : 0xFFB49A75;
-
-            graphics.renderOutline(
-                    getX(),
-                    getY(),
-                    width,
-                    height,
-                    borderColor
-            );
-
-            super.renderWidget(graphics, mouseX, mouseY, partialTick);
-
-            // Placeholder
-            if (getValue().isEmpty() && !isFocused()) {
-                graphics.drawString(
-                        Minecraft.getInstance().font,
-                        placeholder,
-                        getX() + 4,
-                        getY() + (height - 8) / 2,
-                        0xFF927F68,
-                        false
-                );
-            }
-        }
-    }
 }

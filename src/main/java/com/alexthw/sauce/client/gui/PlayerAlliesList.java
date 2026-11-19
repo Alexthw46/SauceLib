@@ -2,10 +2,13 @@ package com.alexthw.sauce.client.gui;
 
 import com.alexthw.sauce.api.AlliesSavedData;
 import com.mojang.authlib.GameProfile;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -17,6 +20,7 @@ import static com.hollingsworth.arsnouveau.ArsNouveau.prefix;
 
 public class PlayerAlliesList extends ObjectSelectionList<PlayerAlliesList.PlayerListEntry> {
 
+    private static final ResourceLocation SCROLLER_SPRITE = prefix("scroller");
     private final AlliesSavedData.AllyData allies;
     private final Runnable onChanged;
 
@@ -62,7 +66,7 @@ public class PlayerAlliesList extends ObjectSelectionList<PlayerAlliesList.Playe
 
     @Override
     protected int getScrollbarPosition() {
-        return getX() - 6;
+        return getX() - 1;
     }
 
     @Override
@@ -80,6 +84,33 @@ public class PlayerAlliesList extends ObjectSelectionList<PlayerAlliesList.Playe
                 prefix("textures/gui/menu_paper.png"),
                 getX() - 5, getY(), 0, 0, 108, 108, 108, 108
         );
+    }
+
+    @Override
+    protected boolean scrollbarVisible() {
+        return false;
+    }
+
+    protected boolean isScrollbarVisible() {
+        return super.scrollbarVisible();
+    }
+
+    @Override
+    public void renderWidget(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.renderWidget(guiGraphics, mouseX, mouseY, partialTick);
+        if (this.isScrollbarVisible()) {
+            int l = this.getScrollbarPosition();
+            int i1 = (int) ((float) (this.height * this.height) / (float) this.getMaxPosition());
+            i1 = Mth.clamp(i1, 32, this.height - 8);
+            int k = (int) this.getScrollAmount() * (this.height - i1) / this.getMaxScroll() + this.getY();
+            if (k < this.getY()) {
+                k = this.getY();
+            }
+
+            RenderSystem.enableBlend();
+            guiGraphics.blitSprite(SCROLLER_SPRITE, l, k, 6, i1);
+            RenderSystem.disableBlend();
+        }
     }
 
     public static class PlayerListEntry extends ObjectSelectionList.Entry<PlayerListEntry> {
