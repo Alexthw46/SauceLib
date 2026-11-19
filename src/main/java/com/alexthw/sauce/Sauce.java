@@ -108,6 +108,7 @@ public class Sauce {
         }
         event.accept(ModRegistry.ANIMA_ESSENCE.get());
         event.accept(ModRegistry.ARCANE_PLINTH.get());
+        event.accept(ModRegistry.FRIEND_BOOK.get());
     }
 
     public void registerCapabilities(RegisterCapabilitiesEvent event) {

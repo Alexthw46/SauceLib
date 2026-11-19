@@ -108,7 +108,7 @@ public class PlayerAlliesList extends ObjectSelectionList<PlayerAlliesList.Playe
             }
 
             RenderSystem.enableBlend();
-            guiGraphics.blitSprite(SCROLLER_SPRITE, l, k, 6, i1);
+            guiGraphics.blitSprite(SCROLLER_SPRITE, l, k + 2, 5, i1);
             RenderSystem.disableBlend();
         }
     }

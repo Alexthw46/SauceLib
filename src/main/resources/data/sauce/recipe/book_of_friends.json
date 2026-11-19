@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "ars_nouveau:starbuncle_shards"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "sauce:book_of_friends"
+  }
+}

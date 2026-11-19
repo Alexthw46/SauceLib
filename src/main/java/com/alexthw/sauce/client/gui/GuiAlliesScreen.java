@@ -40,7 +40,7 @@ public class GuiAlliesScreen extends BaseBook {
         allies = AlliesSavedData.getLocalAllies();
 
         int listY = bookTop + 60;
-        int listHeight = 108;
+        int listHeight = 103;
 
         // Player section
         playerInput = new CustomEditBox(
