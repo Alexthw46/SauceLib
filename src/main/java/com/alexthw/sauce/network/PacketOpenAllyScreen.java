@@ -1,7 +1,7 @@
 package com.alexthw.sauce.network;
 
 import com.alexthw.sauce.Sauce;
-import com.alexthw.sauce.client.gui.GuiAlliesScreen;
+import com.alexthw.sauce.common.item.FriendBookItem;
 import com.hollingsworth.arsnouveau.common.network.AbstractPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -29,7 +29,7 @@ public class PacketOpenAllyScreen extends AbstractPacket {
 
     @Override
     public void onClientReceived(Minecraft minecraft, Player player) {
-        Minecraft.getInstance().setScreen(new GuiAlliesScreen());
+        FriendBookItem.openGui();
     }
 
     @Override
